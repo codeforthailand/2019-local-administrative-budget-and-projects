@@ -26,16 +26,16 @@ const BipartiteGraph = ({layoutData, width, height}) => {
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
     
     // // flow lines
-    // container.append('g')
-    //   .selectAll('path')
-    //   .data(flows)
-    //   .enter()
-    //   .append('path')
-    //     .attr('d', d => d.path)
-    //     .attr('opacity', 0.5)  
-    //     .attr('fill', 'none')  
-    //     .attr('stroke', 'steelblue')  
-    //     .attr('stroke-width', d => d.thickness);
+    container.append('g')
+      .selectAll('path')
+      .data(flows)
+      .enter()
+      .append('path')
+        .attr('d', d => d.path)
+        .attr('opacity', 0.5)  
+        .attr('fill', 'none')  
+        .attr('stroke', 'steelblue')  
+        .attr('stroke-width', d => d.thickness);
     
     // // node rectangles
     container.append('g')
