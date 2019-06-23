@@ -39,21 +39,38 @@ function layout(nodes, padding, x, height, side, y0, k) {
   }
 }
 
-function scaleK(nodes, height, padding) {
-  return (height - padding * (nodes.length - 1)) / d3Array.sum(nodes, nodeValue);
+function layoutHorizontal(nodes, padding, y, width, side, x0, k) {
+  var i, node, w,
+      x = x0 + (width - padding * (nodes.length - 1) - d3Array.sum(nodes, nodeValue) * k)/2;
+
+  for (i = 0; i < nodes.length; i++) {
+    node = nodes[i];
+    w = nodeValue(node) * k;
+    if (side) {
+      node[side] = { x: x, y: y, width: w };
+    } else {
+      node.x = x; node.y = y; node.width = w;
+    }
+    x += w + padding;
+  }
+}
+
+function scaleK(nodes, width, padding) {
+  return (width - padding * (nodes.length - 1)) / d3Array.sum(nodes, nodeValue);
 }
 
 function link(d, curvature) {
-   var x0 = d.start.x,
-       x1 = d.end.x,
-       xi = d3Interpolate.interpolateNumber(x0, x1),
-       x2 = xi(curvature),
-       x3 = xi(1 - curvature),
-       y0 = d.start.y + d.thickness / 2,
-       y1 = d.end.y + d.thickness / 2;
+  console.log(d)
+   var y0 = d.start.y,
+       y1 = d.end.y,
+       yi = d3Interpolate.interpolateNumber(y0, y1),
+       y2 = yi(curvature),
+       y3 = yi(1 - curvature),
+       x0 = d.start.x + d.thickness / 2,
+       x1 = d.end.x + d.thickness / 2;
    return "M" + x0 + "," + y0
-        + "C" + x2 + "," + y0
-        + " " + x3 + "," + y1
+        + "C" + x0 + "," + y2
+        + " " + x1 + "," + y3
         + " " + x1 + "," + y1;
 }
 
@@ -75,22 +92,31 @@ export default function() {
       curvature = .5;
 
   var bipartite = function(_flows) {
-
     var flows = _flows.map(wrap),
         sources = nodeTotals(flows, defaultSource),
         targets = nodeTotals(flows, defaultTarget);
 
-    k = Math.min(scaleK(sources, height, padding), scaleK(targets, height, padding));
+    k = Math.min(scaleK(sources, width, padding), scaleK(targets, width, padding));
 
-    layout(sources, padding, 0, height, null, 0, k);
+    layoutHorizontal(sources, padding, 0, width, null, 0, k);
     sources.forEach(function(node) {
-      layout(node.values, 0, 0, node.height, 'start', node.y, k);
+      layoutHorizontal(node.values, 0, 0, node.width, 'start', node.x, k);
     });
 
-    layout(targets, padding, width, height, null, 0, k);
+    layoutHorizontal(targets, padding, height, width, null, 0, k);
     targets.forEach(function(node) {
-      layout(node.values, 0, width, node.height, 'end', node.y, k);
+      layoutHorizontal(node.values, 0, height, node.width, 'end', node.x, k);
     });
+
+    // layout(sources, padding, 0, height, null, 0, k);
+    // sources.forEach(function(node) {
+    //   layout(node.values, 0, 0, node.height, 'start', node.y, k);
+    // });
+
+    // layout(targets, padding, width, height, null, 0, k);
+    // targets.forEach(function(node) {
+    //   layout(node.values, 0, width, node.height, 'end', node.y, k);
+    // });
 
     flows.forEach(function(flow) {
       flow.thickness = k * flow.value;

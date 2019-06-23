@@ -22,33 +22,26 @@ const RD3Component = rd3.Component;
 
 const mock_data = [
   {
-    source: 6631,
-    target: 6534,
+    source: "เชียงใหม่",
+    target: "บริษัท A",
     value: 6631
   },
   {
-    source: 6532,
-    target: 6535,
+    source: "เชียงราย",
+    target: "หจก. B",
     value: 1004
+  },
+  {
+    source: "ลำปาง",
+    target: "บริษัท A",
+    value: 512
   },
 ]
 
 const IndexPage = () => {
-  // const bpData = viz.biPartite()
-  //   .data(mock_data)
-  //   .orient("horizontal")
   const [d3Dom, setd3Dom] = useState()
 
-  const ref = useRef(null);
-  useEffect(() => {
-    if (!ref.current || !ref.current.getBoundingClientRect().width) return;
-    console.log('useEffect')
-    console.log('do something with', ref.current.getBoundingClientRect().width);
-  }, [ref.current]);
-
-
   const padding = 10
-  // const width = window.innerWidth - 2*padding - 40 - 20;
   const width = 800
   const height = 410
 
@@ -61,9 +54,7 @@ const IndexPage = () => {
     .value(d => d.value)
 
   const layoutData = layout(mock_data)
-  console.log(layoutData)
   
-
   useEffect(() => {
     const something = BipartiteGraph({
       layoutData, width, height

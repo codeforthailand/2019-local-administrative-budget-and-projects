@@ -5,6 +5,10 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "d3": "^5.9.2",
+    "d3-bipartite": "0.0.7",
+    "d3-scale": "^3.0.0",
+    "d3-scale-chromatic": "^1.3.3",
     "gatsby": "^2.10.0",
     "gatsby-image": "^2.2.1",
     "gatsby-plugin-manifest": "^2.2.0",
@@ -15,6 +19,7 @@
     "gatsby-transformer-sharp": "^2.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-d3-library": "^1.1.8",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1"
   },
