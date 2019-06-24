@@ -21,7 +21,8 @@
     "react": "^16.8.6",
     "react-d3-library": "^1.1.8",
     "react-dom": "^16.8.6",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "react-page-scroller": "^1.5.1"
   },
   "devDependencies": {
     "prettier": "^1.18.2"

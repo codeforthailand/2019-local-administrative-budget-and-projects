@@ -2,48 +2,64 @@ import React, {useState, useEffect, useRef} from "react"
 // import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-// import Image from "../components/image"
-// import SEO from "../components/seo"
 
 import rd3 from 'react-d3-library'
-
-// import * from 'd3'
-// import * as d3 from "d3"
-// import * as d3Scale from 'd3-scale-chromatic'
 
 import bipartite from '../bipartite'
 import Placeholder from '../components/placholder'
 
 import BipartiteGraph from '../bp'
 
-
+import ReactPageScroller from "react-page-scroller";
+import Page from "../components/page"
 
 const RD3Component = rd3.Component;
 
-const mock_data = [
-  {
-    source: "เชียงใหม่",
-    target: "บริษัท A",
-    value: 6631
-  },
-  {
-    source: "เชียงราย",
-    target: "หจก. B",
-    value: 1004
-  },
-  {
-    source: "ลำปาง",
-    target: "บริษัท A",
-    value: 512
-  },
-]
+const datasource = {
+  'north':[
+    {
+      source: "เชียงใหม่",
+      target: "บริษัท A",
+      value: 6631
+    },
+    {
+      source: "เชียงราย",
+      target: "หจก. B",
+      value: 1004
+    },
+    {
+      source: "ลำปาง",
+      target: "บริษัท A",
+      value: 512
+    },
+  ],
+  'east':[
+    {
+      source: "ระยอง",
+      target: "ระยองการช่าง",
+      value: 3000
+    },
+    {
+      source: "ตราด",
+      target: "ระยองการช่าง",
+      value: 1004
+    },
+    {
+      source: "ชลบุรี",
+      target: "หจก. ประธานพร",
+      value: 8800
+    },
+  ]
+}
 
 const IndexPage = () => {
   const [d3Dom, setd3Dom] = useState()
+  const [data, setData]= useState(datasource["north"])
+  const refPager = useRef()
 
   const padding = 10
-  const width = 800
-  const height = 410
+  const width = window.innerWidth * 0.55
+  const height = window.innerHeight * 0.5
 
   const layout = bipartite() 
     .width(width)
@@ -53,22 +69,48 @@ const IndexPage = () => {
     .target(d => d.target)
     .value(d => d.value)
 
-  const layoutData = layout(mock_data)
-  
   useEffect(() => {
+    const layoutData = layout(data)
     const something = BipartiteGraph({
       layoutData, width, height
     })
 
     setd3Dom(something)
-
-  }, []);
+    refPager.current.goToPage(0)
+  }, [data]);
 
   return (
     <Layout>
-      <h1>นิติบุคคลที่มีส่วนรวมในโครงการขององค์การปกครองส่วนท้องถิ่น</h1>
-      <Placeholder name="Filter: ภาคเหนือ ▼"/>
-      <RD3Component data={d3Dom}/>
+      <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
+        <h2>นิติบุคคลที่มีส่วนรวมในโครงการขององค์การปกครองส่วนท้องถิ่น</h2>
+        <select onChange={(e) => setData(datasource[e.target.value])}>
+          <option value="north">ภาคเหนือ</option>
+          <option value="east">ภาคตะวันออก</option>
+        </select>
+        <RD3Component data={d3Dom}/>
+      </div>
+
+      <div style={{background: "blue", width: "40%", marginLeft: "60%"}}>
+        <ReactPageScroller 
+          containerWidth={window.innerWidth * 0.4}
+          ref={refPager} 
+          // animationTimer={500}
+        >
+          <Page>
+            คำอธิบายสั้นๆ 
+          </Page>
+          <Page>
+            วิเคราะห์ 1
+          </Page>
+          <Page>
+            วิเคราะห์ 2
+          </Page>
+          <Page>
+            Credit(s)
+          </Page>
+        </ReactPageScroller>
+      </div>
+
     </Layout>
   )
 }

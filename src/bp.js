@@ -11,7 +11,6 @@ const BipartiteGraph = ({layoutData, width, height}) => {
     const svg = d3.select(node).append("svg")
         .attr("width", width + margin.left + margin.right + 20)
         .attr("height", height + margin.top + margin.bottom + 20)
-        .style("background", "#ddd")
 
     const { flows, sources, targets } = layoutData;
     const nodes = [].concat(sources, targets);
