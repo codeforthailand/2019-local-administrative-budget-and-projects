@@ -39,10 +39,24 @@ const BipartiteGraph = ({layoutData, width, height}) => {
         .enter().append('rect')
             .attr('x', d => d.x)
             .attr('y', d => d.y - nodeHeight/2)
-          .attr('height', nodeHeight)
+            .attr('height', nodeHeight)
             .attr('width', d => d.width)
             .attr('fill', 'steelblue')  
-            .attr('stroke', 'none');
+            .attr('stroke', 'none')
+            .on('mouseover', (d, i) => {
+                d3.selectAll("rect")
+                .transition()
+                .ease(d3.easeCubic)
+                .duration(500)
+                .attr("fill", "blue"); 
+            })
+            .on('mouseout', (d, i) => {
+                d3.selectAll("rect")
+                .transition()
+                .ease(d3.easeCubic)
+                .duration(500)
+                .attr("fill", "steelblue"); 
+            })
     
     // // source labels
     container.append('g')
