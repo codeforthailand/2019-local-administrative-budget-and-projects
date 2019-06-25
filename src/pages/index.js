@@ -62,6 +62,7 @@ const getWindowWidthHeight = () => {
 const IndexPage = () => {
   const [d3Dom, setd3Dom] = useState()
   const [data, setData]= useState(datasource["north"])
+  const [windowSize, setWindowSize] = useState({width: 0, height: 0})
   const refPager = useRef()
 
   const padding = 10
@@ -86,7 +87,12 @@ const IndexPage = () => {
     refPager.current.goToPage(0)
   }, [data]);
 
-  const wh = getWindowWidthHeight()
+  useEffect(() => {
+    const wh = getWindowWidthHeight()
+    console.log(wh)
+    setWindowSize(wh)
+  }, [])
+
 
   return (
     <Layout>
@@ -101,7 +107,7 @@ const IndexPage = () => {
 
       <div style={{background: "blue", width: "40%", marginLeft: "60%"}}>
         <ReactPageScroller 
-          containerWidth={wh.width * 0.4}
+          containerWidth={windowSize.width * 0.4}
           ref={refPager} 
           // animationTimer={500}
         >
