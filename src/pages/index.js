@@ -52,6 +52,13 @@ const datasource = {
   ]
 }
 
+const getWindowWidthHeight = () => {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight
+  }
+}
+
 const IndexPage = () => {
   const [d3Dom, setd3Dom] = useState()
   const [data, setData]= useState(datasource["north"])
@@ -79,6 +86,8 @@ const IndexPage = () => {
     refPager.current.goToPage(0)
   }, [data]);
 
+  const wh = getWindowWidthHeight()
+
   return (
     <Layout>
       <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
@@ -92,7 +101,7 @@ const IndexPage = () => {
 
       <div style={{background: "blue", width: "40%", marginLeft: "60%"}}>
         <ReactPageScroller 
-          containerWidth={window.innerWidth * 0.4}
+          containerWidth={wh.width * 0.4}
           ref={refPager} 
           // animationTimer={500}
         >
