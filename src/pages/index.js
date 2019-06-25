@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from "react"
-// import { Link } from "gatsby"
+import {window} from 'browser-monads'
 
 import Layout from "../components/layout"
 
