@@ -1,17 +1,15 @@
-import React, {useState, useEffect, useRef} from "react"
+import axios from "axios"
 import {window} from 'browser-monads'
 
-import Layout from "../components/layout"
-
+import React, {useState, useEffect, useRef} from "react"
 import rd3 from 'react-d3-library'
-
-import bipartite from '../bipartite'
-import Placeholder from '../components/placholder'
-
-import BipartiteGraph from '../bp'
-
 import ReactPageScroller from "react-page-scroller";
+
+import Layout from "../components/layout"
+import Placeholder from '../components/placholder'
 import Page from "../components/page"
+import bipartite from '../bipartite'
+import BipartiteGraph from '../bp'
 
 const RD3Component = rd3.Component;
 
@@ -59,9 +57,33 @@ const getWindowWidthHeight = () => {
   }
 }
 
+const availableSources = [
+  {
+    "value": "เทศบาลตำบลตาพระยา-สระแก้ว",
+    "name" : "เทศบาลตำบลตาพระยา-สระแก้ว"
+  },
+  {
+    "value": "องค์การบริหารส่วนตำบลท่างาม-ปราจีนบุรี",
+    "name" : "องค์การบริหารส่วนตำบลท่างาม-ปราจีนบุรี"
+  },
+  {
+    "value": "องค์การบริหารส่วนตำบลท่าตูม-ปราจีนบุรี",
+    "name" : "องค์การบริหารส่วนตำบลท่าตูม-ปราจีนบุรี"
+  },
+  {
+    "value": "chiangmai-top-20",
+    "name" : "โครงการก่อสร้างในเชียงใหม่ (5 นิติบุคคลที่ได้โครงการมากสุด)"
+  },
+  {
+    "value": "north-specific-vendor-budget-500k",
+    "name" : "โครงการในจังหวัดภาคเหนือที่จัดซื้อจัดจ้างเป็นเฉพาะเจาะจงและมูลค่ารวมมากกว่า 500k"
+  },
+]
+
 const IndexPage = () => {
   const [d3Dom, setd3Dom] = useState()
-  const [data, setData]= useState(datasource["north"])
+  const [data, setData]= useState([])
+  const [source, setSource] = useState(availableSources[0].value)
   const [windowSize, setWindowSize] = useState({width: 0, height: 0})
   const refPager = useRef()
 
@@ -88,8 +110,17 @@ const IndexPage = () => {
   }, [data]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const sourceUrl = "data/"+source+".json"
+      console.log(sourceUrl)
+      const result = await axios(sourceUrl)
+      setData(result.data)
+    };
+    fetchData();
+  }, [source])
+
+  useEffect(() => {
     const wh = getWindowWidthHeight()
-    console.log(wh)
     setWindowSize(wh)
   }, [])
 
@@ -98,9 +129,12 @@ const IndexPage = () => {
     <Layout>
       <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
         <h2>นิติบุคคลที่มีส่วนรวมในโครงการขององค์การปกครองส่วนท้องถิ่น</h2>
-        <select onChange={(e) => setData(datasource[e.target.value])}>
-          <option value="north">ภาคเหนือ</option>
-          <option value="east">ภาคตะวันออก</option>
+        <select onChange={(e) => setSource(e.target.value)}>
+          {
+            availableSources.map(({name, value}) => {
+              return <option key={value} value={value}>{name}</option>
+            })
+          }
         </select>
         <RD3Component data={d3Dom}/>
       </div>

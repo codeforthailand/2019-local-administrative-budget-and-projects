@@ -60,7 +60,6 @@ function scaleK(nodes, width, padding) {
 }
 
 function link(d, curvature) {
-  console.log(d)
    var y0 = d.start.y,
        y1 = d.end.y,
        yi = d3Interpolate.interpolateNumber(y0, y1),

@@ -75,13 +75,13 @@ const BipartiteGraph = ({layoutData, width, height}) => {
       .selectAll('text')
       .data(targets)
         .enter().append('text')
-                .attr('x', d => d.x + d.width/2)
-                .attr('y', d => d.y + 15)
+            .attr('x', d => d.x + d.width/2)
+            .attr('y', d => d.y + 15)
           .attr('font-family', 'arial')
           .attr('font-size', 10)
           .attr('alignment-baseline', 'middle')
           .attr('text-anchor', 'middle')
-          .text(d => d.key);
+          .text(d => d.key)
   
     return node;
 }
