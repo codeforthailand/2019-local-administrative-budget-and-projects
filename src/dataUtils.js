@@ -32,10 +32,13 @@ const generateBubbleData = ({numNodes}) => {
             return { size: Math.random() * 30000000 + 20000000}
         }))
 
-    return data.map(d => {
+    return data.map( (d, i) => {
         const size = d["size"] / 1e6
         return {
-            category: budget2category(size),
+            oneCategory: 0,
+            budgetCategory: budget2category(size),
+            regionCategory: i % 6,
+            totalProjectCategory: Math.ceil(i + Math.random()*2) % 4,
             size: size,
             ratio: Math.random()
         }
