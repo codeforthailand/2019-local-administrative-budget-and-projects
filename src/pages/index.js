@@ -12,6 +12,7 @@ import Page from "../components/page"
 
 import { navigate } from "gatsby"
 
+import globalStyles from "../styles/global.module.css"
 
 const RD3Component = rd3.Component;
 
@@ -97,8 +98,9 @@ const SecondPage = () => {
       </div>
       <div style={{
           marginTop: "10vh", position: "absolute", top: "0px",
-          display: currentPage < filterOptions.length ? "block" : "none"
-        }}>
+        }}
+        className={`${globalStyles.vizElement} ${currentPage < filterOptions.length? '': globalStyles.hide }`}
+        >
         <div style={{position: "absolute", margin: "20px 0px 0px 20px"}}>
           จำแนกตามนิติบุคคลที่เกี่ยวข้องตาม
           <select onChange={(e) => setCurrentCat(e.target.value)} value={currentCat}>
@@ -106,7 +108,7 @@ const SecondPage = () => {
               .map( c => <option key={c.key} value={c.key}>{c.desc}</option> )
             }
           </select>
-          Page {currentPage}
+          <span className={globalStyles.textRed}>Page {currentPage}</span>
         </div>
         <div style={{border: "1px solid #eee", float: "left", padding: "20px"}}>
           <RD3Component data={d3Dom.node}/>
