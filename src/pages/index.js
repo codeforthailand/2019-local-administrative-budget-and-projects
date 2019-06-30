@@ -1,37 +1,47 @@
 import React, {useState, useEffect, useRef} from "react"
 
+import { navigate } from "gatsby"
+import { useHotkeys } from 'react-hotkeys-hook';
+import ReactPageScroller from "react-page-scroller";
+import rd3 from 'react-d3-library'
+
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import CircleBlob from "../d3-components/circle-blob"
-import {generateBubbleData} from "../dataUtils"
-import { Link } from "gatsby"
-import ReactPageScroller from "react-page-scroller";
-
-import rd3 from 'react-d3-library'
+import {generateBubbleData, budget2category, projectCount2Cat} from "../dataUtils"
 import Page from "../components/page"
 
-import { navigate } from "gatsby"
-
 import globalStyles from "../styles/global.module.css"
+import {array2lookup} from "../utils"
+
+import axios from 'axios'
+import dataUtils from "../dataUtils"
+import {labelConstant} from "../constant"
 
 const RD3Component = rd3.Component;
+
+// const checkRegion = (r) => {
+//   return 
+// }
+const regionLookup = array2lookup(labelConstant.region)
+console.log(regionLookup)
 
 const filterOptions = [
   {
     desc: "ภาพรวมทั้งประเทศ",
-    key: "oneCategory"
+    key: "one"
   },
   {
     desc: "มูลค่าโครงการรวม",
-    key: "budgetCategory"
+    key: "budget"
   },
   {
     desc: "ภูมิภาคที่ได้รับโครงการส่วนใหญ่",
-    key: "regionCategory"
+    key: "region"
   },
   {
     desc: "จำนวนโครงการที่ได้",
-    key: "totalProjectCategory"
+    key: "totalProjects"
   }
 ]
 
@@ -41,36 +51,69 @@ const SecondPage = () => {
   const [currentCat, setCurrentCat] = useState(filterOptions[0].key)
   const [currentPage, setCurrentPage] = useState(0)
   const refPager = useRef()
+  const changePage = (d) => {
+    const newPage = currentPage + d
+    if( newPage >= 0 && currentPage < (filterOptions.length+1)){
+      setCurrentPage(newPage)
+    }
+
+  }
 
   useEffect(() => {
-    const data = generateBubbleData({numNodes: 100})
 
-    const obj = CircleBlob({data, navigate})
-    setd3Dom(obj)
-    window.doSimulate = obj.doSimulate
+    const fetchData = async () => {
+      const result = await axios("data.json")
+      const data = result.data.map( (d, i) => {
+        const budgetM = d['totalProjectBudget'] / 1e6
+        return {
+          ...d,
+          ratio: d['specificProjects'] / d['totalProjects'],
+          size: budgetM,
+          category: {
+            one: 0,
+            budget: budget2category(budgetM),
+            region: regionLookup[d['majorityRegion']],
+            totalProjects: projectCount2Cat(d['totalProjects'])
+          }
+        }
+      })
 
+      const obj = CircleBlob({data, navigate})
+      setd3Dom(obj)
+
+      return obj
+    };
+
+    const obj = fetchData();
     return obj.cleanUp
   }, [])
 
   useEffect(() => {
     if(d3Dom.node){
-      d3Dom.doSimulate({key: currentCat, restart: true})
+     d3Dom.doSimulate({key: currentCat, restart: true})
     }
 
-    refPager.current.goToPage(filterOptions.findIndex(s => s.key == currentCat))
+    refPager.current.goToPage(filterOptions.findIndex(s => s.key === currentCat))
   }, [d3Dom, currentCat])
 
   useEffect(() => {
     if(currentPage < filterOptions.length){
       setCurrentCat(filterOptions[currentPage].key)
-    }
+    } 
+
+    refPager.current.goToPage(currentPage)
   }, [currentPage])
+
+  useEffect(() => {
+    refPager.current.goToPage(filterOptions.findIndex(s => s.key == currentCat))
+  }, [currentCat])
 
   return (
     <Layout>
       <SEO title="Home"/>
       <div style={{position: "absolute", width: "100%", top: "0px"}}>
         <ReactPageScroller 
+          animationTimer={1000}
           containerWidth="100%"
           containerHeight="100vh"
           ref={refPager} 
@@ -78,7 +121,18 @@ const SecondPage = () => {
             setCurrentPage(e-1)
           }}
         >
-          <Page header="เปิดขุมทรัพย์">คำอธิบายทั่วไป​ (ทั้งประเทศ)</Page>
+          <Page header="เปิดขุมทรัพย์">
+            คำอธิบายทั่วไป​ (ทั้งประเทศ)
+            <div>🔴 คือนิติบุคคล</div>
+            <ul>
+              <li>
+                เฉดสีบอกถึงอัตราส่วนโครงการที่ได้ว่าเป็นแบบเฉพาะเจาะจงมากน้อยแค่ไหน อัตราส่วนสูงแดงมาก
+              </li>
+              <li>
+                ขนาดบอกมูลค่าโครงการรวม
+              </li>
+            </ul>
+          </Page>
           <Page>คำอธิบาย ของ {filterOptions[1].desc}</Page>
           <Page>คำอธิบาย ของ {filterOptions[2].desc}</Page>
           <Page>คำอธิบาย ของ {filterOptions[3].desc}</Page>
@@ -108,7 +162,6 @@ const SecondPage = () => {
               .map( c => <option key={c.key} value={c.key}>{c.desc}</option> )
             }
           </select>
-          <span className={globalStyles.textRed}>Page {currentPage}</span>
         </div>
         <div style={{border: "1px solid #eee", float: "left", padding: "20px"}}>
           <RD3Component data={d3Dom.node}/>

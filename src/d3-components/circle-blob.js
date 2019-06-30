@@ -17,13 +17,13 @@ const CircleBlob = ({data, navigate}) => {
 
     const width = 896, height = 600;
     const xCenter = {
-        oneCategory: [width*0.5],
-        budgetCategory: [width*0.8, width*0.6, width*0.35, width*0.1],
-        regionCategory: [
+        one: [width*0.5],
+        budget: [width*0.8, width*0.6, width*0.35, width*0.1],
+        region: [
             width*0.85, width*0.7, width*0.55,
             width*0.4, width*0.25, width*0.1,
         ],
-        totalProjectCategory: [width*0.8, width*0.6, width*0.35, width*0.1],
+        totalProjects: [width*0.8, width*0.6, width*0.35, width*0.1],
     }
 
     const svg = d3.select(node)
@@ -59,13 +59,14 @@ const CircleBlob = ({data, navigate}) => {
             d3.select("svg")
                 .selectAll("text.label")
                 .style("opacity", 0)
-
             simulation.alpha(0.8).restart()
         }
 
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(function (d) {
-                return xCenter[key][d[key]];
+                // console.log('xCenter')
+                // console.log(xCenter[key][d.category[key]])
+                return xCenter[key][d.category[key]];
             }))
             .force('collision', d3.forceCollide().radius(function (d) {
                 return d.radius;
@@ -81,11 +82,11 @@ const CircleBlob = ({data, navigate}) => {
                     .style('fill', d => d.fill)
                     .style('cursor', 'pointer')
                     .on("click", (d) => {
-                        navigate("/org")
+                        // navigate("/org")
                     })
                     .on("mouseover", (d) => {
                         d3.select("body").select("div.tooltip")
-                            .html("Company Name.")	
+                            .html(d.name)	
                             .style("z-index", 1000)
                             .style("left", (d3.event.pageX + 20) + "px")
                             .style("top", (d3.event.pageY - 28) + "px")
@@ -114,7 +115,13 @@ const CircleBlob = ({data, navigate}) => {
                         .style("text-anchor", "middle")
                         .merge(u)
                         .text( (d, i) => {
-                            return labelConstant[key][i] + `(${i})`
+                            if( key === "one" ){
+                                return ""
+                            }
+
+                            const count = nodes.filter(d => d.category[key] == i)
+                                .length
+                            return labelConstant[key][i] + `(${count})`
                         })
                         .attr("x", (d) => d)
                         .attr("y", height - 50)

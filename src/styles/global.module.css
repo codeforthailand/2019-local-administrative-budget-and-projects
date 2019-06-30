@@ -1,10 +1,10 @@
 .vizElement {
     opacity: 1;
 
-	transition-property: opacity;
-	transition-duration: .5s;
-	transition-delay: .1s;
-	transition-timing-function: ease-in-out;
+    transition-property: opacity;
+    transition-duration: .5s;
+    transition-delay: .1s;
+    transition-timing-function: ease-in-out;
 }
 
 .hide {

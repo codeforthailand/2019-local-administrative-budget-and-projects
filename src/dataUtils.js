@@ -3,7 +3,7 @@ import * as d3 from "d3"
 /*
 input: budget (in millions)
 */
-function budget2category(budget) {
+const budget2category = (budget) => {
     if (budget >= 100) {
         return 0
     } else if (budget >= 50 && budget < 100) {
@@ -14,6 +14,19 @@ function budget2category(budget) {
         return 3
     }
 }
+
+const projectCount2Cat = (c) => {
+    if(c >=20){
+        return 0
+    } else if (c >= 10 && c < 20) {
+        return 1
+    } else if (c >= 5 && c < 10) {
+        return 2
+    } else if (c >= 1 && c < 5) {
+        return 3
+    }
+}
+
 
 const generateBubbleData = ({numNodes}) => {
     console.log('generating bubble data')
@@ -46,4 +59,4 @@ const generateBubbleData = ({numNodes}) => {
 }
 
 
-export {generateBubbleData}
+export {generateBubbleData, budget2category, projectCount2Cat}
