@@ -24,13 +24,14 @@ const CircleBlob = ({data, navigate}) => {
             width*0.4, width*0.25, width*0.1,
         ],
         totalProjects: [width*0.8, width*0.6, width*0.35, width*0.1],
+        moral: [width*0.6, width*0.2],
     }
 
     const svg = d3.select(node)
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("border", "1px #eee dotted")
+        // .style("border", "1px #eee dotted")
 
     const g = svg.append("g")
 
@@ -51,6 +52,11 @@ const CircleBlob = ({data, navigate}) => {
         .style("padding", "10px")
 
     const simulation = d3.forceSimulation(nodes)
+    const cleanUp = () => {
+        console.log("on cleanup")
+        tooltip.remove()
+        simulation.stop()
+    }
 
     const catKey = Object.keys(xCenter)[0];
 
@@ -63,14 +69,8 @@ const CircleBlob = ({data, navigate}) => {
         }
 
         simulation.force('charge', d3.forceManyBody().strength(1.5))
-            .force('x', d3.forceX().x(function (d) {
-                // console.log('xCenter')
-                // console.log(xCenter[key][d.category[key]])
-                return xCenter[key][d.category[key]];
-            }))
-            .force('collision', d3.forceCollide().radius(function (d) {
-                return d.radius;
-            }))
+            .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
+            .force('collision', d3.forceCollide().radius(d => d.radius))
             .on('tick', () => {
                 const u = d3.select("svg").select("g") 
                     .selectAll('circle')
@@ -80,13 +80,20 @@ const CircleBlob = ({data, navigate}) => {
                     .append('circle')
                     .attr('r', (d) => d.radius)
                     .style('fill', d => d.fill)
+                    .style("pointer-events", "all")
                     .style('cursor', 'pointer')
-                    .on("click", (d) => {
-                        // navigate("/org")
+                    .on("click", (d) => { 
+                        cleanUp()
+                        navigate("/org")
                     })
                     .on("mouseover", (d) => {
                         d3.select("body").select("div.tooltip")
-                            .html(d.name)	
+                            .html(`
+                            ${d.name}<br/>
+                            ได้รับทั้งหมด ${d.totalProjects} โครงการ
+                            รวมมูลค่าทั้งสิ้น ฿${Math.round(d.size)}M
+                            `
+                            )	
                             .style("z-index", 1000)
                             .style("left", (d3.event.pageX + 20) + "px")
                             .style("top", (d3.event.pageY - 28) + "px")
@@ -113,21 +120,29 @@ const CircleBlob = ({data, navigate}) => {
                         .append("text")
                         .attr("class", "label")
                         .style("text-anchor", "middle")
+                        .style("font-size", 12)
                         .merge(u)
-                        .text( (d, i) => {
-                            if( key === "one" ){
-                                return ""
-                            }
-
-                            const count = nodes.filter(d => d.category[key] == i)
-                                .length
-                            return labelConstant[key][i] + `(${count})`
-                        })
                         .attr("x", (d) => d)
                         .attr("y", height - 50)
                         .style("cursor", "pointer")
                         .transition()
                         .style("opacity", 1)
+                        .text( (d, i) => {
+                            const currNodes = nodes.filter(d => d.category[key] == i)
+
+                            const count = currNodes.length
+                            const totalBudgets = Math.round(
+                                currNodes.map(d => d.totalProjectBudget)
+                                    .reduce((a, b) => a + b, 0) / 1e6
+                            )
+                            if( key === "one" ){
+                                return `มูลค่าโครงการรวม ฿${totalBudgets}M`
+                            } else if( key === "moral"){
+                                return labelConstant[key][i] 
+                                    + `(${count} นิติบุคคล, มูลค่าโครงการรวม ฿${totalBudgets}M)`
+                            }
+                            return labelConstant[key][i] + `(${count} นิติบุคคล)`
+                        })
 
                     u.exit().remove()
             });
@@ -135,12 +150,7 @@ const CircleBlob = ({data, navigate}) => {
 
    doSimulate({key: catKey, restart: false} )
 
-    const cleanUp = () => {
-        tooltip.remove()
-        simulation.stop()
-    }
-
-    return {node, cleanUp, doSimulate}
+   return {node, cleanUp, doSimulate}
 }
 
 export default CircleBlob

@@ -42,6 +42,10 @@ const filterOptions = [
   {
     desc: "จำนวนโครงการที่ได้",
     key: "totalProjects"
+  },
+  {
+    desc: "อัตราส่วนได้โครงการแบบเฉพาะเจาะจง",
+    key: "moral"
   }
 ]
 
@@ -65,15 +69,17 @@ const SecondPage = () => {
       const result = await axios("data.json")
       const data = result.data.map( (d, i) => {
         const budgetM = d['totalProjectBudget'] / 1e6
+        const ratio = d['specificProjects'] / d['totalProjects']
         return {
           ...d,
-          ratio: d['specificProjects'] / d['totalProjects'],
+          ratio: ratio,
           size: budgetM,
           category: {
             one: 0,
             budget: budget2category(budgetM),
             region: regionLookup[d['majorityRegion']],
-            totalProjects: projectCount2Cat(d['totalProjects'])
+            totalProjects: projectCount2Cat(d['totalProjects']),
+            moral: ratio > 0.3 ? 0 : 1
           }
         }
       })
@@ -85,7 +91,10 @@ const SecondPage = () => {
     };
 
     const obj = fetchData();
-    return obj.cleanUp
+    // return obj.cleanUp
+    return () => {
+      obj.then(d => d.cleanUp())
+    }
   }, [])
 
   useEffect(() => {
@@ -121,7 +130,10 @@ const SecondPage = () => {
             setCurrentPage(e-1)
           }}
         >
-          <Page header="เปิดขุมทรัพย์">
+          <Page header="เปิดขุมทรัพย์องค์การปกครองส่วนท้องถิ่น">
+            <div>
+              นิติบุคคล ที่ได้โครงการขององค์การปกครองส่วนท้องถิ่น มากกว่า ฿20M มี xxx จาก x,xxx
+            </div>
             คำอธิบายทั่วไป​ (ทั้งประเทศ)
             <div>🔴 คือนิติบุคคล</div>
             <ul>
@@ -136,6 +148,7 @@ const SecondPage = () => {
           <Page>คำอธิบาย ของ {filterOptions[1].desc}</Page>
           <Page>คำอธิบาย ของ {filterOptions[2].desc}</Page>
           <Page>คำอธิบาย ของ {filterOptions[3].desc}</Page>
+          <Page>คำอธิบาย ของ {filterOptions[4].desc}</Page>
           <div style={{ paddingTop: "20vh"}}>
             <div style={{
               height: "80vh",
@@ -152,10 +165,11 @@ const SecondPage = () => {
       </div>
       <div style={{
           marginTop: "10vh", position: "absolute", top: "0px",
+          pointerEvents: "none"
         }}
         className={`${globalStyles.vizElement} ${currentPage < filterOptions.length? '': globalStyles.hide }`}
         >
-        <div style={{position: "absolute", margin: "20px 0px 0px 20px"}}>
+        <div style={{position: "absolute", margin: "20px 0px 0px 20px", pointerEvents: "all"}}>
           จำแนกตามนิติบุคคลที่เกี่ยวข้องตาม
           <select onChange={(e) => setCurrentCat(e.target.value)} value={currentCat}>
             { filterOptions 
@@ -163,7 +177,10 @@ const SecondPage = () => {
             }
           </select>
         </div>
-        <div style={{border: "1px solid #eee", float: "left", padding: "20px"}}>
+        <div style={{
+            // border: "1px solid #eee",
+            float: "left", padding: "20px"
+          }}>
           <RD3Component data={d3Dom.node}/>
         </div>
       </div>
