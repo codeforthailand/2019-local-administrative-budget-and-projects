@@ -125,6 +125,7 @@ const OrgPage = () => {
 
           { orgProfile.projects &&  <span>
               ได้รับโครงการจากองค์การปกครองส่วนท้องถ่ินต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
+              {` `}ซึ่งมีมูลค่ารวมทั้งสิ้น ฿{topKProjects.map(p => p.sum_price_agree).reduce( (a,b) => a+b, 0)/1e6}M 
               โดยโครงการที่มีมูลค่าสูงสุด {topKProjects.length} อันดับแรก คือ 
               <ul>
                 {
