@@ -25,7 +25,8 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-hotkeys-hook": "^1.4.0",
-    "react-page-scroller": "^1.5.1"
+    "react-page-scroller": "^1.5.1",
+    "use-query-params": "^0.3.3"
   },
   "devDependencies": {
     "prettier": "^1.18.2"

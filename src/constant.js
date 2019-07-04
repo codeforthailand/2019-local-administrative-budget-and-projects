@@ -26,4 +26,8 @@ const labelConstant = {
     ]
 }
 
-export {labelConstant}
+const db = {
+    url: "data.json"
+}
+
+export {labelConstant, db}

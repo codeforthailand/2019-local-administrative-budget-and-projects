@@ -4,11 +4,14 @@ import {window} from 'browser-monads'
 import React, {useState, useEffect, useRef} from "react"
 import rd3 from 'react-d3-library'
 import ReactPageScroller from "react-page-scroller";
+import { useQueryParam, StringParam } from 'use-query-params';
 
 import Layout from "../components/layout"
 import Placeholder from '../components/placholder'
 import bipartite from '../bipartite'
 import BipartiteGraph from '../bp'
+
+import {db} from "../constant"
 
 import { Link } from "gatsby"
 const RD3Component = rd3.Component;
@@ -47,7 +50,39 @@ const datasource = {
       target: "หจก. ประธานพร",
       value: 8800
     },
-  ]
+  ],
+  'org':[
+    {
+      source: "e-bidding",
+      target: "เชียงใหม่",
+      value: 6631
+    },
+    {
+      source: "e-bidding",
+      target: "เชียงราย",
+      value: 1004
+    },
+    {
+      source: "เฉพาะเจาะจง",
+      target: "ลำปาง",
+      value: 512
+    },
+    {
+      source: "เฉพาะเจาะจง",
+      target: "ลำพูน",
+      value: 1024
+    },
+    {
+      source: "เฉพาะเจาะจง",
+      target: "พะเยา",
+      value: 423
+    },
+    {
+      source: "คัดเลือกพิเศษ",
+      target: "พะเยา",
+      value: 2400
+    },
+  ],
 }
 
 const getWindowWidthHeight = () => {
@@ -80,7 +115,10 @@ const availableSources = [
   },
 ]
 
-const IndexPage = () => {
+const OrgPage = () => {
+  const [tin, setTin] = useQueryParam('tin', StringParam);
+  const [orgProfile, setOrgProfile] = useState({})
+
   const [d3Dom, setd3Dom] = useState()
   const [data, setData]= useState([])
   const [source, setSource] = useState(availableSources[0].value)
@@ -109,10 +147,38 @@ const IndexPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const sourceUrl = "data/"+source+".json"
-      console.log(sourceUrl)
-      const result = await axios(sourceUrl)
-      setData(result.data)
+      const result = await axios(db.url)
+      
+      const org = result.data
+        .filter(o => o.tin === tin)[0]
+
+
+      console.log(org)
+
+      const dd = {}
+
+      org.projects
+        .forEach(p => {
+          const k = `${p.purchase_method_name}::${p.province}`
+          if (k in dd) {
+            dd[k] += p.sum_price_agree / 1e6
+          } else {
+            dd[k] = p.sum_price_agree / 1e6
+          }
+        });
+
+      const connections = Object.keys(dd).map( k => {
+        const slugs = k.split("::")
+        return {
+            source: slugs[0],
+            target: slugs[1],
+            value: dd[k]
+        }
+      })
+
+      setData(connections)
+      setOrgProfile(org)
+
     };
     fetchData();
   }, [source])
@@ -133,10 +199,13 @@ const IndexPage = () => {
       </div>
 
       <div style={{border: "1px solid #ddd", width: "40%", marginLeft: "60%"}}>
-        <h2>บ.​ อะไรดี</h2>
+        <h2>{orgProfile.name}</h2>
 
-        ได้รับโครงการรัฤทั้งสิ้น ... โครงการก
-        โดยโครงการที่มีมูลค่าสูงสุด 5 อันดับแรกคือ 
+        { orgProfile.projects &&  <span>
+             ได้รับโครงการรัฤทั้งสิ้น {orgProfile.projects.length} โครงการ
+        </span>
+        }
+        {/* โดยโครงการที่มีมูลค่าสูงสุด 5 อันดับแรกคือ 
         <p>
         1.
         2.
@@ -145,11 +214,12 @@ const IndexPage = () => {
         5
         </p>
 
-        เกี่ยวข้องกับ นาย ...
+        เกี่ยวข้องกับ นาย ... */}
+        <a href={`https://datawarehouse.dbd.go.th/company/profile/3/${orgProfile.tin}`} target="_blank">ข้อมูลเพิ่มเติมจาก DBD</a>
       </div>
 
     </Layout>
   )
 }
 
-export default IndexPage
+export default OrgPage

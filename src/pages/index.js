@@ -8,23 +8,18 @@ import rd3 from 'react-d3-library'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import CircleBlob from "../d3-components/circle-blob"
-import {generateBubbleData, budget2category, projectCount2Cat} from "../dataUtils"
+import {budget2category, projectCount2Cat} from "../dataUtils"
 import Page from "../components/page"
 
 import globalStyles from "../styles/global.module.css"
 import {array2lookup} from "../utils"
 
 import axios from 'axios'
-import dataUtils from "../dataUtils"
-import {labelConstant} from "../constant"
+import {labelConstant, db} from "../constant"
 
 const RD3Component = rd3.Component;
 
-// const checkRegion = (r) => {
-//   return 
-// }
 const regionLookup = array2lookup(labelConstant.region)
-console.log(regionLookup)
 
 const filterOptions = [
   {
@@ -66,7 +61,7 @@ const SecondPage = () => {
   useEffect(() => {
 
     const fetchData = async () => {
-      const result = await axios("data.json")
+      const result = await axios(db.url)
       const data = result.data.map( (d, i) => {
         const budgetM = d['totalProjectBudget'] / 1e6
         const ratio = d['specificProjects'] / d['totalProjects']
@@ -91,7 +86,6 @@ const SecondPage = () => {
     };
 
     const obj = fetchData();
-    // return obj.cleanUp
     return () => {
       obj.then(d => d.cleanUp())
     }

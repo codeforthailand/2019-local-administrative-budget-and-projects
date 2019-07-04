@@ -31,9 +31,8 @@ const CircleBlob = ({data, navigate}) => {
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        // .style("border", "1px #eee dotted")
 
-    const g = svg.append("g")
+    const g = svg.append("g").attr("class", "main-panel")
 
     const nodes = data.map( (d, i) => {
         return {
@@ -53,7 +52,6 @@ const CircleBlob = ({data, navigate}) => {
 
     const simulation = d3.forceSimulation(nodes)
     const cleanUp = () => {
-        console.log("on cleanup")
         tooltip.remove()
         simulation.stop()
     }
@@ -82,9 +80,9 @@ const CircleBlob = ({data, navigate}) => {
                     .style('fill', d => d.fill)
                     .style("pointer-events", "all")
                     .style('cursor', 'pointer')
-                    .on("click", (d) => { 
+                    .on("click", d => { 
                         cleanUp()
-                        navigate("/org")
+                        navigate(`/org?tin=${d.tin}`)
                     })
                     .on("mouseover", (d) => {
                         d3.select("body").select("div.tooltip")
@@ -99,11 +97,13 @@ const CircleBlob = ({data, navigate}) => {
                             .style("top", (d3.event.pageY - 28) + "px")
                             .transition()
                             .style("opacity", 0.8)
+                            .style("display", "block")
                     })
                     .on("mouseleave", () => {
                         d3.select("body").select("div.tooltip")
                             .transition()
                             .style("opacity", 0)
+                            .style("display", "none")
                     })
                     .merge(u)
                     .attr('cx', d => d.x)
@@ -111,7 +111,8 @@ const CircleBlob = ({data, navigate}) => {
 
                 u.exit().remove();
             })
-            .on("end", () => {
+            // .on("end", () => {
+            // });
                 const u = d3.select("svg")
                     .selectAll("text.label")
                     .data(xCenter[key], d => d)
@@ -125,8 +126,6 @@ const CircleBlob = ({data, navigate}) => {
                         .attr("x", (d) => d)
                         .attr("y", height - 50)
                         .style("cursor", "pointer")
-                        .transition()
-                        .style("opacity", 1)
                         .text( (d, i) => {
                             const currNodes = nodes.filter(d => d.category[key] == i)
 
@@ -145,7 +144,6 @@ const CircleBlob = ({data, navigate}) => {
                         })
 
                     u.exit().remove()
-            });
     }
 
    doSimulate({key: catKey, restart: false} )
