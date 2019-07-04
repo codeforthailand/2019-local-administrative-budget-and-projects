@@ -66,7 +66,6 @@ const OrgPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(db.url)
-      console.log(result.data)
       
       const org = result.data
         .filter(o => o.tin === tin)[0]
@@ -100,9 +99,6 @@ const OrgPage = () => {
         .slice()
         .sort( (a, b) => b.sum_price_agree - a.sum_price_agree)
         .slice(0, k)
-
-
-      console.log(topProjects)
 
       setTopKProjects(topProjects)
 
