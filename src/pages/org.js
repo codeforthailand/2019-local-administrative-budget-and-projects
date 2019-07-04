@@ -38,11 +38,12 @@ const OrgPage = () => {
 
   const [d3Dom, setd3Dom] = useState()
   const [data, setData]= useState([])
+  const [topKProjects, setTopKProjects]= useState([])
 
   const padding = 10
 
   const windowWidthHeight = getWindowWidthHeight()
-  const width =  windowWidthHeight.width * 0.4
+  const width =  windowWidthHeight.width * 0.3
   const height = windowWidthHeight.height * 0.5
 
   const layout = bipartite() 
@@ -94,39 +95,59 @@ const OrgPage = () => {
       setData(connections)
       setOrgProfile(org)
 
+      const k = Math.min(5, org.projects.length)
+      const topProjects = org.projects
+        .slice()
+        .sort( (a, b) => b.sum_price_agree - a.sum_price_agree)
+        .slice(0, k)
+
+
+      console.log(topProjects)
+
+      setTopKProjects(topProjects)
+
     };
     fetchData();
   }, [])
 
   return (
     <Layout>
-      <div>
-        <Link to="/">Back to Main</Link> หรือ <Placeholder name="ค้นหา นิติบุคลลอื่นๆ"/>
+      <div style={{padding: "20px"}}>
+        <div>
+          <Link to="/">กลับไปหน้าแรก</Link> หรือ <Placeholder name="🔍 ค้นหา นิติบุคลลอื่นๆ"/>
+        </div>
+        <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
+          <RD3Component data={d3Dom}/>
+        </div>
+
+        <div style={{width: "40%", marginLeft: "60%"}}>
+          <h2>{orgProfile.name}</h2>
+
+          { orgProfile.projects &&  <span>
+              ได้รับโครงการจากองค์การปกครองส่วนท้องถ่ินต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
+              โดยโครงการที่มีมูลค่าสูงสุด {topKProjects.length} อันดับแรก คือ 
+              <ul>
+                {
+                  topKProjects.map(p => {
+                    return <li key={`${p.sum_price_agree}-${p.province}`}>
+                      <b>ชื่อโครงการ </b>(มูลค่า ฿{p.sum_price_agree/1e6}M)<br/>
+                      กับ อบต..., {p.province} {` `}
+                      โดยรูปแบบ {p.purchase_method_name}
+                      </li>
+                  })
+                }
+              </ul> 
+          </span>
+          }
+
+          <a href={`https://datawarehouse.dbd.go.th/company/profile/3/${orgProfile.tin}`} target="_blank">
+            ดูข้อมูลเพิ่มเติมของนิติบุคคลนี้จากกรมการค้าภายใน
+          </a> <br/>
+          <a href={`#`} target="_blank"> 
+            ดูโครงการทั้งหมดจาก ภาษีไปไหน?
+          </a>
+        </div> 
       </div>
-      <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
-        <RD3Component data={d3Dom}/>
-      </div>
-
-      <div style={{border: "1px solid #ddd", width: "40%", marginLeft: "60%"}}>
-        <h2>{orgProfile.name}</h2>
-
-        { orgProfile.projects &&  <span>
-             ได้รับโครงการรัฤทั้งสิ้น {orgProfile.projects.length} โครงการ
-        </span>
-        }
-        {/* โดยโครงการที่มีมูลค่าสูงสุด 5 อันดับแรกคือ 
-        <p>
-        1.
-        2.
-        3.
-        4.
-        5
-        </p>
-
-        เกี่ยวข้องกับ นาย ... */}
-        <a href={`https://datawarehouse.dbd.go.th/company/profile/3/${orgProfile.tin}`} target="_blank">ข้อมูลเพิ่มเติมจาก DBD</a>
-      </div>
-
     </Layout>
   )
 }
