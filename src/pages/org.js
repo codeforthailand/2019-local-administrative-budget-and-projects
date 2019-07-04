@@ -145,8 +145,8 @@ const OrgPage = () => {
   const padding = 10
 
   const windowWidthHeight = getWindowWidthHeight()
-  const width =  windowWidthHeight.innerWidth * 0.55
-  const height = windowWidthHeight.innerHeight * 0.5
+  const width =  windowWidthHeight.width * 0.55
+  const height = windowWidthHeight.height * 0.5
 
   const layout = bipartite() 
     .width(width)
