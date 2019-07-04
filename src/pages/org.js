@@ -6,83 +6,15 @@ import rd3 from 'react-d3-library'
 import { useQueryParam, StringParam } from 'use-query-params';
 
 import Layout from "../components/layout"
-import Placeholder from '../components/placholder'
-import bipartite from '../bipartite'
-import BipartiteGraph from '../bp'
+import Placeholder from "../components/placholder"
+import bipartite from "d3-bipartite"
+import BipartiteGraph from "../d3-components/bipartite"
 
 import {db} from "../constant"
+import { default as utils } from "../utils"
 
 import { Link } from "gatsby"
 const RD3Component = rd3.Component;
-
-const datasource = {
-  'north':[
-    {
-      source: "เชียงใหม่",
-      target: "บริษัท A",
-      value: 6631
-    },
-    {
-      source: "เชียงราย",
-      target: "หจก. B",
-      value: 1004
-    },
-    {
-      source: "ลำปาง",
-      target: "บริษัท A",
-      value: 512
-    },
-  ],
-  'east':[
-    {
-      source: "ระยอง",
-      target: "ระยองการช่าง",
-      value: 3000
-    },
-    {
-      source: "ตราด",
-      target: "ระยองการช่าง",
-      value: 1004
-    },
-    {
-      source: "ชลบุรี",
-      target: "หจก. ประธานพร",
-      value: 8800
-    },
-  ],
-  'org':[
-    {
-      source: "e-bidding",
-      target: "เชียงใหม่",
-      value: 6631
-    },
-    {
-      source: "e-bidding",
-      target: "เชียงราย",
-      value: 1004
-    },
-    {
-      source: "เฉพาะเจาะจง",
-      target: "ลำปาง",
-      value: 512
-    },
-    {
-      source: "เฉพาะเจาะจง",
-      target: "ลำพูน",
-      value: 1024
-    },
-    {
-      source: "เฉพาะเจาะจง",
-      target: "พะเยา",
-      value: 423
-    },
-    {
-      source: "คัดเลือกพิเศษ",
-      target: "พะเยา",
-      value: 2400
-    },
-  ],
-}
 
 const getWindowWidthHeight = () => {
   if(typeof window !== 'undefined' && window) {
@@ -98,54 +30,19 @@ const getWindowWidthHeight = () => {
   }
 }
 
-const availableSources = [
-  {
-    "value": "เทศบาลตำบลตาพระยา-สระแก้ว",
-    "name" : "เทศบาลตำบลตาพระยา-สระแก้ว"
-  },
-  {
-    "value": "องค์การบริหารส่วนตำบลท่างาม-ปราจีนบุรี",
-    "name" : "องค์การบริหารส่วนตำบลท่างาม-ปราจีนบุรี"
-  },
-  {
-    "value": "องค์การบริหารส่วนตำบลท่าตูม-ปราจีนบุรี",
-    "name" : "องค์การบริหารส่วนตำบลท่าตูม-ปราจีนบุรี"
-  },
-  {
-    "value": "chiangmai-top-20",
-    "name" : "โครงการก่อสร้างในเชียงใหม่ (5 นิติบุคคลที่ได้โครงการมากสุด)"
-  },
-  {
-    "value": "north-specific-vendor-budget-500k",
-    "name" : "โครงการในจังหวัดภาคเหนือที่จัดซื้อจัดจ้างเป็นเฉพาะเจาะจงและมูลค่ารวมมากกว่า 500k"
-  },
-]
-
-const defaultLocationSearch = () => {
-  if(typeof window !== 'undefined' && window) {
-    console.log("window exists")
-    return "" // useQueryParam will parse query params automatically
-  } else {
-    console.log("defaultLocation:dumy")
-    return "?dummy-param"
-  }
-}
-
 const OrgPage = () => {
   const [tin, setTin] = useQueryParam(
-    'tin', StringParam, defaultLocationSearch()
+    'tin', StringParam, utils.defaultLocationSearch()
   );
   const [orgProfile, setOrgProfile] = useState({})
 
   const [d3Dom, setd3Dom] = useState()
   const [data, setData]= useState([])
-  const [source, setSource] = useState(availableSources[0].value)
-  const [windowSize, setWindowSize] = useState({width: 0, height: 0})
 
   const padding = 10
 
   const windowWidthHeight = getWindowWidthHeight()
-  const width =  windowWidthHeight.width * 0.55
+  const width =  windowWidthHeight.width * 0.4
   const height = windowWidthHeight.height * 0.5
 
   const layout = bipartite() 
@@ -168,12 +65,10 @@ const OrgPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(db.url)
+      console.log(result.data)
       
       const org = result.data
         .filter(o => o.tin === tin)[0]
-
-
-      console.log(org)
 
       const dd = {}
 
@@ -201,13 +96,7 @@ const OrgPage = () => {
 
     };
     fetchData();
-  }, [source])
-
-  useEffect(() => {
-    const wh = getWindowWidthHeight()
-    setWindowSize(wh)
   }, [])
-
 
   return (
     <Layout>

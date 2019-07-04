@@ -27,7 +27,7 @@ const labelConstant = {
 }
 
 const db = {
-    url: "data.json"
+    url: "/data.json"
 }
 
 export {labelConstant, db}

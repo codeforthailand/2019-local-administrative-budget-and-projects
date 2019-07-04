@@ -12,14 +12,15 @@ import {budget2category, projectCount2Cat} from "../dataUtils"
 import Page from "../components/page"
 
 import globalStyles from "../styles/global.module.css"
-import {array2lookup} from "../utils"
+
+import { default as utils } from "../utils"
 
 import axios from 'axios'
 import {labelConstant, db} from "../constant"
 
 const RD3Component = rd3.Component;
 
-const regionLookup = array2lookup(labelConstant.region)
+const regionLookup = utils.array2lookup(labelConstant.region)
 
 const filterOptions = [
   {
@@ -50,6 +51,7 @@ const IndexPage = () => {
   const [currentCat, setCurrentCat] = useState(filterOptions[0].key)
   const [currentPage, setCurrentPage] = useState(0)
   const refPager = useRef()
+
   const changePage = (d) => {
     const newPage = currentPage + d
     if( newPage >= 0 && currentPage < (filterOptions.length+1)){
