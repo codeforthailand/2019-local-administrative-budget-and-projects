@@ -1,9 +1,8 @@
 import axios from "axios"
-import {window} from 'browser-monads'
 
 import React, {useState, useEffect, useRef} from "react"
 import rd3 from 'react-d3-library'
-import ReactPageScroller from "react-page-scroller";
+
 import { useQueryParam, StringParam } from 'use-query-params';
 
 import Layout from "../components/layout"
@@ -86,9 +85,16 @@ const datasource = {
 }
 
 const getWindowWidthHeight = () => {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight
+  if(typeof window !== 'undefined' && window) {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+  } else {
+    return {
+      width: 0,
+      height: 0
+    }
   }
 }
 
@@ -115,8 +121,20 @@ const availableSources = [
   },
 ]
 
+const defaultLocationSearch = () => {
+  if(typeof window !== 'undefined' && window) {
+    console.log("window exists")
+    return "" // useQueryParam will parse query params automatically
+  } else {
+    console.log("defaultLocation:dumy")
+    return "?dummy-param"
+  }
+}
+
 const OrgPage = () => {
-  const [tin, setTin] = useQueryParam('tin', StringParam);
+  const [tin, setTin] = useQueryParam(
+    'tin', StringParam, defaultLocationSearch()
+  );
   const [orgProfile, setOrgProfile] = useState({})
 
   const [d3Dom, setd3Dom] = useState()
@@ -125,8 +143,10 @@ const OrgPage = () => {
   const [windowSize, setWindowSize] = useState({width: 0, height: 0})
 
   const padding = 10
-  const width = window.innerWidth * 0.55
-  const height = window.innerHeight * 0.5
+
+  const windowWidthHeight = getWindowWidthHeight()
+  const width =  windowWidthHeight.innerWidth * 0.55
+  const height = windowWidthHeight.innerHeight * 0.5
 
   const layout = bipartite() 
     .width(width)

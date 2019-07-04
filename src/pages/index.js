@@ -44,7 +44,7 @@ const filterOptions = [
   }
 ]
 
-const SecondPage = () => {
+const IndexPage = () => {
 
   const [d3Dom, setd3Dom] = useState({node: "", simulation: ""})
   const [currentCat, setCurrentCat] = useState(filterOptions[0].key)
@@ -55,7 +55,6 @@ const SecondPage = () => {
     if( newPage >= 0 && currentPage < (filterOptions.length+1)){
       setCurrentPage(newPage)
     }
-
   }
 
   useEffect(() => {
@@ -183,4 +182,4 @@ const SecondPage = () => {
 
 }
 
-export default SecondPage
+export default IndexPage
