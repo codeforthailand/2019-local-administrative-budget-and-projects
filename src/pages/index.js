@@ -10,13 +10,14 @@ import SEO from "../components/seo"
 import CircleBlob from "../d3-components/circle-blob"
 import {budget2category, projectCount2Cat} from "../dataUtils"
 import Page from "../components/page"
+import CreditPage from "../pages/credit"
 
 import globalStyles from "../styles/global.module.css"
 
 import { default as utils } from "../utils"
 
 import axios from 'axios'
-import {labelConstant, db} from "../constant"
+import {labelConstant, db, globalConfig} from "../constant"
 
 const RD3Component = rd3.Component;
 
@@ -28,21 +29,13 @@ const filterOptions = [
     key: "one"
   },
   {
-    desc: "มูลค่าโครงการรวม",
-    key: "budget"
-  },
-  {
     desc: "ภูมิภาคที่ได้รับโครงการส่วนใหญ่",
     key: "region"
   },
   {
-    desc: "จำนวนโครงการที่ได้",
+    desc: "ตามสัดส่วนประเภทการจัดซื้อจัดจ้าง",
     key: "totalProjects"
   },
-  {
-    desc: "อัตราส่วนได้โครงการแบบเฉพาะเจาะจง",
-    key: "moral"
-  }
 ]
 
 const IndexPage = () => {
@@ -59,8 +52,9 @@ const IndexPage = () => {
     }
   }
 
-  useEffect(() => {
+  const currentViz = () => globalConfig.vizAtPage[currentPage]
 
+  useEffect(() => {
     const fetchData = async () => {
       const result = await axios(db.url)
       const data = result.data.map( (d, i) => {
@@ -93,24 +87,12 @@ const IndexPage = () => {
   }, [])
 
   useEffect(() => {
-    if(d3Dom.node){
-     d3Dom.doSimulate({key: currentCat, restart: true})
+    if(d3Dom.node && currentViz() === "circleBlob"){
+      const relIx = currentPage - globalConfig.mainVizPageNo
+      d3Dom.doSimulate({key: filterOptions[relIx].key, restart: true})
     }
 
-    refPager.current.goToPage(filterOptions.findIndex(s => s.key === currentCat))
-  }, [d3Dom, currentCat])
-
-  useEffect(() => {
-    if(currentPage < filterOptions.length){
-      setCurrentCat(filterOptions[currentPage].key)
-    } 
-
-    refPager.current.goToPage(currentPage)
-  }, [currentPage])
-
-  useEffect(() => {
-    refPager.current.goToPage(filterOptions.findIndex(s => s.key == currentCat))
-  }, [currentCat])
+  }, [d3Dom, currentPage])
 
   return (
     <Layout>
@@ -125,7 +107,12 @@ const IndexPage = () => {
             setCurrentPage(e-1)
           }}
         >
-          <Page header="เปิดขุมทรัพย์องค์การปกครองส่วนท้องถิ่น">
+          <Page header="หน้าแรก (1)"></Page>
+          <Page header="ประเภทการจัดซื้อจัดจ้าง (2)"></Page>
+          <Page header="ประเภทการจัดซื้อจัดจ้าง (2.1)">เน้น เฉพาะเจาะจง</Page>
+          <Page header="สัดส่วนการใช้งบของอปท. (3)"></Page>
+          <Page header="สัดส่วนการใช้งบของอปท. (3.1)">เน้น โครงการสร้างถนน</Page>
+          <Page header="เปิดขุมทรัพย์องค์การปกครองส่วนท้องถิ่น (4)">
             <div>
               นิติบุคคล ที่ได้โครงการขององค์การปกครองส่วนท้องถิ่น มากกว่า ฿20M มี xxx จาก x,xxx
             </div>
@@ -142,43 +129,30 @@ const IndexPage = () => {
           </Page>
           <Page>คำอธิบาย ของ {filterOptions[1].desc}</Page>
           <Page>คำอธิบาย ของ {filterOptions[2].desc}</Page>
-          <Page>คำอธิบาย ของ {filterOptions[3].desc}</Page>
-          <Page>คำอธิบาย ของ {filterOptions[4].desc}</Page>
-          <div style={{ paddingTop: "20vh"}}>
-            <div style={{
-              height: "80vh",
-              paddingLeft: "10%", paddingTop: "10%",
-              background: "black", color: "white"
-            }}>
-              <b>โครงการนี้เป็นส่วนหนึ่งของ .... </b> <br/>
-              <b>คณะผู้จัดทำ</b> ชื่อ นามสกุล (หน้าที่) <br/>
-              <b>พาร์ทเนอร์</b> <br/>
-              <b>ขอบคุณข้อมูลจาก ...</b> <br/>
-            </div>
-          </div>
+          <CreditPage/>
         </ReactPageScroller>
       </div>
-      <div style={{
-          marginTop: "10vh", position: "absolute", top: "0px",
-          pointerEvents: "none"
-        }}
-        className={`${globalStyles.vizElement} ${currentPage < filterOptions.length? '': globalStyles.hide }`}
-        >
-        <div style={{position: "absolute", margin: "20px 0px 0px 20px", pointerEvents: "all"}}>
-          จำแนกตามนิติบุคคลที่เกี่ยวข้องตาม
-          <select onChange={(e) => setCurrentCat(e.target.value)} value={currentCat}>
-            { filterOptions 
-              .map( c => <option key={c.key} value={c.key}>{c.desc}</option> )
-            }
-          </select>
-        </div>
         <div style={{
-            // border: "1px solid #eee",
-            float: "left", padding: "20px"
-          }}>
-          <RD3Component data={d3Dom.node}/>
+            marginTop: "10vh", position: "absolute", top: "0px",
+            pointerEvents: "none",
+            display: `${currentViz() === "circleBlob" ? "block": "none"}`
+          }}
+          className={`${globalStyles.vizElement} ${currentPage - globalConfig.mainVizPageNo < filterOptions.length ? '': globalStyles.hide }`}
+          >
+          <div style={{position: "absolute", margin: "20px 0px 0px 20px", pointerEvents: "all"}}>
+            จำแนกตามนิติบุคคลที่เกี่ยวข้องตาม
+            <select onChange={(e) => setCurrentCat(e.target.value)} value={currentCat}>
+              { filterOptions 
+                .map( c => <option key={c.key} value={c.key}>{c.desc}</option> )
+              }
+            </select>
+          </div>
+          <div style={{
+              float: "left", padding: "20px"
+            }}>
+            <RD3Component data={d3Dom.node}/>
+          </div>
         </div>
-      </div>
     </Layout>
   )
 

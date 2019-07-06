@@ -30,4 +30,19 @@ const db = {
     url: "/data.json"
 }
 
-export {labelConstant, db}
+const globalConfig = {
+    mainVizPageNo: 5,
+    vizAtPage: [
+        "none",
+        "none",
+        "none",
+        "none",
+        "none",
+        "circleBlob",
+        "circleBlob",
+        "circleBlob",
+        "none",
+    ],
+}
+
+export {labelConstant, db, globalConfig}

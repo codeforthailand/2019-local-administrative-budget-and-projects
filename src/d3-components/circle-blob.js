@@ -18,13 +18,11 @@ const CircleBlob = ({data, navigate}) => {
     const width = 896, height = 600;
     const xCenter = {
         one: [width*0.5],
-        budget: [width*0.8, width*0.6, width*0.35, width*0.1],
         region: [
             width*0.85, width*0.7, width*0.55,
             width*0.4, width*0.25, width*0.1,
         ],
         totalProjects: [width*0.8, width*0.6, width*0.35, width*0.1],
-        moral: [width*0.6, width*0.2],
     }
 
     const svg = d3.select(node)
@@ -58,6 +56,8 @@ const CircleBlob = ({data, navigate}) => {
 
     const catKey = Object.keys(xCenter)[0];
 
+    var alreadySimulated = false
+
     const doSimulate = ({key, restart}) => {
         if(restart){
             d3.select("svg")
@@ -65,6 +65,8 @@ const CircleBlob = ({data, navigate}) => {
                 .style("opacity", 0)
             simulation.alpha(0.8).restart()
         }
+
+        console.log(">>>>>>>>>>>> ",key)
 
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
