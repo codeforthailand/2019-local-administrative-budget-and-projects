@@ -57,13 +57,30 @@ const CircleBlob = ({data, navigate}) => {
 
 
     const findColor = (highlightKey, d) => {
-        console.log(highlightKey)
         const selectedProjects = d.projects.filter(
             p => p.purchase_method_name === highlightKey
         )
 
-        console.log(selectedProjects.length / d.projects.length)
         return colorScaler(selectedProjects.length / d.projects.length)
+    }
+
+    const setLabels = (key) => {
+        const u = d3.select("svg")
+            .selectAll("text.label")
+            .data(xCenter[key], d => d)
+
+            u.enter()
+                .append("text")
+                .attr("class", "label")
+                .style("text-anchor", "middle")
+                .style("font-size", 12)
+                .merge(u)
+                .attr("x", (d) => d)
+                .attr("y", height - 100)
+                .style("cursor", "pointer")
+                .text((_, i) => labelConstant[key][i])
+
+            u.exit().remove()
     }
     
 
@@ -119,51 +136,20 @@ const CircleBlob = ({data, navigate}) => {
                 u.exit().remove();
             })
 
-            const u = d3.select("svg")
-                .selectAll("text.label")
-                .data(xCenter[key], d => d)
-
-                u.enter()
-                    .append("text")
-                    .attr("class", "label")
-                    .style("text-anchor", "middle")
-                    .style("font-size", 12)
-                    .merge(u)
-                    .attr("x", (d) => d)
-                    .attr("y", height - 100)
-                    .style("cursor", "pointer")
-                    .text( (d, i) => {
-                        const currNodes = nodes.filter(d => d.category[key] == i)
-
-                        const count = currNodes.length
-                        const totalBudgets = Math.round(
-                            currNodes.map(d => d.totalProjectBudget)
-                                .reduce((a, b) => a + b, 0) / 1e6
-                        )
-                        if( key === "one" ){
-                            return `มูลค่าโครงการรวม ฿${totalBudgets}M`
-                        } else if( key === "moral"){
-                            return labelConstant[key][i] 
-                                + `(${count} นิติบุคคล, มูลค่าโครงการรวม ฿${totalBudgets}M)`
-                        }
-                        return labelConstant[key][i] + `(${count} นิติบุคคล)`
-                    })
-
-                u.exit().remove()
+            setLabels(key)
     }
 
     doSimulate({
         key: catKey,
-        krestart: false,
-        highlightKey: globalConfig.purchaseMethods[0]
     })
 
-    const setCircleHighlight = (highlightKey) => {
-        console.log(highlightKey)
-        d3.select("svg")
+    const setCircleHighlight = (key, highlightKey) => {
+        const u = d3
             .selectAll("circle.org")
             .transition()
             .attr("fill", d => findColor(highlightKey, d))
+
+        setLabels(key)
     }
 
    return {node, cleanUp, doSimulate, setCircleHighlight}

@@ -74,8 +74,6 @@ const IndexPage = () => {
         }
       })
 
-      console.log(data)
-
       const obj = CircleBlob({data, navigate})
       setd3Dom(obj)
 
@@ -102,7 +100,8 @@ const IndexPage = () => {
 
   useEffect(() => {
     if(d3Dom.node){
-      d3Dom.setCircleHighlight(highlightCategory)
+      const relIx = currentPage - globalConfig.mainVizPageNo
+      d3Dom.setCircleHighlight(filterOptions[relIx].key, highlightCategory)
     }
   }, [highlightCategory])
 

@@ -1,5 +1,5 @@
 const labelConstant = {
-    one: [""],
+    one: ["ภาพรวมทั้งประเทศ"],
     budget: [
         "฿200M ขึ้นไป",
         "฿100M-200M",
