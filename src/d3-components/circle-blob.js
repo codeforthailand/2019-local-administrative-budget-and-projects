@@ -1,5 +1,5 @@
 import * as d3 from "d3"
-import {labelConstant} from "../constant"
+import {labelConstant, globalConfig} from "../constant"
 
 const CircleBlob = ({data, navigate}) => {
     const maxSize = d3.max(data, d => d.size)
@@ -36,7 +36,6 @@ const CircleBlob = ({data, navigate}) => {
         return {
             ...d,
             radius: bubbleSizeScaler(d.size),
-            fill: colorScaler(d.ratio)
         }
     });
 
@@ -56,17 +55,22 @@ const CircleBlob = ({data, navigate}) => {
 
     const catKey = Object.keys(xCenter)[0];
 
-    var alreadySimulated = false
 
-    const doSimulate = ({key, restart}) => {
+    const findColor = (highlightKey, d) => {
+        console.log(highlightKey)
+        const selectedProjects = d.projects.filter(
+            p => p.purchase_method_name === highlightKey
+        )
+
+        console.log(selectedProjects.length / d.projects.length)
+        return colorScaler(selectedProjects.length / d.projects.length)
+    }
+    
+
+    const doSimulate = ({key, restart, highlightKey}) => {
         if(restart){
-            d3.select("svg")
-                .selectAll("text.label")
-                .style("opacity", 0)
             simulation.alpha(0.8).restart()
         }
-
-        console.log(">>>>>>>>>>>> ",key)
 
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
@@ -78,10 +82,11 @@ const CircleBlob = ({data, navigate}) => {
 
                 u.enter() 
                     .append('circle')
+                    .attr("class", "org")
                     .attr('r', (d) => d.radius)
-                    .style('fill', d => d.fill)
                     .style("pointer-events", "all")
                     .style('cursor', 'pointer')
+                    .attr("fill", (d) => findColor(highlightKey, d))
                     .on("click", d => { 
                         cleanUp()
                         navigate(`/org?tin=${d.tin}`)
@@ -93,7 +98,7 @@ const CircleBlob = ({data, navigate}) => {
                             ได้รับทั้งหมด ${d.totalProjects} โครงการ
                             รวมมูลค่าทั้งสิ้น ฿${Math.round(d.size)}M
                             `
-                            )	
+                            )
                             .style("z-index", 1000)
                             .style("left", (d3.event.pageX + 20) + "px")
                             .style("top", (d3.event.pageY - 28) + "px")
@@ -113,44 +118,55 @@ const CircleBlob = ({data, navigate}) => {
 
                 u.exit().remove();
             })
-            // .on("end", () => {
-            // });
-                const u = d3.select("svg")
-                    .selectAll("text.label")
-                    .data(xCenter[key], d => d)
 
-                    u.enter()
-                        .append("text")
-                        .attr("class", "label")
-                        .style("text-anchor", "middle")
-                        .style("font-size", 12)
-                        .merge(u)
-                        .attr("x", (d) => d)
-                        .attr("y", height - 50)
-                        .style("cursor", "pointer")
-                        .text( (d, i) => {
-                            const currNodes = nodes.filter(d => d.category[key] == i)
+            const u = d3.select("svg")
+                .selectAll("text.label")
+                .data(xCenter[key], d => d)
 
-                            const count = currNodes.length
-                            const totalBudgets = Math.round(
-                                currNodes.map(d => d.totalProjectBudget)
-                                    .reduce((a, b) => a + b, 0) / 1e6
-                            )
-                            if( key === "one" ){
-                                return `มูลค่าโครงการรวม ฿${totalBudgets}M`
-                            } else if( key === "moral"){
-                                return labelConstant[key][i] 
-                                    + `(${count} นิติบุคคล, มูลค่าโครงการรวม ฿${totalBudgets}M)`
-                            }
-                            return labelConstant[key][i] + `(${count} นิติบุคคล)`
-                        })
+                u.enter()
+                    .append("text")
+                    .attr("class", "label")
+                    .style("text-anchor", "middle")
+                    .style("font-size", 12)
+                    .merge(u)
+                    .attr("x", (d) => d)
+                    .attr("y", height - 100)
+                    .style("cursor", "pointer")
+                    .text( (d, i) => {
+                        const currNodes = nodes.filter(d => d.category[key] == i)
 
-                    u.exit().remove()
+                        const count = currNodes.length
+                        const totalBudgets = Math.round(
+                            currNodes.map(d => d.totalProjectBudget)
+                                .reduce((a, b) => a + b, 0) / 1e6
+                        )
+                        if( key === "one" ){
+                            return `มูลค่าโครงการรวม ฿${totalBudgets}M`
+                        } else if( key === "moral"){
+                            return labelConstant[key][i] 
+                                + `(${count} นิติบุคคล, มูลค่าโครงการรวม ฿${totalBudgets}M)`
+                        }
+                        return labelConstant[key][i] + `(${count} นิติบุคคล)`
+                    })
+
+                u.exit().remove()
     }
 
-   doSimulate({key: catKey, restart: false} )
+    doSimulate({
+        key: catKey,
+        krestart: false,
+        highlightKey: globalConfig.purchaseMethods[0]
+    })
 
-   return {node, cleanUp, doSimulate}
+    const setCircleHighlight = (highlightKey) => {
+        console.log(highlightKey)
+        d3.select("svg")
+            .selectAll("circle.org")
+            .transition()
+            .attr("fill", d => findColor(highlightKey, d))
+    }
+
+   return {node, cleanUp, doSimulate, setCircleHighlight}
 }
 
 export default CircleBlob

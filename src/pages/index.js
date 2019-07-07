@@ -41,8 +41,8 @@ const filterOptions = [
 const IndexPage = () => {
 
   const [d3Dom, setd3Dom] = useState({node: "", simulation: ""})
-  const [currentCat, setCurrentCat] = useState(filterOptions[0].key)
   const [currentPage, setCurrentPage] = useState(0)
+  const [highlightCategory, setHighlightCategory] = useState(globalConfig.purchaseMethods[0])
   const refPager = useRef()
 
   const changePage = (d) => {
@@ -74,6 +74,8 @@ const IndexPage = () => {
         }
       })
 
+      console.log(data)
+
       const obj = CircleBlob({data, navigate})
       setd3Dom(obj)
 
@@ -89,10 +91,20 @@ const IndexPage = () => {
   useEffect(() => {
     if(d3Dom.node && currentViz() === "circleBlob"){
       const relIx = currentPage - globalConfig.mainVizPageNo
-      d3Dom.doSimulate({key: filterOptions[relIx].key, restart: true})
+      d3Dom.doSimulate({
+        key: filterOptions[relIx].key,
+        restart: true,
+        highlightKey: highlightCategory
+      })
     }
 
   }, [d3Dom, currentPage])
+
+  useEffect(() => {
+    if(d3Dom.node){
+      d3Dom.setCircleHighlight(highlightCategory)
+    }
+  }, [highlightCategory])
 
   const movePageBy = (diff) => {
     refPager.current.goToPage(currentPage + diff) 
@@ -143,18 +155,34 @@ const IndexPage = () => {
           }}
           className={`${globalStyles.vizElement} ${currentPage - globalConfig.mainVizPageNo < filterOptions.length ? '': globalStyles.hide }`}
           >
-          <div style={{position: "absolute", margin: "20px 0px 0px 20px", pointerEvents: "all"}}>
-            จำแนกตามนิติบุคคลที่เกี่ยวข้องตาม
-            <select onChange={(e) => setCurrentCat(e.target.value)} value={currentCat}>
-              { filterOptions 
-                .map( c => <option key={c.key} value={c.key}>{c.desc}</option> )
-              }
-            </select>
-          </div>
           <div style={{
               float: "left", padding: "20px"
             }}>
             <RD3Component data={d3Dom.node}/>
+          </div>
+
+        <div style={{
+            position: "fixed", fontSize: "10px",
+            left: "5vh", bottom: "5vh", 
+            pointerEvents: "all"
+          }}
+        >
+            <div>
+              คำอธิบายไซต์
+            </div>
+            <div>
+              เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
+              <select
+                value={highlightCategory}
+                onChange={(e) => setHighlightCategory(e.target.value)}
+              >
+                {
+                  globalConfig.purchaseMethods.map(m => {
+                    return <option key={m} value={m}>{m}</option>
+                  })
+                }
+              </select>
+            </div>
           </div>
         </div>
         <div style={{
