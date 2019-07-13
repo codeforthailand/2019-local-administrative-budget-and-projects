@@ -5,13 +5,15 @@ const CircleBlob = ({data, navigate}) => {
     const maxSize = d3.max(data, d => d.size)
     const minSize = d3.min(data, d => d.size) 
 
+    const createColorScaler = (color) => {
+        return d3.scaleLinear()
+            .domain([0, 1])
+            .range(["#eee", color])
+    }
+
     const bubbleSizeScaler = d3.scaleLinear()
         .domain([minSize, maxSize])
         .range([2.5, 30])
-
-    const colorScaler = d3.scaleLinear()
-        .domain([0, 1])
-        .range(["#eee", "#f00"])
 
     const node = document.createElement('div');
 
@@ -56,12 +58,12 @@ const CircleBlob = ({data, navigate}) => {
     const catKey = Object.keys(xCenter)[0];
 
 
-    const findColor = (highlightKey, d) => {
+    const findColor = (highlightKey, d, scaler) => {
         const selectedProjects = d.projects.filter(
-            p => p.purchase_method_name === highlightKey
+            p => p.purchase_method_name === highlightKey.name
         )
 
-        return colorScaler(selectedProjects.length / d.projects.length)
+        return scaler(selectedProjects.length / d.projects.length)
     }
 
     const setLabels = (key) => {
@@ -89,6 +91,8 @@ const CircleBlob = ({data, navigate}) => {
             simulation.alpha(0.8).restart()
         }
 
+        const colorScaler = createColorScaler(highlightKey.color) 
+
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
             .force('collision', d3.forceCollide().radius(d => d.radius))
@@ -103,10 +107,9 @@ const CircleBlob = ({data, navigate}) => {
                     .attr('r', (d) => d.radius)
                     .style("pointer-events", "all")
                     .style('cursor', 'pointer')
-                    .attr("fill", (d) => findColor(highlightKey, d))
+                    .attr("fill", (d) => findColor(highlightKey, d, v => colorScaler(v)))
                     .on("click", d => { 
-                        cleanUp()
-                        navigate(`/org?tin=${d.tin}`)
+                        window.open(`/org?tin=${d.tin}`, "_blank")
                     })
                     .on("mouseover", (d) => {
                         d3.select("body").select("div.tooltip")
@@ -139,15 +142,14 @@ const CircleBlob = ({data, navigate}) => {
             setLabels(key)
     }
 
-    doSimulate({
-        key: catKey,
-    })
-
     const setCircleHighlight = (key, highlightKey) => {
+        console.log(highlightKey)
+        const colorScaler = createColorScaler(highlightKey.color)
+
         const u = d3
             .selectAll("circle.org")
             .transition()
-            .attr("fill", d => findColor(highlightKey, d))
+            .attr("fill", d => findColor(highlightKey, d, v => colorScaler(v)))
 
         setLabels(key)
     }

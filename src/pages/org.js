@@ -109,9 +109,9 @@ const OrgPage = () => {
   return (
     <Layout>
       <div style={{padding: "20px"}}>
-        <div>
+        {/* <div>
           <Link to="/">กลับไปหน้าแรก</Link> หรือ <Placeholder name="🔍 ค้นหา นิติบุคลลอื่นๆ"/>
-        </div>
+        </div> */}
         <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
           <RD3Component data={d3Dom}/>
         </div>

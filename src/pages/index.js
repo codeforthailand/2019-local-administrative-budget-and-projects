@@ -44,7 +44,7 @@ const IndexPage = () => {
 
   const [d3Dom, setd3Dom] = useState({node: "", simulation: ""})
   const [currentPage, setCurrentPage] = useState(0)
-  const [highlightCategory, setHighlightCategory] = useState(globalConfig.purchaseMethods[0])
+  const [highlightCategory, setHighlightCategory] = useState(0)
   const refPager = useRef()
 
   const changePage = (d) => {
@@ -94,7 +94,7 @@ const IndexPage = () => {
       d3Dom.doSimulate({
         key: filterOptions[relIx].key,
         restart: true,
-        highlightKey: highlightCategory
+        highlightKey: globalConfig.purchaseMethods[highlightCategory]
       })
     }
 
@@ -103,7 +103,10 @@ const IndexPage = () => {
   useEffect(() => {
     if(d3Dom.node){
       const relIx = currentPage - globalConfig.mainVizPageNo
-      d3Dom.setCircleHighlight(filterOptions[relIx].key, highlightCategory)
+      d3Dom.setCircleHighlight(
+        filterOptions[relIx].key,
+        globalConfig.purchaseMethods[highlightCategory]
+      )
     }
   }, [highlightCategory])
 
@@ -229,11 +232,15 @@ const IndexPage = () => {
               เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
               <select
                 value={highlightCategory}
-                onChange={(e) => setHighlightCategory(e.target.value)}
+                onChange={(e) => {
+                  setHighlightCategory(e.target.value)
+                }}
               >
                 {
-                  globalConfig.purchaseMethods.map(m => {
-                    return <option key={m} value={m}>{m}</option>
+                  globalConfig.purchaseMethods.map( (m, i) => {
+                    return <option key={i} value={i}>
+                      {m.name}
+                    </option>
                   })
                 }
               </select>
