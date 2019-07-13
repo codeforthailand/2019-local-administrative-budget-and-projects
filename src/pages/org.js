@@ -6,7 +6,7 @@ import rd3 from 'react-d3-library'
 import { useQueryParam, StringParam } from 'use-query-params';
 
 import Layout from "../components/layout"
-import Placeholder from "../components/placholder"
+import Placeholder from "../components/placeholder"
 import bipartite from "d3-bipartite"
 import BipartiteGraph from "../d3-components/bipartite"
 
