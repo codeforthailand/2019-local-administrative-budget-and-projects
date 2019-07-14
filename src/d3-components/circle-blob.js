@@ -5,11 +5,10 @@ const CircleBlob = ({data, navigate}) => {
     const maxSize = d3.max(data, d => d.size)
     const minSize = d3.min(data, d => d.size) 
 
-    const createColorScaler = (color) => {
-        return d3.scaleLinear()
-            .domain([0, 1])
-            .range(["#eee", color])
-    }
+
+    const colorScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range(globalConfig.highligthColors)
 
     const bubbleSizeScaler = d3.scaleLinear()
         .domain([minSize, maxSize])
@@ -63,7 +62,7 @@ const CircleBlob = ({data, navigate}) => {
             p => p.purchase_method_name === highlightKey.name
         )
 
-        return scaler(selectedProjects.length / d.projects.length)
+        return colorScale(selectedProjects.length / d.projects.length)
     }
 
     const setLabels = (key) => {
@@ -91,8 +90,6 @@ const CircleBlob = ({data, navigate}) => {
             simulation.alpha(0.8).restart()
         }
 
-        const colorScaler = createColorScaler(highlightKey.color) 
-
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
             .force('collision', d3.forceCollide().radius(d => d.radius))
@@ -107,7 +104,7 @@ const CircleBlob = ({data, navigate}) => {
                     .attr('r', (d) => d.radius)
                     .style("pointer-events", "all")
                     .style('cursor', 'pointer')
-                    .attr("fill", (d) => findColor(highlightKey, d, v => colorScaler(v)))
+                    .attr("fill", (d) => findColor(highlightKey, d))
                     .on("click", d => { 
                         window.open(`/org?tin=${d.tin}`, "_blank")
                     })
@@ -143,13 +140,10 @@ const CircleBlob = ({data, navigate}) => {
     }
 
     const setCircleHighlight = (key, highlightKey) => {
-        console.log(highlightKey)
-        const colorScaler = createColorScaler(highlightKey.color)
-
         const u = d3
             .selectAll("circle.org")
             .transition()
-            .attr("fill", d => findColor(highlightKey, d, v => colorScaler(v)))
+            .attr("fill", d => findColor(highlightKey, d))
 
         setLabels(key)
     }

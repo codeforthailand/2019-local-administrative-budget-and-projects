@@ -32,6 +32,10 @@ const db = {
 
 const globalConfig = {
     mainVizPageNo: 5,
+    highligthColors: [
+        "#eee",
+        "#5E5050"
+    ],
     vizAtPage: [
         "none",
         "none",
@@ -57,57 +61,43 @@ const globalConfig = {
     purchaseMethods: [
         {
             name: 'เฉพาะเจาะจง',
-            color: "#F03135",
         },
         {
-            name: 'กรณีพิเศษ',
-            color: "#FC5B21",
+            name: 'ประกวดราคาอิเล็กทรอนิกส์ (e-bidding)',
+        },
+        {
+            name: 'ประกวดราคาด้วยวิธีการทางอิเล็กทรอนิกส์',
         },
         {
             name: 'พิเศษ',
-            color: "#FDB537",
         },
         {
             name: 'คัดเลือก',
-            color: "#FFFD67"
+        },
+        {
+            name: 'สอบราคา',
         },
         {
             name: 'จ้างที่ปรึกษาโดยวิธีคัดเลือก',
-            color: "#FFFD67",
         },
         {
             name: 'จ้างที่ปรึกษาโดยวิธีประกาศเชิญชวนทั่วไป',
-            color: "#35BEFC",
         },
         {
 
             name: 'จ้างที่ปรึกษาโดยวิธีเฉพาะเจาะจง',
-            color: "#1C1B8B",
         },
         {
             name: 'ตกลงราคา',
-            color: "#683396",
         },
         {
             name: 'ประกวดราคา',
-            color: "#FC2972",
         },
         {
-            name: 'ประกวดราคาด้วยวิธีการทางอิเล็กทรอนิกส์',
-            color: "#DE5329",
+            name: 'กรณีพิเศษ',
         },
-        {
-            name: 'ประกวดราคาอิเล็กทรอนิกส์ (e-bidding)',
-            color: "#5E5050",
-        },
-        {
-            name: 'สอบราคา',
-            color: "#000000"
-        }
 
     ],
-    colors: [
-    ]
 }
 
 export {labelConstant, db, globalConfig}

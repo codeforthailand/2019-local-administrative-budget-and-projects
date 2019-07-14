@@ -21,6 +21,8 @@ import { default as utils } from "../utils"
 import axios from 'axios'
 import {labelConstant, db, globalConfig} from "../constant"
 
+import sizeLegendImage from "../images/size-legend.svg"
+
 const RD3Component = rd3.Component;
 
 const regionLookup = utils.array2lookup(labelConstant.region)
@@ -46,13 +48,6 @@ const IndexPage = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [highlightCategory, setHighlightCategory] = useState(0)
   const refPager = useRef()
-
-  const changePage = (d) => {
-    const newPage = currentPage + d
-    if( newPage >= 0 && currentPage < (filterOptions.length+1)){
-      setCurrentPage(newPage)
-    }
-  }
 
   const currentViz = () => globalConfig.vizAtPage[currentPage]
 
@@ -226,7 +221,9 @@ const IndexPage = () => {
           }}
         >
             <div>
-              คำอธิบายไซต์
+              <img style={{height: "30px", marginBottom: 0, verticalAlign: "middle"}}
+                src={sizeLegendImage}/>
+                สัดส่วนมูลค่าโครงการทั้งหมด
             </div>
             <div>
               เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
