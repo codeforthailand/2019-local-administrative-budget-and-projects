@@ -19,14 +19,13 @@ const Part1 = () => {
     }, [])
 
     useEffect( () => {
-        console.log("effect viz")
         if(viz.node){
             viz.display_part1()
         }
     }, [viz])
     
     return <div>
-        <h1 style={{marginTop: "15vh", marginLeft: "10vw"}}>
+        <h1 style={{paddingTop: "15vh", marginLeft: "10vw", zIndex: 2000, position: "relative"}}>
             คุณรู้หรือไม่? ในปี 2561 องค์กรปกครองส่วนท้องถิ่น <br/>
             มีรายรับโดยประมาณทั้งสิ้น
             <span style={{fontFamily: "monospace", paddingLeft: "0.5em", fontSize: "2em"}}>
@@ -34,7 +33,7 @@ const Part1 = () => {
             </span>
             ล้านบาท
         </h1>
-        <div style={{position: "absolute", top: "15vh"}}>
+        <div style={{position: "absolute", top: "10vh", zIndex: 0}}>
             <RD3Component data={viz.node}/>
         </div>
         <div style={{marginLeft: "50%", marginTop: "10vh", width: "30%"}}>

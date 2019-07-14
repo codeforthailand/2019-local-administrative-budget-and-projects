@@ -117,9 +117,7 @@ const VizPart1 = () => {
                         .merge(u)
                         .attr("cx", d => d.x)
                         .attr("cy", d => d.y)
-                } else {
-                    simulation.stop()
-                }
+                } 
             })
     }
 
