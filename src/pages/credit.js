@@ -25,14 +25,20 @@ const CreditPage = () => {
             เรียบเรียงเนื้อหา {
                 joinArray([
                     <Person name="ชนิกานต์ กาญจนสาลี" url="http://www.datatalksonline.com"/>,
-                    <Person name="กิตตินันท์ นาคทอง" url="http://kittinan.sakhononline.com"/>
+                    <Person name="กิตตินันท์ นาคทอง" url="http://kittinan.sakhononline.com"/>,
+                    <Person name="กนิษฐา ไชยแสง" url="#"/>
                 ])
             }
             <br/>
             ออกแบบ <Person name="อักษราภัค​ พุทธ​วงษ์​" url="#"/>
             
             <br/>
-            พัฒนาเว็บไซต์ <Person name={`ภัทรวัต ช่อไม้`} url={`http://pat.chormai.org`}/>
+            พัฒนาเว็บไซต์ {
+                joinArray([
+                    <Person name={`ไวยณ์วุฒิ เอื้อจงประสิทธิ์`} url="#"/>,
+                    <Person name={`ภัทรวัต ช่อไม้`} url={`http://pat.chormai.org`}/>,
+                ])
+            }
 
             <br/><br/>
 
