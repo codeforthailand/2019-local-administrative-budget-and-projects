@@ -31,6 +31,7 @@ const db = {
 }
 
 const globalConfig = {
+    references: [],
     mainVizPageNo: 5,
     highligthColors: [
         "#eee",

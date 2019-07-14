@@ -28,10 +28,11 @@ const CircleBlob = ({data, navigate}) => {
 
     const svg = d3.select(node)
         .append("svg")
+        .attr("class", "part4")
         .attr("width", width)
         .attr("height", height)
 
-    const g = svg.append("g").attr("class", "main-panel")
+    svg.append("g").attr("class", "main-panel")
 
     const nodes = data.map( (d, i) => {
         return {
@@ -54,9 +55,6 @@ const CircleBlob = ({data, navigate}) => {
         simulation.stop()
     }
 
-    const catKey = Object.keys(xCenter)[0];
-
-
     const findColor = (highlightKey, d, scaler) => {
         const selectedProjects = d.projects.filter(
             p => p.purchase_method_name === highlightKey.name
@@ -66,7 +64,7 @@ const CircleBlob = ({data, navigate}) => {
     }
 
     const setLabels = (key) => {
-        const u = d3.select("svg")
+        const u = d3.select("svg.part4")
             .selectAll("text.label")
             .data(xCenter[key], d => d)
 
@@ -94,7 +92,7 @@ const CircleBlob = ({data, navigate}) => {
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
             .force('collision', d3.forceCollide().radius(d => d.radius))
             .on('tick', () => {
-                const u = d3.select("svg").select("g") 
+                const u = d3.select("svg.part4").select("g") 
                     .selectAll('circle')
                     .data(nodes)
 
@@ -140,8 +138,7 @@ const CircleBlob = ({data, navigate}) => {
     }
 
     const setCircleHighlight = (key, highlightKey) => {
-        const u = d3
-            .selectAll("circle.org")
+        d3.selectAll("circle.org")
             .transition()
             .attr("fill", d => findColor(highlightKey, d))
 

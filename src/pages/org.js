@@ -1,19 +1,17 @@
 import axios from "axios"
 
-import React, {useState, useEffect, useRef} from "react"
+import React, {useState, useEffect} from "react"
 import rd3 from 'react-d3-library'
 
 import { useQueryParam, StringParam } from 'use-query-params';
 
 import Layout from "../components/layout"
-import Placeholder from "../components/placeholder"
 import bipartite from "d3-bipartite"
 import BipartiteGraph from "../d3-components/bipartite"
 
 import {db} from "../constant"
 import { default as utils } from "../utils"
 
-import { Link } from "gatsby"
 const RD3Component = rd3.Component;
 
 const getWindowWidthHeight = () => {
@@ -31,7 +29,8 @@ const getWindowWidthHeight = () => {
 }
 
 const OrgPage = () => {
-  const [tin, setTin] = useQueryParam(
+  // eslint-disable-next-line
+  const [tin, _] = useQueryParam(
     'tin', StringParam, utils.defaultLocationSearch()
   );
   const [orgProfile, setOrgProfile] = useState({})
@@ -137,10 +136,10 @@ const OrgPage = () => {
           </span>
           }
 
-          <a href={`https://datawarehouse.dbd.go.th/company/profile/3/${orgProfile.tin}`} target="_blank">
+          <a href={`https://datawarehouse.dbd.go.th/company/profile/3/${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
             ดูข้อมูลเพิ่มเติมของนิติบุคคลนี้จากกรมการค้าภายใน
           </a> <br/>
-          <a href={`#`} target="_blank"> 
+          <a href="http://govspending.data.go.th" target="_blank" rel="noopener noreferrer"> 
             ดูโครงการทั้งหมดจาก ภาษีไปไหน?
           </a>
         </div> 
