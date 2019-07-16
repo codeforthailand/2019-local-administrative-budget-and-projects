@@ -138,22 +138,8 @@ const IndexPage = () => {
           <Part6 totalOrgs={totalOrgs}/>
           <Part7/>
           <Part8/>
-
-          {/* <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">
-            <span/>
-            <div>
-              คำอธิบาย ของ {filterOptions[1].desc}
-            </div>
-          </Page>
-
-          <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">
-            <span/>
-            <div>
-              คำอธิบาย ของ {filterOptions[2].desc}
-            </div>
-          </Page> */}
-
           <CreditPage/>
+
         </ReactPageScroller>
       </div>
         <div style={{
