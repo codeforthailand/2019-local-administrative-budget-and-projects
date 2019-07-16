@@ -13,17 +13,14 @@ const getIndex = (url) => {
     return counter + 1
 }
 
-
-const Reference = ({url}) => {
+const Reference = ({url, color="black"}) => {
     const counter = getIndex(url)
 
-    return <sup>
-        <a style={{ textDecoration: "none", color: "black" }}
+    return <a style={{ textDecoration: "none", color: color }}
             href={url} target="_blank" rel="noopener noreferrer"
         >
-                [{counter}]
-        </a>
-        </sup>
+        [{counter}]
+    </a>
 }
 
 export default Reference

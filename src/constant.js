@@ -53,9 +53,9 @@ const globalConfig = {
         "none",
     ],
     pageTitles: [
-        "ภาพรวมงบประมาณท้องถิ่นปี 2561",
-        "ประเภทการจัดซืื้อจัดจ้าง",
-        "ประเภทการจัดซืื้อจัดจ้าง",
+        "ขุมทรัพย์อปท. 7 แสนล้านบาท",
+        "มูลค่าการจัดซื้อ-จัดจ้างและรูปแบบการจัดซื้อ",
+        "ที่มาเงินทอน",
         "สัดส่วนการใช้งบของอปท.",
         "สัดส่วนการใช้งบของอปท.",
         "นิติบุคคลกับโครงการของอปท.",
@@ -105,4 +105,14 @@ const globalConfig = {
     ],
 }
 
-export {labelConstant, db, globalConfig}
+const statistics = {
+    "part1": {
+        "totalGovBudget": 720822 * 1e6,
+        "totalProjects": 30000,
+        "totalValue": 32768 * 1e6,
+        "totalCivilProjectValue": 21252 * 1e6,
+        "totalCivilProjects": 12222,
+    }
+}
+
+export {labelConstant, db, globalConfig, statistics}

@@ -1,4 +1,4 @@
-
+import * as d3 from "d3-format"
 
 const utils = {}
 
@@ -19,5 +19,8 @@ utils.defaultLocationSearch = () => {
     return "?dummy-param"
   }
 }
+
+utils.numFormatInt = d3.format(",")
+utils.numFormatFloat = d3.format(",.2f")
 
 export default utils
