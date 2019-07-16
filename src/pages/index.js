@@ -16,6 +16,7 @@ import Page from "../components/page"
 import Reference from "../components/reference"
 import Part1 from "../pages/part1"
 import Part2 from "../pages/part2"
+import Part3 from "../pages/part3"
 import CreditPage from "../pages/credit"
 
 import { default as utils } from "../utils"
@@ -126,6 +127,7 @@ const IndexPage = () => {
         >
           <Part1 currentPage={currentPage}/>
           <Part2 currentPage={currentPage}/>
+          <Part3/>
 
           {/* <Page header="คุณรู้หรือไม่? ในปี 2561 องค์กรปกครองท้องถิ่นไทยทั้งสิ้น 216,971 ล้านบาท">
             <Placeholder name="graphic" width="100%" height="30vh"/>
@@ -136,16 +138,8 @@ const IndexPage = () => {
             </div>
           </Page> */}
 
-          <Page header="ความแตกต่างของการจัดซื้อจัดจ้างในแต่ละแบบ">
-            <Placeholder name="graphic" width="100%" height="30vh"/>
-            <div>
-              <p>...(เน้น เฉพาะเจาะจง)
-              </p>
-            </div>
-          </Page>
-
           <Page header="สัดส่วนการใช้งบในแต่ละด้านของอปท.">
-            <Placeholder name="graphic" width="100%" height="30vh"/>
+            <Placeholder name="รอ graphic จากพี่แปม" width="100%" height="30vh"/>
             <div>
               <p>...</p>
             </div>
