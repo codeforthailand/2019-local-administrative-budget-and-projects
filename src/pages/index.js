@@ -15,6 +15,7 @@ import globalStyles from "../styles/global.module.css"
 import Page from "../components/page"
 import Reference from "../components/reference"
 import Part1 from "../pages/part1"
+import Part2 from "../pages/part2"
 import CreditPage from "../pages/credit"
 
 import { default as utils } from "../utils"
@@ -123,16 +124,17 @@ const IndexPage = () => {
             setCurrentPage(e-1)
           }}
         >
-          <Part1/>
+          <Part1 currentPage={currentPage}/>
+          <Part2 currentPage={currentPage}/>
 
-          <Page header="คุณรู้หรือไม่? ในปี 2561 องค์กรปกครองท้องถิ่นไทยทั้งสิ้น 216,971 ล้านบาท">
+          {/* <Page header="คุณรู้หรือไม่? ในปี 2561 องค์กรปกครองท้องถิ่นไทยทั้งสิ้น 216,971 ล้านบาท">
             <Placeholder name="graphic" width="100%" height="30vh"/>
             <div>
               <p>
               เจาะลึกลงไป จาก 12 รูปแบบการจัดซื้อจัดจ้างภาครัฐพบว่ามี 6 ... <Reference url="abc.org"/>
               </p>
             </div>
-          </Page>
+          </Page> */}
 
           <Page header="ความแตกต่างของการจัดซื้อจัดจ้างในแต่ละแบบ">
             <Placeholder name="graphic" width="100%" height="30vh"/>

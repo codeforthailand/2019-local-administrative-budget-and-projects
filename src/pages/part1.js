@@ -4,14 +4,16 @@ import rd3 from 'react-d3-library'
 
 import CountUp from 'react-countup';
 
-import Page from "../components/page"
 import Reference from "../components/reference"
 
 import VizPart1 from "../d3-components/part1"
 
 const RD3Component = rd3.Component;
 
-const Part1 = () => {
+
+const PAGE_NO = 0
+
+const Part1 = ({currentPage}) => {
     const [viz, setViz] = useState({})
     useEffect(()=> {
         const obj = VizPart1()
@@ -20,16 +22,18 @@ const Part1 = () => {
 
     useEffect( () => {
         if(viz.node){
-            viz.display_part1()
+            if(PAGE_NO == currentPage){
+                viz.display()
+            } 
         }
-    }, [viz])
+    }, [viz, currentPage])
     
-    return <div>
+    return <div style={{background: "black", color: "white", height: "100%"}}>
         <h1 style={{paddingTop: "15vh", marginLeft: "10vw", zIndex: 2000, position: "relative"}}>
             คุณรู้หรือไม่? ในปี 2561 องค์กรปกครองส่วนท้องถิ่น <br/>
             มีรายรับโดยประมาณทั้งสิ้น
             <span style={{fontFamily: "monospace", paddingLeft: "0.5em", fontSize: "2em"}}>
-                <CountUp duration={5} start={100000} end={216971} separator=","/>
+                <CountUp duration={3} start={100000} end={216971} separator=","/>
             </span>
             ล้านบาท
         </h1>

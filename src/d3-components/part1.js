@@ -36,7 +36,7 @@ const VizPart1 = () => {
     let innerRadius = width * 0.1; // new nodes outside this radius, initial nodes within.
     let startCenter = [width / 2, height / 2]; // new nodes/initial nodes center point
     const n = 200; // number of initial nodes
-    let cycles = 800; // number of ticks before stopping.
+    let cycles = 200; // number of ticks before stopping.
 
     const clsName = "part1"
     const selector = `svg.${clsName}`
@@ -61,7 +61,7 @@ const VizPart1 = () => {
             x: x,
             y: y,
             strength: strength,
-            r: Math.random() * 5,
+            r: Math.random() * 3,
             fill: colorScale(Math.random())
         }
     }
@@ -70,10 +70,10 @@ const VizPart1 = () => {
     let tick = 0;
 
     const data = Array.from({length: n}, (_, i) => random())
-    console.log(data)
 
+    const display = () => {
+        console.log("display part1")
 
-    const display_part1 = () => {
         d3.select(selector)
             .selectAll("circle")
             .data(data)
@@ -179,7 +179,11 @@ const VizPart1 = () => {
 
     // display_part1()
 
-    return {node, display_part1}
+    const reset = () => {
+        tick = 0
+    }
+
+    return {node, display, reset}
 }
 
 export default VizPart1
