@@ -17,6 +17,9 @@ import Reference from "../components/reference"
 import Part1 from "../pages/part1"
 import Part2 from "../pages/part2"
 import Part3 from "../pages/part3"
+
+import Part5 from "../pages/part5"
+
 import CreditPage from "../pages/credit"
 
 import { default as utils } from "../utils"
@@ -145,12 +148,13 @@ const IndexPage = () => {
             </div>
           </Page>
 
-          <Page header="ปัญหาของการใช้งบด้านก่อสร้าง...">
+          {/* <Page header="...">
             <Placeholder name="graphic" width="100%" height="30vh"/>
             <div>
               <p>งบก่อสร้าง ซ่อม ถนน เป็นปัญหาใหญ่ที่ สตง.ตรวจพบเสมอ อดีตผู้ว่า...</p>
             </div>
-          </Page>
+          </Page> */}
+          <Part5/>
 
           <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">
             <span/>
