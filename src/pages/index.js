@@ -6,18 +6,20 @@ import rd3 from 'react-d3-library'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Placeholder from "../components/placeholder"
 
 import CircleBlob from "../d3-components/circle-blob"
 import globalStyles from "../styles/global.module.css"
 
 import Page from "../components/page"
-import Reference from "../components/reference"
+
 import Part1 from "../pages/part1"
 import Part2 from "../pages/part2"
 import Part3 from "../pages/part3"
-
+import Part4 from "../pages/part4"
 import Part5 from "../pages/part5"
+import Part6 from "../pages/part6"
+import Part7 from "../pages/part7"
+import Part8 from "../pages/part8"
 
 import CreditPage from "../pages/credit"
 
@@ -54,6 +56,8 @@ const IndexPage = () => {
   const [highlightCategory, setHighlightCategory] = useState(0)
   const refPager = useRef()
 
+  const [totalOrgs, setTotalOrgs] = useState(0)
+
   const currentViz = () => globalConfig.vizAtPage[currentPage]
 
   useEffect(() => {
@@ -76,6 +80,7 @@ const IndexPage = () => {
 
       const obj = CircleBlob({data, navigate})
       setd3Dom(obj)
+      setTotalOrgs(data.length)
 
       return obj
     };
@@ -128,34 +133,13 @@ const IndexPage = () => {
           <Part1 currentPage={currentPage}/>
           <Part2 currentPage={currentPage}/>
           <Part3/>
-
-          <Page header="สัดส่วนการใช้งบในแต่ละด้านของอปท.">
-            <Placeholder name="รอ graphic จากพี่แปม" width="100%" height="30vh"/>
-            <div>
-              <p>...</p>
-            </div>
-          </Page>
-
+          <Part4/>
           <Part5/>
+          <Part6 totalOrgs={totalOrgs}/>
+          <Part7/>
+          <Part8/>
 
-          <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">
-            <span/>
-            <div>
-              <div>
-                นิติบุคคล ที่ได้โครงการขององค์การปกครองส่วนท้องถิ่น มากกว่า ฿20M มี xxx จาก x,xxx
-              </div>
-              <ul>
-                <li>
-                  เฉดสีบอกถึงอัตราส่วนโครงการที่ได้ว่าเป็นแบบเฉพาะเจาะจงมากน้อยแค่ไหน อัตราส่วนสูงแดงมาก
-                </li>
-                <li>
-                  ขนาดบอกมูลค่าโครงการรวม
-                </li>
-              </ul>
-            </div>
-          </Page>
-
-          <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">
+          {/* <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">
             <span/>
             <div>
               คำอธิบาย ของ {filterOptions[1].desc}
@@ -167,7 +151,7 @@ const IndexPage = () => {
             <div>
               คำอธิบาย ของ {filterOptions[2].desc}
             </div>
-          </Page>
+          </Page> */}
 
           <CreditPage/>
         </ReactPageScroller>
@@ -227,7 +211,7 @@ const IndexPage = () => {
             </span>
           <span
             style={{
-              width: "25vh", textAlign: "center", display: "inline-block",
+              width: "30vh", textAlign: "center", display: "inline-block",
               borderRight: "1px solid gray",
               borderLeft: "1px solid gray",
               fontSize: "10px",
