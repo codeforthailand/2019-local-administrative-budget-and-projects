@@ -22,7 +22,7 @@ const Part1 = ({currentPage}) => {
 
     useEffect( () => {
         if(viz.node){
-            if(PAGE_NO == currentPage){
+            if(PAGE_NO === currentPage){
                 viz.display()
             } 
         }

@@ -13,20 +13,9 @@ const VizPart1 = () => {
         right: 40
     };
 
-    let label_size = {
-        width: 300,
-        height: 30
-    }
-
     const colorScale = d3.scaleLinear()
         .domain([0, 1])
         .range(globalConfig.highligthColors)
-
-
-    let _label
-    let _text;
-
-    let text_value = 'เปิดขุมทรัพย์ อปท. กว่า 7 แสนล้านบาท'
 
     // Key variables:
     let strength = -0.25; // default repulsion
@@ -43,7 +32,7 @@ const VizPart1 = () => {
 
     const node = document.createElement('div');
 
-    const svg = d3.select(node)
+    d3.select(node)
         .append('svg')
         .attr("class", clsName)
         .attr("width", width + margin.left + margin.right)
@@ -120,64 +109,6 @@ const VizPart1 = () => {
                 } 
             })
     }
-
-    // function ticked() {
-    //     tick++;
-
-    //     if (tick < cycles) {
-    //         data_nodes.push(random()); // create a node
-    //         this.nodes(data_nodes); // update the nodes.
-
-    //         nodes = nodes.data(data_nodes)
-
-    //         nodes = nodes.enter()
-    //             .append("circle")
-    //             .attr('r', d => d.r)
-    //             .merge(nodes);
-
-    //         nodes
-    //             .attr("cx", d => d.x)
-    //             .attr("cy", d => d.y)
-
-    //     } else {
-    //         nodes
-    //             .attr("cx", d => d.x)
-    //             .attr("cy", d => d.y)
-
-    //         exit_part1()
-    //     }
-
-    // }
-
-    // // Transition to exit part 1
-    // function exit_part1() {
-
-    //     _label
-    //         .transition()
-    //         .duration(50)
-    //         .style("opacity", 0.0);
-
-    //     _text
-    //         .transition()
-    //         .duration(50)
-    //         .style("opacity", 0.0);
-
-    //     for (let i = 0; i < data_nodes.length; i++) {
-    //         data_nodes.pop();
-    //     }
-
-    //     nodes = nodes.data(data_nodes)
-    //     nodes.exit()
-    //         .transition()
-    //         .duration(1000)
-    //         .style('opacity', 0)
-    //         .style('fill', 'gray')
-    //         .remove();
-
-    // }
-
-
-    // display_part1()
 
     const reset = () => {
         tick = 0

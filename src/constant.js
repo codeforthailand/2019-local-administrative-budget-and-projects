@@ -23,6 +23,10 @@ const labelConstant = {
     moral: [
         "มากกว่า 30%",
         "",
+    ],
+    doCivilProjects: [
+        "รับโครงการด้านโยธา",
+        ""
     ]
 }
 

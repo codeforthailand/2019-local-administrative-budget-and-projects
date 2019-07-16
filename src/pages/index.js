@@ -7,7 +7,6 @@ import rd3 from 'react-d3-library'
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Placeholder from "../components/placeholder"
-import {budget2category, projectCount2Cat} from "../dataUtils"
 
 import CircleBlob from "../d3-components/circle-blob"
 import globalStyles from "../styles/global.module.css"
@@ -39,12 +38,12 @@ const filterOptions = [
     key: "one"
   },
   {
-    desc: "ภูมิภาคที่ได้รับโครงการส่วนใหญ่",
-    key: "region"
+    desc: "ขอบเขตงานเกี่ยวข้องกับโครงการด้านโยธา",
+    key: "doCivilProjects"
   },
   {
-    desc: "ตามสัดส่วนประเภทการจัดซื้อจัดจ้าง",
-    key: "totalProjects"
+    desc: "ภูมิภาคที่ได้รับโครงการส่วนใหญ่",
+    key: "region"
   },
 ]
 
@@ -69,10 +68,8 @@ const IndexPage = () => {
           size: budgetM,
           category: {
             one: 0,
-            budget: budget2category(budgetM),
             region: regionLookup[d['majorityRegion']],
-            totalProjects: projectCount2Cat(d['totalProjects']),
-            moral: ratio > 0.3 ? 0 : 1
+            doCivilProjects: Math.random() > 0.7 ? 0 : 1, // this is a mock
           }
         }
       })
@@ -132,15 +129,6 @@ const IndexPage = () => {
           <Part2 currentPage={currentPage}/>
           <Part3/>
 
-          {/* <Page header="คุณรู้หรือไม่? ในปี 2561 องค์กรปกครองท้องถิ่นไทยทั้งสิ้น 216,971 ล้านบาท">
-            <Placeholder name="graphic" width="100%" height="30vh"/>
-            <div>
-              <p>
-              เจาะลึกลงไป จาก 12 รูปแบบการจัดซื้อจัดจ้างภาครัฐพบว่ามี 6 ... <Reference url="abc.org"/>
-              </p>
-            </div>
-          </Page> */}
-
           <Page header="สัดส่วนการใช้งบในแต่ละด้านของอปท.">
             <Placeholder name="รอ graphic จากพี่แปม" width="100%" height="30vh"/>
             <div>
@@ -148,12 +136,6 @@ const IndexPage = () => {
             </div>
           </Page>
 
-          {/* <Page header="...">
-            <Placeholder name="graphic" width="100%" height="30vh"/>
-            <div>
-              <p>งบก่อสร้าง ซ่อม ถนน เป็นปัญหาใหญ่ที่ สตง.ตรวจพบเสมอ อดีตผู้ว่า...</p>
-            </div>
-          </Page> */}
           <Part5/>
 
           <Page header="50 นิติบุคคลที่มีขีดความสามารถได้โครงการอปท.มากที่สุด">

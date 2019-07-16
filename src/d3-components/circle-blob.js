@@ -23,7 +23,7 @@ const CircleBlob = ({data, navigate}) => {
             width*0.85, width*0.7, width*0.55,
             width*0.4, width*0.25, width*0.1,
         ],
-        totalProjects: [width*0.8, width*0.6, width*0.35, width*0.1],
+        doCivilProjects: [width*0.7, width*0.2],
     }
 
     const svg = d3.select(node)
