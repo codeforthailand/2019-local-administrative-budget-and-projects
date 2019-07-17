@@ -39,7 +39,7 @@ const globalConfig = {
     mainVizPageNo: 5,
     highligthColors: [
         "#eee",
-        "#5E5050"
+        "red"
     ],
     vizAtPage: [
         "none",
