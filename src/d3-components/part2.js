@@ -69,23 +69,6 @@ const VizPart2 = (data) => {
             .attr("fill", globalConfig.highligthColors[1])
             .attr("width", function(d) {return xScale(d.project_money)})
 
-        // bar
-        //     .on("mouseover", function() {
-        //         d3.select(this)
-        //             .attr("fill", "brown");
-        //     })
-        //     .on("mouseleave",function(){
-        //         d3.select(this)
-        //             .attr("fill","steelblue");
-        //         d3.select('.tooltip'+current_show_id).style('display','none')
-        //     })
-        //     .on("mouseenter", d=>{
-        //         showTootip(d, [d3.event.clientX,d3.event.clientY]) 
-        //         })
-        //     .on("mousemove", d=>{
-        //         showTootip(d, [d3.event.clientX,d3.event.clientY])  }
-        //         )
-        
         // //add chart label
         const project_val = d3.select(selector)
             .append('g')
@@ -121,7 +104,15 @@ const VizPart2 = (data) => {
 
     }
 
-    return {node, display}
+    const reset = () => {
+        d3.select(selector)
+            .selectAll("g")
+            .transition()
+            .style("opacity", 0)
+            .remove()
+    }
+
+    return {node, display, reset}
 }
 
 export default VizPart2

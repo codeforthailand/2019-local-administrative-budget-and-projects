@@ -43,8 +43,12 @@ const Part2 = ({currentPage}) => {
     }, [])
 
     useEffect( () => {
-      if(currentPage === PAGE_NO && viz.node){
-        viz.display()
+      if(viz.node){
+        if(currentPage === PAGE_NO){
+          viz.display()
+        } else {
+          viz.reset()
+        }
       }
 
     }, [viz, currentPage])
