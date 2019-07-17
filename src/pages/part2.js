@@ -5,7 +5,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import rd3 from 'react-d3-library'
 
 import Page from "../components/page"
-import Reference from "../components/reference"
+// import Reference from "../components/reference"
 import VizPart2 from "../d3-components/part2"
 
 

@@ -10,8 +10,6 @@ import SEO from "../components/seo"
 import CircleBlob from "../d3-components/circle-blob"
 import globalStyles from "../styles/global.module.css"
 
-import Page from "../components/page"
-
 import Part1 from "../pages/part1"
 import Part2 from "../pages/part2"
 import Part3 from "../pages/part3"

@@ -6,7 +6,7 @@ import Page from "../components/page"
 const Part3 = () => {
     return <Page header="รูปแบบการจัดซื้อแบบเฉพาะเจาะจง">
         <div style={{textAlign: "center"}}>
-            <img src={img} style={{width: "30%"}}/>
+            <img src={img} style={{width: "30%"}} alt="อ.พิศิษฐ์ อดีตผู้ว่า สตง."/>
         </div>
         <div>
             <blockquote>

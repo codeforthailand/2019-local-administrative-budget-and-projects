@@ -6,7 +6,7 @@ import Page from "../components/page"
 const Part5 = () => {
     return <Page header="คอนกรีต - ลูกรัง ซ่อมสร้างไม่รู้จบ">
         <div style={{textAlign: "center"}}>
-            <img src={img} style={{width: "50%"}}/>
+            <img src={img} style={{width: "50%"}} alt="ปัญหายืดยื้อของการสร้างถนน และงานโยธา"/>
         </div>
         <div>
             <p>อดีตผู้ว่า สตง.สะท้อนประสบการณ์การตรวจสอบและชี้ประเด็นสำคัญคือ การใช้งบก่อสร้าง ซ่อมถนน ที่สังคมให้ความสนใจให้มาก</p>
