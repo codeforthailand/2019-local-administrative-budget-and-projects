@@ -1,5 +1,5 @@
 import * as d3 from "d3"
-import {globalConfig} from "../constant"
+import {globalConfig, statistics} from "../constant"
 
 const VizPart1 = () => {
     // constants to define the size
@@ -55,13 +55,14 @@ const VizPart1 = () => {
         }
     }
 
-    const simulation = d3.forceSimulation()
-    let tick = 0;
 
-    const data = Array.from({length: n}, (_, i) => random())
+    const dataInit = () => Array.from({length: n}, (_, i) => random())
 
     const display = () => {
         console.log("display part1")
+        const data = dataInit()
+        let tick = 0
+        const simulation = d3.forceSimulation()
 
         d3.select(selector)
             .selectAll("circle")
@@ -86,32 +87,49 @@ const VizPart1 = () => {
                 return startCenter[1]
             })
             .strength(centeringStrength))
-            .alphaDecay(0)
             .velocityDecay(velocityDecay)
             .on("tick", () => {
+                const u = d3.select(selector)
+                    .selectAll("circle")
+
+                u.data(data)
+                    .enter()
+                    .append("circle")
+                    .attr('r', d => d.r)
+                    .attr('fill', d => d.fill)
+                    .merge(u)
+                    .attr("cx", d => d.x)
+                    .attr("cy", d => d.y)
+
                 tick += 1
                 if (tick <= cycles) {
                     data.push(random()); // create a node
-                    // this.nodes(data_nodes); // update the nodes.
                     simulation.nodes(data)
-
-                    const u = d3.select(selector)
-                        .selectAll("circle")
-
-                    u.data(data)
-                        .enter()
-                        .append("circle")
-                        .attr('r', d => d.r)
-                        .attr('fill', d => d.fill)
-                        .merge(u)
-                        .attr("cx", d => d.x)
-                        .attr("cy", d => d.y)
-                } 
+                } else {
+                    simulation.alphaMin(0.2)
+                }
+            })
+            .on("end", () => {
+                d3.select(selector)
+                    .append("text")
+                    .text(`มี ${statistics.part1.totalOrgs} นิติบุคคล ที่เกี่ยวข้องกับโครงการของอปท.`)
+                    .attr("text-anchor", "middle")
+                    .attr("x", startCenter[0] - 150)
+                    .attr("y", startCenter[1] + innerRadius + 100)
+                    .style("font-size", "10px")
+                    .transition()
+                    .attr("fill", "white")
             })
     }
 
     const reset = () => {
-        tick = 0
+        d3.select(selector)
+            .selectAll("circle")
+            .transition()
+            .style("opacity", 0)
+            .remove()
+
+        d3.select(selector).select("text").remove()
     }
 
     return {node, display, reset}

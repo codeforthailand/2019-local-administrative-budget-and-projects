@@ -108,10 +108,11 @@ const globalConfig = {
 const statistics = {
     "part1": {
         "totalGovBudget": 720822 * 1e6,
-        "totalProjects": 30000,
+        "totalProjects": 92137,
         "totalValue": 32768 * 1e6,
         "totalCivilProjectValue": 21252 * 1e6,
-        "totalCivilProjects": 12222,
+        "totalCivilProjects": 30634,
+        "totalOrgs": 10000, // this is a mock data
     }
 }
 

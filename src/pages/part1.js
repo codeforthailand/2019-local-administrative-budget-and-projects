@@ -21,14 +21,20 @@ const Part1 = ({currentPage}) => {
     useEffect(()=> {
         const obj = VizPart1()
         setViz(obj)
+
+        return () => {
+            obj.reset()
+        }
     }, [])
 
     useEffect( () => {
         if(viz.node){
             if(PAGE_NO === currentPage){
                 viz.display()
-            } 
-        }
+            }  else {
+                viz.reset()
+            }
+        } 
     }, [viz, currentPage])
     
     return <div style={{background: "black", color: "white", height: "100%"}}>
@@ -48,8 +54,8 @@ const Part1 = ({currentPage}) => {
               ชี้ชัดว่าอย่างน้อย 2 ใน 3 จากทั้งหมด { utils.numFormatInt(statistics.part1.totalProjects) } กว่าโครงการ
               เม็ดเงิน { utils.numFormatInt(statistics.part1.totalValue / 1e6) } ล้านบาท  มีโครงการจัดซื้อจัดจ้างโดย อปท.
               ซึ่งเป็นงานเกี่ยวกับการโยธา เช่น ซ่อม สร้าง ขุด ถนน ถมลูกรัง คอนกรีต และขุดท่อ
+              จำนวน { utils.numFormatInt(statistics.part1.totalCivilProjects) } โครงการ
               คิดเป็นเงินรวมแล้วกว่า { utils.numFormatInt(statistics.part1.totalCivilProjectValue / 1e6) } ล้านบาท 
-              จำนวน <span style={{color: "red"}}>{ utils.numFormatInt(statistics.part1.totalCivilProjects) }</span> โครงการ
              </p>
         </div>
     </div>
