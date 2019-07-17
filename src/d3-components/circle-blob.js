@@ -2,6 +2,9 @@ import * as d3 from "d3"
 import {labelConstant, globalConfig} from "../constant"
 
 const CircleBlob = ({data, navigate}) => {
+    const clsName = "circleBlob"
+    const selector = `svg.${clsName}`
+
     const maxSize = d3.max(data, d => d.size)
     const minSize = d3.min(data, d => d.size) 
 
@@ -28,7 +31,7 @@ const CircleBlob = ({data, navigate}) => {
 
     const svg = d3.select(node)
         .append("svg")
-        .attr("class", "part4")
+        .attr("class", clsName)
         .attr("width", width)
         .attr("height", height)
 
@@ -65,7 +68,7 @@ const CircleBlob = ({data, navigate}) => {
     }
 
     const setLabels = (key) => {
-        const u = d3.select("svg.part4")
+        const u = d3.select(selector)
             .selectAll("text.label")
             .data(xCenter[key], d => d)
 
@@ -85,7 +88,7 @@ const CircleBlob = ({data, navigate}) => {
 
 
     const draw = (key, highlightKey) => {
-        const u = d3.select("svg.part4").select("g") 
+        const u = d3.select(selector).select("g") 
             .selectAll('circle')
             .data(nodes)
 
@@ -143,7 +146,7 @@ const CircleBlob = ({data, navigate}) => {
     const setCircleHighlight = (key, highlightKey) => {
         draw(key, highlightKey)
 
-        d3.select("svg.part4")
+        d3.select(selector)
             .selectAll("circle")
             .transition()
             .attr("fill", (d) => findColor(highlightKey, d))

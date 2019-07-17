@@ -6,7 +6,7 @@ const Page = ({header, children}) => {
         }}>
         <h2>{header}</h2>
         <div style={{marginTop: "10vh"}}>
-            <div style={{width: "70%", float: "left"}}>
+            <div style={{width: "60%", float: "left"}}>
                 <div style={{padding: "1em"}}>
                     {children[0]}
                 </div>

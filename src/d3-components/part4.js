@@ -3,6 +3,7 @@ import * as d3 from "d3"
 const VizPart4 = (data) => {
     const clsName = "part4"
     const selector = `svg.${clsName}`
+
     const node = document.createElement('div')
 
     const moneyFormat = d3.format(',.0f')
@@ -13,7 +14,7 @@ const VizPart4 = (data) => {
     const margin = { top: 0, left: 0, bottom: 0, right: 0};
     const radius = Math.min(width, height) / 2 * 0.75;
     const centroid = {cx:width/2,cy:height/2}
-    const delay_duration = 1800
+    const delay_duration = 1200
 
     const cScale = d3.scaleOrdinal()
         .domain(d => d.income_src)
@@ -31,7 +32,7 @@ const VizPart4 = (data) => {
             .attr('class','center_text')
             .attr('x', centroid.cx-80)
             .attr('y', centroid.cy+10)
-            .style("font-size", "1.5em")
+            .style("font-size", "1.2em")
 
         const arc = d3.arc()
                 .outerRadius(radius * 0.6)
@@ -117,7 +118,6 @@ const VizPart4 = (data) => {
             .style('font-size', '10px')
             .transition()
             .style('opacity', 1)
-
     }
 
     const reset = () => {

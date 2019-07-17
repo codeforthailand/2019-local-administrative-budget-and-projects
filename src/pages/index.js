@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react"
+import React, {useState, useEffect, useRef, useCallback} from "react"
 
 import { navigate } from "gatsby"
 import ReactPageScroller from "react-page-scroller";
@@ -115,8 +115,26 @@ const IndexPage = () => {
     refPager.current.goToPage(currentPage + diff) 
   }
 
+  const handleUserKeyPress = useCallback(event => {
+    const { key } = event
+    if(key === "n" || key === "ArrowRight"){
+      movePageBy(1)
+    } else if(key === "p" || key === "ArrowLeft") {
+      movePageBy(-1)
+    } else if(key === "g") {
+      const pageNo = parseInt(
+        prompt(`Please input page number (1-${globalConfig.pageTitles.length})`)
+      )
+      refPager.current.goToPage(pageNo-1)
+    }
+  }, [currentPage]);
 
-  window.goToPage = (p) => refPager.current.goToPage(p)
+  useEffect(() => {
+      window.addEventListener('keydown', handleUserKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleUserKeyPress);
+    };
+  }, [handleUserKeyPress]);
 
   return (
     <Layout>
@@ -127,14 +145,12 @@ const IndexPage = () => {
           containerWidth="100%"
           containerHeight="100vh"
           ref={refPager} 
-          pageOnChange={(e) => {
-            setCurrentPage(e-1)
-          }}
+          pageOnChange={(e) => setCurrentPage(e-1)}
         >
           <Part1 currentPage={currentPage}/>
           <Part2 currentPage={currentPage}/>
           <Part3/>
-          <Part4/>
+          <Part4 currentPage={currentPage}/>
           <Part5/>
           <Part6 totalOrgs={totalOrgs}/>
           <Part7/>
