@@ -113,6 +113,26 @@ const statistics = {
         "totalCivilProjectValue": 21252 * 1e6,
         "totalCivilProjects": 30634,
         "totalOrgs": 10000, // this is a mock data
+    },
+    "part4": {
+        "budgetPortions": [
+            {
+                "name": "รายได้ที่ อปท. จัดหาเอง",
+                "amount": 112000
+            },
+            {
+                "name": "รายได้ที่รัฐบาลเก็บให้และแบ่งให้",
+                "amount": 229900 
+            },
+            {
+                "name": "ภาษีมูลค่าเพิ่มที่รัฐบาลแบ่งให้  (ตาม พ.ร.บ. กำหนดแผนฯ)",
+                "amount": 115000 
+            },
+            {
+                "name": "เงินอุดหนุน",
+                "amount": 263922 
+            },
+        ]
     }
 }
 
