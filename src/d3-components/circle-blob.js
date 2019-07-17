@@ -55,7 +55,8 @@ const CircleBlob = ({data, navigate}) => {
         simulation.stop()
     }
 
-    const findColor = (highlightKey, d, scaler) => {
+    const findColor = (highlightKey, d) => {
+        console.log("find colorxx")
         const selectedProjects = d.projects.filter(
             p => p.purchase_method_name === highlightKey.name
         )
@@ -81,7 +82,52 @@ const CircleBlob = ({data, navigate}) => {
 
             u.exit().remove()
     }
-    
+
+
+    const draw = (key, highlightKey) => {
+        const u = d3.select("svg.part4").select("g") 
+            .selectAll('circle')
+            .data(nodes)
+
+        u.enter() 
+            .append('circle')
+            .attr("class", "org")
+            .attr('r', (d) => d.radius)
+            .style("pointer-events", "all")
+            .style('cursor', 'pointer')
+            .attr("fill", (d) => findColor(highlightKey, d))
+            .on("click", d => { 
+                window.open(`/org?tin=${d.tin}`, "_blank")
+            })
+            .on("mouseover", (d) => {
+                d3.select("body").select("div.tooltip")
+                    .html(`
+                    ${d.name}<br/>
+                    ได้รับทั้งหมด ${d.totalProjects} โครงการ
+                    รวมมูลค่าทั้งสิ้น ฿${Math.round(d.size)}M
+                    `
+                    )
+                    .style("z-index", 1000)
+                    .style("left", (d3.event.pageX + 20) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px")
+                    .transition()
+                    .style("opacity", 0.8)
+                    .style("display", "block")
+            })
+            .on("mouseleave", () => {
+                d3.select("body").select("div.tooltip")
+                    .transition()
+                    .style("opacity", 0)
+                    .style("display", "none")
+            })
+            .merge(u)
+            .attr('cx', d => d.x)
+            .attr('cy', d => height/2 + d.y)
+
+        u.exit().remove();
+
+        setLabels(key)
+    }
 
     const doSimulate = ({key, restart, highlightKey}) => {
         if(restart){
@@ -91,58 +137,16 @@ const CircleBlob = ({data, navigate}) => {
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
             .force('collision', d3.forceCollide().radius(d => d.radius))
-            .on('tick', () => {
-                const u = d3.select("svg.part4").select("g") 
-                    .selectAll('circle')
-                    .data(nodes)
-
-                u.enter() 
-                    .append('circle')
-                    .attr("class", "org")
-                    .attr('r', (d) => d.radius)
-                    .style("pointer-events", "all")
-                    .style('cursor', 'pointer')
-                    .attr("fill", (d) => findColor(highlightKey, d))
-                    .on("click", d => { 
-                        window.open(`/org?tin=${d.tin}`, "_blank")
-                    })
-                    .on("mouseover", (d) => {
-                        d3.select("body").select("div.tooltip")
-                            .html(`
-                            ${d.name}<br/>
-                            ได้รับทั้งหมด ${d.totalProjects} โครงการ
-                            รวมมูลค่าทั้งสิ้น ฿${Math.round(d.size)}M
-                            `
-                            )
-                            .style("z-index", 1000)
-                            .style("left", (d3.event.pageX + 20) + "px")
-                            .style("top", (d3.event.pageY - 28) + "px")
-                            .transition()
-                            .style("opacity", 0.8)
-                            .style("display", "block")
-                    })
-                    .on("mouseleave", () => {
-                        d3.select("body").select("div.tooltip")
-                            .transition()
-                            .style("opacity", 0)
-                            .style("display", "none")
-                    })
-                    .merge(u)
-                    .attr('cx', d => d.x)
-                    .attr('cy', d => height/2 + d.y)
-
-                u.exit().remove();
-            })
-
-            setLabels(key)
+            .on('tick', () => draw(key, highlightKey))
     }
 
     const setCircleHighlight = (key, highlightKey) => {
-        d3.selectAll("circle.org")
-            .transition()
-            .attr("fill", d => findColor(highlightKey, d))
+        draw(key, highlightKey)
 
-        setLabels(key)
+        d3.select("svg.part4")
+            .selectAll("circle")
+            .transition()
+            .attr("fill", (d) => findColor(highlightKey, d))
     }
 
    return {node, cleanUp, doSimulate, setCircleHighlight}

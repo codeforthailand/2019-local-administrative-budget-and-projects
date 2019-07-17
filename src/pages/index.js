@@ -49,7 +49,7 @@ const filterOptions = [
 
 const IndexPage = () => {
 
-  const [d3Dom, setd3Dom] = useState({node: "", simulation: ""})
+  const [d3Dom, setd3Dom] = useState({})
   const [currentPage, setCurrentPage] = useState(0)
   const [highlightCategory, setHighlightCategory] = useState(0)
   const refPager = useRef()
@@ -102,18 +102,21 @@ const IndexPage = () => {
   }, [d3Dom, currentPage])
 
   useEffect(() => {
-    if(d3Dom.node){
-      const relIx = currentPage - globalConfig.mainVizPageNo
+    const relIx = currentPage - globalConfig.mainVizPageNo
+    if(d3Dom.node && relIx >= 0){
       d3Dom.setCircleHighlight(
         filterOptions[relIx].key,
         globalConfig.purchaseMethods[highlightCategory]
       )
     }
-  }, [highlightCategory])
+  }, [d3Dom, highlightCategory])
 
   const movePageBy = (diff) => {
     refPager.current.goToPage(currentPage + diff) 
   }
+
+
+  window.goToPage = (p) => refPager.current.goToPage(p)
 
   return (
     <Layout>
