@@ -8,9 +8,10 @@ import { useQueryParam, StringParam } from 'use-query-params';
 import Layout from "../components/layout"
 import bipartite from "d3-bipartite"
 import BipartiteGraph from "../d3-components/bipartite"
+import Link from "../components/link"
 
 import {db} from "../constant"
-import { default as utils } from "../utils"
+import utils from "../utils"
 
 const RD3Component = rd3.Component;
 
@@ -42,7 +43,7 @@ const OrgPage = () => {
   const padding = 10
 
   const windowWidthHeight = getWindowWidthHeight()
-  const width =  windowWidthHeight.width * 0.3
+  const width =  windowWidthHeight.width * 0.25
   const height = windowWidthHeight.height * 0.5
 
   const layout = bipartite() 
@@ -68,6 +69,8 @@ const OrgPage = () => {
       
       const org = result.data
         .filter(o => o.tin === tin)[0]
+      
+        console.log(org)
 
       const dd = {}
 
@@ -120,15 +123,17 @@ const OrgPage = () => {
 
           { orgProfile.projects &&  <span>
               ได้รับโครงการจากองค์การปกครองส่วนท้องถ่ินต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
-              {` `}ซึ่งมีมูลค่ารวมทั้งสิ้น ฿{topKProjects.map(p => p.sum_price_agree).reduce( (a,b) => a+b, 0)/1e6}M 
-              โดยโครงการที่มีมูลค่าสูงสุด {topKProjects.length} อันดับแรก คือ 
+              {` `}ซึ่งมีมูลค่ารวมทั้งสิ้น {utils.moneyFormat(topKProjects.map(p => p.sum_price_agree).reduce( (a,b) => a+b, 0)/1e6)}
+              {` `}โดยโครงการที่มีมูลค่าสูงสุด {topKProjects.length} อันดับแรก คือ 
               <ul>
                 {
                   topKProjects.map(p => {
                     return <li key={`${p.sum_price_agree}-${p.province}`}>
-                      <b>ชื่อโครงการ </b>(มูลค่า ฿{p.sum_price_agree/1e6}M)<br/>
-                      กับ อบต..., {p.province} {` `}
-                      โดยรูปแบบ {p.purchase_method_name}
+                      <Link href="#">
+                        <b>ชื่อโครงการ </b>(มูลค่า {utils.moneyFormat(p.sum_price_agree/1e6)})<br/>
+                        กับ อบต..., {p.province} {` `}
+                        โดยรูปแบบ {p.purchase_method_name}
+                      </Link>
                       </li>
                   })
                 }
@@ -136,12 +141,15 @@ const OrgPage = () => {
           </span>
           }
 
-          <a href={`https://datawarehouse.dbd.go.th/company/profile/3/${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
-            ดูข้อมูลเพิ่มเติมของนิติบุคคลนี้จากกรมการค้าภายใน
-          </a> <br/>
-          <a href="http://govspending.data.go.th" target="_blank" rel="noopener noreferrer"> 
-            ดูโครงการทั้งหมดจาก ภาษีไปไหน?
-          </a>
+          { orgProfile.tin && <div>
+            <Link href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`}>
+                ดูข้อมูลเพิ่มเติมของนิติบุคคลนี้จากกรมการค้าภายใน
+            </Link> <br/>
+            <Link href={`https://govspending.data.go.th/budget?winner=${orgProfile.tin}`}>
+                ดูโครงการทั้งหมดจาก ภาษีไปไหน?
+            </Link>
+            </div>
+          }
         </div> 
       </div>
     </Layout>
