@@ -31,7 +31,8 @@ const labelConstant = {
 }
 
 const db = {
-    url: "/data.json"
+    url: "/data.json",
+    companyProfile: (tin) => `/company-profiles/${tin}.json`
 }
 
 const globalConfig = {

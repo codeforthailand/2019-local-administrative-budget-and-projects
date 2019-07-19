@@ -10,6 +10,8 @@ import bipartite from "d3-bipartite"
 import BipartiteGraph from "../d3-components/bipartite"
 import Link from "../components/link"
 
+import Sugar from "sugar"
+
 import {db} from "../constant"
 import utils from "../utils"
 
@@ -65,22 +67,20 @@ const OrgPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(db.url)
+      const result = await axios(db.companyProfile(tin))
       
       const org = result.data
-        .filter(o => o.tin === tin)[0]
-      
-        console.log(org)
+      console.log(org)
 
       const dd = {}
 
       org.projects
         .forEach(p => {
-          const k = `${p.purchase_method_name}::${p.province}`
+          const k = `${p.purchaseMethod}::${p.province}`
           if (k in dd) {
-            dd[k] += p.sum_price_agree / 1e6
+            dd[k] += p.projectValue / 1e6
           } else {
-            dd[k] = p.sum_price_agree / 1e6
+            dd[k] = p.projectValue / 1e6
           }
         });
 
@@ -96,7 +96,7 @@ const OrgPage = () => {
       setData(connections)
       setOrgProfile(org)
 
-      const k = Math.min(5, org.projects.length)
+      const k = Math.min(3, org.projects.length)
       const topProjects = org.projects
         .slice()
         .sort( (a, b) => b.sum_price_agree - a.sum_price_agree)
@@ -110,7 +110,7 @@ const OrgPage = () => {
 
   return (
     <Layout>
-      <div style={{padding: "20px"}}>
+      <div style={{padding: "20px", marginTop: "5%"}}>
         {/* <div>
           <Link to="/">กลับไปหน้าแรก</Link> หรือ <Placeholder name="🔍 ค้นหา นิติบุคลลอื่นๆ"/>
         </div> */}
@@ -118,22 +118,26 @@ const OrgPage = () => {
           <RD3Component data={d3Dom}/>
         </div>
 
-        <div style={{width: "40%", marginLeft: "60%"}}>
-          <h2>{orgProfile.name}</h2>
-
+        <div style={{width: "40%", marginLeft: "55%"}}>
+          <div style={{fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", marginTop: "0"}}>
+            {orgProfile.name}
+          </div>
           { orgProfile.projects &&  <span>
-              ได้รับโครงการจากองค์การปกครองส่วนท้องถ่ินต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
-              {` `}ซึ่งมีมูลค่ารวมทั้งสิ้น {utils.moneyFormat(topKProjects.map(p => p.sum_price_agree).reduce( (a,b) => a+b, 0)/1e6)}
+              ได้รับโครงการจากอปท.ต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
+              {` `}ซึ่งรวมมูลค่าทั้งหมด {utils.moneyFormat(orgProfile.projects.map(p => p.projectValue).reduce( (a,b) => a+b, 0)/1e6)}
               {` `}โดยโครงการที่มีมูลค่าสูงสุด {topKProjects.length} อันดับแรก คือ 
               <ul>
                 {
                   topKProjects.map(p => {
-                    return <li key={`${p.sum_price_agree}-${p.province}`}>
-                      <Link href="#">
-                        <b>ชื่อโครงการ </b>(มูลค่า {utils.moneyFormat(p.sum_price_agree/1e6)})<br/>
-                        กับ อบต..., {p.province} {` `}
-                        โดยรูปแบบ {p.purchase_method_name}
-                      </Link>
+                    return <li key={p.projectName} alt={p.projectName}>
+                      <a style={{color: "black", textDecoration: "none"}}
+                        href={`https://govspending.data.go.th/budget?tgsp=${p.projectId}`} target="_blank" rel="noopener noreferrer"
+                      >
+                        <b>{ Sugar.String.truncate(p.projectName, 60) }</b> <br/>
+                        กับ {p.localAuthority}, {p.province} {` `} <br/>
+                        โดยรูปแบบ {p.purchaseMethod} <br/>
+                        มูลค่าโครงการ {utils.moneyFormat(p.projectValue/1e6)}<br/>
+                      </a>
                       </li>
                   })
                 }
@@ -141,13 +145,15 @@ const OrgPage = () => {
           </span>
           }
 
-          { orgProfile.tin && <div>
-            <Link href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`}>
+          { orgProfile.tin && <div style={{textDecoration: "underline", textAlign: "center"}}>
+            <a style={{color: "black", textDecoration: "none"}}
+              href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`} rel="noopener noreferrer">
                 ดูข้อมูลเพิ่มเติมของนิติบุคคลนี้จากกรมการค้าภายใน
-            </Link> <br/>
-            <Link href={`https://govspending.data.go.th/budget?winner=${orgProfile.tin}`}>
+            </a> <br/>
+            <a style={{color: "black", textDecoration: "none"}}
+               href={`https://govspending.data.go.th/budget?winner=${orgProfile.tin}`} rel="noopener noreferrer">
                 ดูโครงการทั้งหมดจาก ภาษีไปไหน?
-            </Link>
+            </a>
             </div>
           }
         </div> 
