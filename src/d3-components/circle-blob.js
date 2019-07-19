@@ -76,7 +76,8 @@ const CircleBlob = ({data, navigate}) => {
                 .append("text")
                 .attr("class", "label")
                 .style("text-anchor", "middle")
-                .style("font-size", 12)
+                // .style("font-size", 12)
+                .style("font-weight", "bold")
                 .merge(u)
                 .attr("x", (d) => d)
                 .attr("y", height - 100)
@@ -132,8 +133,10 @@ const CircleBlob = ({data, navigate}) => {
         setLabels(key)
     }
 
-    const doSimulate = ({key, restart, highlightKey}) => {
-        if(restart){
+    let lastKey
+
+    const doSimulate = ({key, highlightKey}) => {
+        if(lastKey != key){
             simulation.alpha(0.8).restart()
         }
 
@@ -141,6 +144,8 @@ const CircleBlob = ({data, navigate}) => {
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
             .force('collision', d3.forceCollide().radius(d => d.radius))
             .on('tick', () => draw(key, highlightKey))
+
+        lastKey = key
     }
 
     const setCircleHighlight = (key, highlightKey) => {

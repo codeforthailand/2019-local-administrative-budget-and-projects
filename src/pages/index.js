@@ -77,6 +77,14 @@ const IndexPage = () => {
       })
 
       const obj = CircleBlob({data, navigate})
+
+      setTimeout( () => {
+        obj.doSimulate({
+          key: filterOptions[0].key,
+          highlightKey: globalConfig.purchaseMethods[highlightCategory]
+        })
+      }, 2000)
+
       setd3Dom(obj)
       setTotalOrgs(data.length)
 
@@ -94,7 +102,6 @@ const IndexPage = () => {
       const relIx = currentPage - globalConfig.mainVizPageNo
       d3Dom.doSimulate({
         key: filterOptions[relIx].key,
-        restart: true,
         highlightKey: globalConfig.purchaseMethods[highlightCategory]
       })
     }
@@ -160,7 +167,7 @@ const IndexPage = () => {
         </ReactPageScroller>
       </div>
         <div style={{
-            marginTop: "10vh", position: "absolute", top: "0px",
+            position: "absolute", top: "0px",
             pointerEvents: "none",
             display: `${currentViz() === "circleBlob" ? "block": "none"}`
           }}
@@ -178,12 +185,12 @@ const IndexPage = () => {
             pointerEvents: "all"
           }}
         >
-            <div>
+            {/* <div>
               <img style={{height: "30px", marginBottom: 0, verticalAlign: "middle"}}
                 src={sizeLegendImage} alt="สัดส่วนมูลค่าโครงการทั้งหมด"/>
                 สัดส่วนมูลค่าโครงการทั้งหมด
-            </div>
-            <div>
+            </div> */}
+            <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>
               เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
               <select
                 value={highlightCategory}

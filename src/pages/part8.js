@@ -3,11 +3,11 @@ import React from "react"
 import Page from "../components/page"
 
 const Part8 = () => {
-    return <div style={{background: "#CFE8FC", height: "100%"}}>
-        <Page header="ประชาชนสามารถมีส่วนร่วมในการตรวจสอบงบประมาณท้องถิ่น">
+    return <div style={{height: "100%"}}>
+        <Page header="เรามาร่วมกันตรวจสอบงบท้องถิ่นได้">
             <span/>
-            <div>
-                ภาคกลางและภาคตะวันออกเฉียงเหนือมีมูลค่าการจัดซื้อจัดจ้างสูงสุด และมีใครถือหุ้นนิติบุคคลในบริษัทใดบ้าง ตรวจสอบ
+            <div style={{fontSize: "1.3rem", marginTop: "50%"}}>
+                บริษัทไหนได้โครงการอปท.ที่ได้บ้าง ลองกดเข้าไปดูกัน
             </div>
         </Page>
     </div>
