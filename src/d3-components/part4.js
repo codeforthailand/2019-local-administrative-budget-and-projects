@@ -1,4 +1,5 @@
 import * as d3 from "d3"
+import {globalConfig} from "../constant"
 
 const VizPart4 = (data) => {
     const clsName = "part4"
@@ -16,9 +17,11 @@ const VizPart4 = (data) => {
     const centroid = {cx:width/2,cy:height/2}
     const delay_duration = 1200
 
-    const cScale = d3.scaleOrdinal()
-        .domain(d => d.income_src)
-        .range(d3.schemeDark2)
+    const cScale = d3.scaleLinear()
+        .domain([0, Math.max(...data.map(d => d.percentage))])
+        .range(globalConfig.highligthColors)
+
+    console.log(data)
 
     d3.select(node).append('svg')
         .attr("class", clsName)
@@ -62,7 +65,7 @@ const VizPart4 = (data) => {
             .append('path')
             .attr("stroke", "white")
             .style("stroke-width", "2px")
-            .attr("fill", d => cScale(d.data.label))
+            .attr("fill", d => cScale(d.data.percentage))
 
         donus.transition().delay( (_, i) => {
                 return i * delay_duration;

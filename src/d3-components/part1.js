@@ -1,5 +1,6 @@
 import * as d3 from "d3"
 import {globalConfig, statistics} from "../constant"
+import utils from "../utils"
 
 const VizPart1 = () => {
     // constants to define the size
@@ -112,11 +113,12 @@ const VizPart1 = () => {
             .on("end", () => {
                 d3.select(selector)
                     .append("text")
-                    .text(`มี ${statistics.part1.totalOrgs} นิติบุคคล ที่เกี่ยวข้องกับโครงการของอปท.`)
+                    .text(`มี ${utils.numFormatInt(statistics.part1.totalOrgs)} นิติบุคคล ที่เกี่ยวข้องกับอปท.`)
                     .attr("text-anchor", "middle")
-                    .attr("x", startCenter[0] - 150)
+                    .attr("x", startCenter[0] - 50)
                     .attr("y", startCenter[1] + innerRadius + 100)
-                    .style("font-size", "10px")
+                    .style("font-size", "1.5rem")
+                    .style("font-weight", "bold")
                     .transition()
                     .attr("fill", "white")
             })
