@@ -113,7 +113,7 @@ const statistics = {
         "totalValue": 32768 * 1e6,
         "totalCivilProjectValue": 21252 * 1e6,
         "totalCivilProjects": 30634,
-        "totalOrgs": 10000, // this is a mock data
+        "totalOrgs": 33225,
     },
     "part4": {
         "budgetPortions": [

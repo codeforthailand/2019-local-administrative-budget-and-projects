@@ -1,6 +1,7 @@
 import React from "react"
 
 import Page from "../components/page"
+import utils from "../utils";
 
 const Part6 = ({totalOrgs=20}) => {
     return <div style={{height: "100%"}}>
@@ -14,7 +15,7 @@ const Part6 = ({totalOrgs=20}) => {
                     ที่มีขีดความสามารถในการได้งานจากท้องถิ่นทั่วประเทศ ด้วยการชี้วัดมูลค่างานและจำนวนสัญญา
                 </div>
                 <div style={{font: "1rem", fontWeight: "normal", marginTop: "1.2rem"}}>
-                   <b>หมายเหตุ:</b> ข้อมูลจากเว็บภาษีไปไหน
+                   <b>หมายเหตุ:</b> 1) ข้อมูลจากเว็บภาษีไปไหน; 2) บริษัทเหล่านี้คือบริษัทที่มีมูลค่าโครงการรวมทั้งปีมากกว่า 20 ล้านบาท
                 </div>
             </div>
         </Page>
