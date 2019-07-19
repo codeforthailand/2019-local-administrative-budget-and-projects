@@ -45,7 +45,7 @@ const Part4 = ({currentPage}) => {
       }, [viz, currentPage])
 
     return <div>
-            <Page header="เป้าหมายสัดส่วนรายได้ของ อปท. ปี 2561">
+            <Page header="สัดส่วนรายได้ของ อปท.">
                 <div>
                     <RD3Component data={viz.node}/>
                 </div>

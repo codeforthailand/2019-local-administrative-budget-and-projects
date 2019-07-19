@@ -16,6 +16,7 @@ const VizPart4 = (data) => {
     const radius = Math.min(width, height) / 2 * 0.75;
     const centroid = {cx:width/2,cy:height/2}
     const delay_duration = 1000
+    const centerTextDefault =  "ปี 2561"
 
     const cScale = d3.scaleLinear()
         .domain([0, Math.max(...data.map(d => d.percentage))])
@@ -36,6 +37,7 @@ const VizPart4 = (data) => {
             .style("font-size", "1.5rem")
             .style("font-weight", "bold")
             .style("text-anchor", "middle")
+            .text(centerTextDefault)
 
         const arc = d3.arc()
                 .outerRadius(radius * 0.6)
@@ -89,6 +91,17 @@ const VizPart4 = (data) => {
                         return 0.1
                     }
                 })
+
+            d3.select(selector).selectAll("text.label")
+                .style("opacity", (dd, j) => {
+                    console.log(dd, j)
+                    if (i === j) {
+                        return 1
+                    } else {
+                        return 0.1
+                    }
+                })
+
             centerText.text(moneyFormat(d.data.value) + " ล้านบาท")
         })
         .on('mouseleave', () => {
@@ -97,15 +110,15 @@ const VizPart4 = (data) => {
                 .transition()
                 .style("opacity", 1)
 
-            centerText.text("")
+            centerText.text(centerTextDefault)
         })
 
         chart.append('g')
-            .attr('class','label')
             .selectAll("text")
             .data(pie(data))
             .enter()
             .append("text")
+            .attr('class','label')
             .attr('transform', (d) => {
                 let pos = outerArc.centroid(d);
                 let midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
