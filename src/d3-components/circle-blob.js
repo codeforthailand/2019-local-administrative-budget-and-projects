@@ -132,8 +132,8 @@ const CircleBlob = ({data, navigate}) => {
 
     let lastKey
 
-    const doSimulate = ({key, highlightKey}) => {
-        if(lastKey != key){
+    const doSimulate = ({key, restart=false, highlightKey}) => {
+        if(lastKey != key || restart){
             simulation.alpha(0.8).restart()
         }
 

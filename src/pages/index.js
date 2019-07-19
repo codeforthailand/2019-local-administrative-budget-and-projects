@@ -100,6 +100,7 @@ const IndexPage = () => {
       const relIx = currentPage - globalConfig.mainVizPageNo
       d3Dom.doSimulate({
         key: filterOptions[relIx].key,
+        restart: true && relIx != 0,
         highlightKey: globalConfig.purchaseMethods[highlightCategory]
       })
     }
