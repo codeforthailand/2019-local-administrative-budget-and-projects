@@ -6,7 +6,7 @@ const joinArray = (arr) => {
     return arr.reduce((p, c) => [p, ", ", c])
 }
 const Person = ({name, url}) => {
-    return <a style={{color: "white", textDecoration: "none"}}
+    return <a style={{color: "white"}}
         href={url} target="_blank" rel="noopener noreferrer"
         >
             {name}
@@ -59,7 +59,8 @@ const CreditPage = () => {
             และความช่วยเหลือจาก {` `}
                 {
                     joinArray([
-                        <Person name="บุญมีแลป" url="http://boonmeelab.com"/>
+                        <Person name="บุญมีแล็บ" url="http://boonmeelab.com"/>,
+                        <Person name="พั้นช์ อัพ" url="https://www.facebook.com/punchupworld/"/>
                     ])
                 }
             <br/>

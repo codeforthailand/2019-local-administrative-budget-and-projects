@@ -1,5 +1,6 @@
 import * as d3 from "d3"
 import {labelConstant, globalConfig} from "../constant"
+import utils from "../utils"
 
 const CircleBlob = ({data, navigate}) => {
     const clsName = "circleBlob"
@@ -76,7 +77,6 @@ const CircleBlob = ({data, navigate}) => {
                 .append("text")
                 .attr("class", "label")
                 .style("text-anchor", "middle")
-                // .style("font-size", 12)
                 .style("font-weight", "bold")
                 .merge(u)
                 .attr("x", (d) => d)
@@ -107,8 +107,8 @@ const CircleBlob = ({data, navigate}) => {
                 d3.select("body").select("div.tooltip")
                     .html(`
                     ${d.name}<br/>
-                    ได้รับทั้งหมด ${d.totalProjects} โครงการ
-                    รวมมูลค่าทั้งสิ้น ฿${Math.round(d.size)}M
+                    ได้รับงานอปท.ทั้งหมด ${d.totalProjects} โครงการ
+                    รวมมูลค่าทั้งสิ้น ${ utils.numFormatInt(Math.round(d.size)) } ล้านบาท
                     `
                     )
                     .style("z-index", 1000)

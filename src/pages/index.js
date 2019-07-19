@@ -78,13 +78,6 @@ const IndexPage = () => {
 
       const obj = CircleBlob({data, navigate})
 
-      setTimeout( () => {
-        obj.doSimulate({
-          key: filterOptions[0].key,
-          highlightKey: globalConfig.purchaseMethods[highlightCategory]
-        })
-      }, 2000)
-
       setd3Dom(obj)
       setTotalOrgs(data.length)
 
@@ -98,6 +91,14 @@ const IndexPage = () => {
   }, [])
 
   useEffect(() => {
+    if(d3Dom.node && currentPage == 4)  {
+      console.log("xx")
+      d3Dom.doSimulate({
+        key: filterOptions[0].key,
+        highlightKey: globalConfig.purchaseMethods[highlightCategory]
+      })
+    }
+
     if(d3Dom.node && currentViz() === "circleBlob"){
       const relIx = currentPage - globalConfig.mainVizPageNo
       d3Dom.doSimulate({

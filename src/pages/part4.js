@@ -35,7 +35,6 @@ const Part4 = ({currentPage}) => {
     }, [])
 
     useEffect( () => {
-        console.log(currentPage)
         if(viz.node){
           if(currentPage === PAGE_NO){
             viz.display()

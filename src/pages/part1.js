@@ -40,7 +40,7 @@ const Part1 = ({currentPage}) => {
     return <div style={{background: "black", color: "white", height: "100%"}}>
         <h1 style={{paddingTop: "15vh", zIndex: 2000, position: "relative", textAlign: "center"}}>
         คุณรู้หรือไม่ปี 2561 องค์กรปกครองส่วนท้องถิ่นทั่วประเทศ (อปท.) 7,852 แห่ง <br/>
-        มีงบประมาณ ทั้งสิ้น{` `}<span style={{fontFamily: "monospace", fontSize: "2em"}}>
+        มีงบประมาณ ทั้งสิ้น{` `}<span style={{fontFamily: "monospace", fontSize: "2em", color: "red"}}>
                 <CountUp duration={3} start={100000} end={statistics.part1.totalGovBudget / 1e6} separator=","/>
             </span>
             {` `}ล้านบาท <Reference color="white" url="http://www.fpo.go.th/main/getattachment/Economic-report/Fiscal-Situation-Report/10820/รายงานสถานการณ์ด้านการคลังประจำปีงบประม.pdf.aspx"/>
