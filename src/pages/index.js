@@ -203,10 +203,10 @@ const IndexPage = () => {
           </div>
         </div>
         <div style={{
-          position: "absolute", border: "1px solid gray",
-          right: "5vh", bottom: "5vh", background: "white", borderRadius: "5px" }}>
+          position: "absolute", border: "1px solid black",
+          right: "5vh", bottom: "5vh", background: "white", borderRadius: "10px" }}>
           <span style={{
-                padding: "5px", cursor: "pointer"
+                padding: "10px", cursor: "pointer"
               }}
               onClick={() => movePageBy(-1)} 
             >
@@ -214,17 +214,16 @@ const IndexPage = () => {
             </span>
           <span
             style={{
-              width: "30vh", textAlign: "center", display: "inline-block",
-              borderRight: "1px solid gray",
-              borderLeft: "1px solid gray",
-              fontSize: "10px",
+              width: "20rem", textAlign: "center", display: "inline-block",
+              borderRight: "1px solid black",
+              borderLeft: "1px solid black",
               verticalAlign: "top",
             }}
             >
               {currentPage+1}/{globalConfig.pageTitles.length} {globalConfig.pageTitles[currentPage]}
           </span>
           <span style={{
-                padding: "5px", cursor: "pointer"
+                padding: "10px", cursor: "pointer"
               }}
               onClick={() => movePageBy(1)} 
             >

@@ -82,7 +82,7 @@ const VizPart2 = (data) => {
             .attr("x", 0)
             .attr("y", (d) => yScale(d.purchase_method_name)+(yScale.bandwidth()/2+ 4))
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
-            .style("font-size", "11px")
+            // .style("font-size", "11px")
         
         project_val
             .transition()
