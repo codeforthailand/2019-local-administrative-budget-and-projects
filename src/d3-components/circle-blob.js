@@ -60,12 +60,9 @@ const CircleBlob = ({data, navigate}) => {
     }
 
     const findColor = (highlightKey, d) => {
-        console.log("find colorxx")
-        const selectedProjects = d.projects.filter(
-            p => p.purchase_method_name === highlightKey.name
-        )
+        const selectedProjects = d.purchaseMethodCount[highlightKey.name] || 0
 
-        return colorScale(selectedProjects.length / d.projects.length)
+        return colorScale(selectedProjects / d.totalProjects)
     }
 
     const setLabels = (key) => {

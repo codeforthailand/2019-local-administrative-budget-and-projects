@@ -62,16 +62,14 @@ const IndexPage = () => {
     const fetchData = async () => {
       const result = await axios(db.url)
       const data = result.data.map( (d, i) => {
-        const budgetM = d['totalProjectBudget'] / 1e6
-        const ratio = d['specificProjects'] / d['totalProjects']
+        const budgetM = d['totalProjectValue'] / 1e6
         return {
           ...d,
-          ratio: ratio,
           size: budgetM,
           category: {
             one: 0,
-            region: regionLookup[d['majorityRegion']],
-            doCivilProjects: Math.random() > 0.7 ? 0 : 1, // this is a mock
+            region: regionLookup[d['primaryRegion']],
+            doCivilProjects: d['doCivilProjects'] === "yes" ? 0 : 1 // "0" is the right most
           }
         }
       })
@@ -92,7 +90,6 @@ const IndexPage = () => {
 
   useEffect(() => {
     if(d3Dom.node && currentPage == 4)  {
-      console.log("xx")
       d3Dom.doSimulate({
         key: filterOptions[0].key,
         highlightKey: globalConfig.purchaseMethods[highlightCategory]
