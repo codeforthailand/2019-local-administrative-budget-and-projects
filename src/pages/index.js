@@ -192,6 +192,10 @@ const IndexPage = () => {
             <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>
               เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
               <select
+                style={{
+                  border: "0px",
+                  background: "#eee",
+                }}
                 value={highlightCategory}
                 onChange={(e) => {
                   setHighlightCategory(e.target.value)
