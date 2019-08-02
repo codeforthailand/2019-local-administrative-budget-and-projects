@@ -37,12 +37,13 @@ const db = {
 
 const globalConfig = {
     references: [],
-    mainVizPageNo: 5,
+    mainVizPageNo: 6,
     highligthColors: [
         "#eee",
         "red"
     ],
     vizAtPage: [
+        "none",
         "none",
         "none",
         "none",
@@ -55,6 +56,7 @@ const globalConfig = {
     ],
     pageTitles: [
         "ขุมทรัพย์อปท. 7 แสนล้านบาท",
+        "สัดส่วนโครงการโยธา",
         "มูลค่าการจัดซื้อ-จัดจ้าง",
         "ที่มาเงินทอน",
         "สัดส่วนรายได้ของ อปท.",
@@ -90,7 +92,6 @@ const globalConfig = {
             name: 'จ้างที่ปรึกษาโดยวิธีประกาศเชิญชวนทั่วไป',
         },
         {
-
             name: 'จ้างที่ปรึกษาโดยวิธีเฉพาะเจาะจง',
         },
         {

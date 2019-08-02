@@ -199,7 +199,8 @@ html {
 }
 body {
   color: hsla(0, 0%, 0%, 0.8);
-  font-family: kanit;
+  font-family: "anugrom", sans-serif;
+  font-style: normal;
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
@@ -621,5 +622,7 @@ pre tt:after {
 }
 
 h1, h2, .header {
-  font-family: athiti
+  font-family: "anugrom", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }

@@ -25,10 +25,13 @@
     "react": "^16.8.6",
     "react-countup": "^4.2.0",
     "react-d3-library": "^1.1.8",
+    "react-device-detect": "^1.7.5",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
+    "react-hooks-window-size": "^0.1.0",
     "react-hotkeys-hook": "^1.4.0",
     "react-page-scroller": "^1.5.1",
+    "react-responsive": "^7.0.0",
     "sugar": "^2.0.6",
     "use-query-params": "^0.3.3"
   },

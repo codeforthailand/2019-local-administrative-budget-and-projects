@@ -9,8 +9,10 @@ import SEO from "../components/seo"
 
 import CircleBlob from "../d3-components/circle-blob"
 import globalStyles from "../styles/global.module.css"
+import MenuBar from "../components/menubar"
 
 import Part1 from "../pages/part1"
+import Part1_2 from "../pages/part1_2"
 import Part2 from "../pages/part2"
 import Part3 from "../pages/part3"
 import Part4 from "../pages/part4"
@@ -153,10 +155,11 @@ const IndexPage = () => {
           ref={refPager} 
           pageOnChange={(e) => setCurrentPage(e-1)}
         >
-          <Part1 currentPage={currentPage}/>
-          <Part2 currentPage={currentPage}/>
+          <Part1 pageNo={0} currentPage={currentPage}/>
+          <Part1_2/>
+          <Part2 pageNo={2} currentPage={currentPage}/>
           <Part3/>
-          <Part4 currentPage={currentPage}/>
+          <Part4 pageNo={4} currentPage={currentPage}/>
           <Part5/>
           <Part6 totalOrgs={totalOrgs}/>
           <Part7/>
@@ -184,11 +187,6 @@ const IndexPage = () => {
             pointerEvents: "all"
           }}
         >
-            {/* <div>
-              <img style={{height: "30px", marginBottom: 0, verticalAlign: "middle"}}
-                src={sizeLegendImage} alt="สัดส่วนมูลค่าโครงการทั้งหมด"/>
-                สัดส่วนมูลค่าโครงการทั้งหมด
-            </div> */}
             <div style={{fontSize: "1.2rem", fontWeight: "bold"}}>
               เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
               <select
@@ -212,34 +210,9 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
-        <div style={{
-          position: "absolute", border: "1px solid black",
-          right: "5vh", bottom: "5vh", background: "white", borderRadius: "10px" }}>
-          <span style={{
-                padding: "10px", cursor: "pointer"
-              }}
-              onClick={() => movePageBy(-1)} 
-            >
-              ←
-            </span>
-          <span
-            style={{
-              width: "20rem", textAlign: "center", display: "inline-block",
-              borderRight: "1px solid black",
-              borderLeft: "1px solid black",
-              verticalAlign: "top",
-            }}
-            >
-              {currentPage+1}/{globalConfig.pageTitles.length} {globalConfig.pageTitles[currentPage]}
-          </span>
-          <span style={{
-                padding: "10px", cursor: "pointer"
-              }}
-              onClick={() => movePageBy(1)} 
-            >
-              →
-            </span>
-        </div>
+        <MenuBar onLeftClick={() => movePageBy(-1)} onRightClick={() => movePageBy(1)}
+          title={`${currentPage+1}/${globalConfig.pageTitles.length} ${globalConfig.pageTitles[currentPage]}`}
+        />
     </Layout>
   )
 

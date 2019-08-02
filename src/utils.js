@@ -24,11 +24,4 @@ utils.numFormatInt = d3.format(",")
 utils.numFormatFloat = d3.format(",.2f")
 utils.moneyFormat = (d) => `${utils.numFormatFloat(d)} ล้านบาท`
 
-utils.screenSize = () => {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight
-  }
-}
-
 export default utils

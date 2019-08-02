@@ -2,17 +2,31 @@ import * as d3 from "d3"
 import {globalConfig, statistics} from "../constant"
 import utils from "../utils"
 
-const VizPart1 = () => {
+const VizPart1 = ({containerWidth, containerHeight}) => {
     // constants to define the size
     // and margins of the vis area.
-    let width = 800;
-    let height = 500;
-    let margin = {
-        top: 20,
-        left: 40,
-        bottom: 80,
-        right: 40
-    };
+    const width = 0.9 * containerWidth
+    const height = 0.875 * containerHeight 
+    // let width = 800;
+    // let height = 500;
+    // const width = width;
+    // const height = height
+    // const margin = {
+    //     top: 20,
+    //     left: 40,
+    //     bottom: 80,
+    //     right: 40
+    // };
+    const margin = {
+        top: 0.025 * containerHeight,
+        left: 0.05 * containerWidth,
+        bottom: 0.1 * containerHeight,
+        right: 0.05 * containerWidth
+    }
+    console.log(containerWidth)
+    console.log(margin.left)
+
+    console.log(width + margin.left + margin.right)
 
     const colorScale = d3.scaleLinear()
         .domain([0, 1])
@@ -38,7 +52,7 @@ const VizPart1 = () => {
         .attr("class", clsName)
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Helper function for part 1 - Create a random node
     function random() {
@@ -115,7 +129,7 @@ const VizPart1 = () => {
                     .append("text")
                     .text(`มี ${utils.numFormatInt(statistics.part1.totalOrgs)} นิติบุคคล ที่เกี่ยวข้องกับอปท.`)
                     .attr("text-anchor", "middle")
-                    .attr("x", startCenter[0] - 50)
+                    .attr("x", startCenter[0])
                     .attr("y", startCenter[1] + innerRadius + 100)
                     .style("font-size", "1.5rem")
                     .style("font-weight", "bold")

@@ -13,7 +13,7 @@ const RD3Component = rd3.Component
 
 const PAGE_NO = 1
 
-const Part2 = ({currentPage}) => {
+const Part2 = ({pageNo, currentPage}) => {
     const {allPurchaseMethodSummaryCsv} =  useStaticQuery(graphql`
       query {
         allPurchaseMethodSummaryCsv 
@@ -44,7 +44,7 @@ const Part2 = ({currentPage}) => {
 
     useEffect( () => {
       if(viz.node){
-        if(currentPage === PAGE_NO){
+        if(currentPage === pageNo){
           viz.display()
         } else {
           viz.reset()

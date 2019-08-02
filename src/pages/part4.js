@@ -12,9 +12,8 @@ import {statistics} from "../constant"
 import VizPart4 from "../d3-components/part4"
 
 const RD3Component = rd3.Component
-const PAGE_NO = 3
 
-const Part4 = ({currentPage}) => {
+const Part4 = ({pageNo, currentPage}) => {
     const totalBudget = statistics.part4.budgetPortions
         .map(d => d.amount)
         .reduce((a, b) => a + b, 0)
@@ -36,7 +35,7 @@ const Part4 = ({currentPage}) => {
 
     useEffect( () => {
         if(viz.node){
-          if(currentPage === PAGE_NO){
+          if(currentPage === pageNo){
             viz.display()
           } else {
             viz.reset()
