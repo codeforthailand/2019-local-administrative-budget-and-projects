@@ -10,19 +10,19 @@ import VizPart1 from "../d3-components/part1"
 
 import {statistics} from "../constant"
 
-import { useWindowSize } from 'react-hooks-window-size'
+import utils from '../utils'
 
 
 const RD3Component = rd3.Component;
 
 const Part1 = ({pageNo, currentPage}) => {
     const [viz, setViz] = useState({})
-    const size = useWindowSize()
+    const windowObj = utils.getWindowObj()
 
     useEffect(()=> {
         const obj = VizPart1({
-            containerWidth: size.width,
-            containerHeight: size.height
+            containerWidth: windowObj.innerWidth,
+            containerHeight: windowObj.innerHeight,
         })
 
         setViz(obj)

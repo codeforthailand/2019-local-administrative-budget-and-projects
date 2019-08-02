@@ -24,4 +24,12 @@ utils.numFormatInt = d3.format(",")
 utils.numFormatFloat = d3.format(",.2f")
 utils.moneyFormat = (d) => `${utils.numFormatFloat(d)} ล้านบาท`
 
+utils.getWindowObj = () => {
+  if(typeof window !== undefined && window){
+    return window
+  } else {
+    return {}
+  }
+}
+
 export default utils
