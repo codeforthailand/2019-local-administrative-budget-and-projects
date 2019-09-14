@@ -3,39 +3,18 @@ import axios from "axios"
 import React, {useState, useEffect} from "react"
 import rd3 from 'react-d3-library'
 
-import { useQueryParam, StringParam } from 'use-query-params';
-
-import Layout from "../components/layout"
 import bipartite from "d3-bipartite"
-import BipartiteGraph from "../d3-components/bipartite"
-import Link from "../components/link"
+import BipartiteGraph from "../../d3-components/bipartite"
+import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../../shared/style"
 
-import Sugar from "sugar"
 
-import {db} from "../constant"
-import utils from "../utils"
+import utils from "../../utils"
+
+import {db} from "../../constant"
 
 const RD3Component = rd3.Component;
 
-const getWindowWidthHeight = () => {
-  if(typeof window !== 'undefined' && window) {
-    return {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
-  } else {
-    return {
-      width: 0,
-      height: 0
-    }
-  }
-}
-
-const OrgPage = () => {
-  // eslint-disable-next-line
-  const [tin, _] = useQueryParam(
-    'tin', StringParam, utils.defaultLocationSearch()
-  );
+const CompanyInfo = ({tin="0107537002753"}) => {
   const [orgProfile, setOrgProfile] = useState({})
 
   const [d3Dom, setd3Dom] = useState()
@@ -44,9 +23,10 @@ const OrgPage = () => {
 
   const padding = 10
 
-  const windowWidthHeight = getWindowWidthHeight()
-  const width =  windowWidthHeight.width * 0.25
-  const height = windowWidthHeight.height * 0.5
+  const windowWidthHeight = utils.getWindowWidthHeight()
+  const scalingFactor = (utils.isMobile() ? 0.3 : 0.5)
+  const width = windowWidthHeight.width * scalingFactor
+  const height = 300
 
   const layout = bipartite() 
     .width(width)
@@ -109,18 +89,60 @@ const OrgPage = () => {
   }, [])
 
   return (
-    <Layout>
-      <div style={{padding: "20px", marginTop: "5%"}}>
-        {/* <div>
-          <Link to="/">กลับไปหน้าแรก</Link> หรือ <Placeholder name="🔍 ค้นหา นิติบุคลลอื่นๆ"/>
-        </div> */}
-        <div style={{position: "absolute", width: "50%", paddingTop: "20px", paddingLeft: "10px"}}>
+      <div id="company-info"
+        css={{
+          position: "relative"
+        }}
+      >
+        <div css={{
+          textAlign: "center",
+          [media(DESKTOP_MIN_WIDTH)]: {
+            textAlign: "left"
+          }
+        }}>
+          <div css={{
+            margin: "0px auto",
+            padding: "5px",
+            border: "1px solid",
+            width: "auto",
+            display: "inline-block",
+            marginBottom: "10px",
+            [media(DESKTOP_MIN_WIDTH)]: {
+              marginBottom: "0px",
+              position: "absolute",
+              top: "-5px",
+              right: "0px",
+            }
+          }}>
+            สุ่มเลือกบริษัทอื่น
+          </div>
+          <div>
+            รายละเอียดการรับโครงการของ {` `}
+            <span css={{
+              textDecoration: "underline",
+              display: "block",
+              [media(DESKTOP_MIN_WIDTH)]: {
+                display: "inline"
+              }
+            }}>
+              {orgProfile.name}
+            </span>
+          </div>
+        </div>
+        <div
+          css={{
+            marginLeft: `-${width}px`,
+            [media(DESKTOP_MIN_WIDTH)]: {
+              marginLeft: 0
+            }
+          }}
+        >
           <RD3Component data={d3Dom}/>
         </div>
 
-        <div style={{width: "40%", marginLeft: "55%"}}>
+        {/* <div>
           <div style={{fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", marginTop: "0"}}>
-            {orgProfile.name}
+            
           </div>
           { orgProfile.projects &&  <span>
               ได้รับโครงการจากอปท.ต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
@@ -145,6 +167,8 @@ const OrgPage = () => {
           </span>
           }
 
+        </div>  */}
+        <div css={{textAlign: "center"}}>
           { orgProfile.tin && <div style={{textDecoration: "underline", textAlign: "center"}}>
             <a style={{color: "black", textDecoration: "none"}}
               href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
@@ -156,10 +180,9 @@ const OrgPage = () => {
             </a>
             </div>
           }
-        </div> 
+        </div>
       </div>
-    </Layout>
   )
 }
 
-export default OrgPage
+export default CompanyInfo

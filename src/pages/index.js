@@ -2,8 +2,9 @@ import React, {useState, useEffect} from "react"
 
 import * as variables from "../shared/variables"
 
-import { DESKTOP_MIN_WIDTH, media } from "../shared/style"
+import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../shared/style"
 import Placeholder from "../components/placeholder"
+import CompanyInfo from "../components/vis/company-info"
 
 require('typeface-kanit')
 
@@ -14,7 +15,7 @@ const TextBox = ({name, children}) => {
     return <div css={{
         width: "100%",
         margin: "0px auto 10px auto",
-        padding: "0 20px",
+        padding: `0 ${MOBILE_CONTENT_PADDING}px`,
         [media(DESKTOP_MIN_WIDTH)]: {
             width: `${DESKTOP_MIN_WIDTH}px`,
             padding: "0px",
@@ -25,7 +26,7 @@ const TextBox = ({name, children}) => {
     </div>
 }
 
-const NewMain = () => {
+const Index = () => {
     return <div
         css={{
             padding: "10px"
@@ -72,8 +73,11 @@ const NewMain = () => {
             <img  width="100%" src="/figures/org-regional-cluster.png"/>
         </TextBox>
         <TextBox name="ลองซุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>
+        {/* <TextBox>
+        </TextBox> */}
         <TextBox>
-            <img  width="100%" src="/figures/org-details.png"/>
+            {/* <img  width="100%" src="/figures/org-details.png"/> */}
+            <CompanyInfo/>
         </TextBox>
         <TextBox name="บทสรุป">
             {variables.content.sectionEmpty}
@@ -84,4 +88,4 @@ const NewMain = () => {
     </div>
 }
 
-export default NewMain
+export default Index
