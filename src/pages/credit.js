@@ -6,7 +6,7 @@ const joinArray = (arr) => {
     return arr.reduce((p, c) => [p, ", ", c])
 }
 const Person = ({name, url}) => {
-    return <a style={{color: "white"}}
+    return <a style={{color: "black"}}
         href={url} target="_blank" rel="noopener noreferrer"
         >
             {name}
@@ -15,12 +15,8 @@ const Person = ({name, url}) => {
 
 
 const CreditPage = () => {
-    return <div style={{ paddingTop: "20vh"}}>
-        <div style={{
-            height: "80vh",
-            paddingLeft: "10%", paddingTop: "10%",
-            background: "black", color: "white"
-        }}>
+    return <div style={{ paddingTop: "20px"}}>
+        <div>
             เรียบเรียงเนื้อหา: {
                 joinArray([
                     <Person name="ชนิกานต์ กาญจนสาลี" url="http://www.datatalksonline.com"/>,
@@ -63,7 +59,6 @@ const CreditPage = () => {
                         <Person name="พั้นช์ อัพ" url="https://www.facebook.com/punchupworld/"/>
                     ])
                 }
-            <br/>
         </div>
     </div>
 }

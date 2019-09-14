@@ -5,6 +5,7 @@ import * as variables from "../shared/variables"
 import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../shared/style"
 import Placeholder from "../components/placeholder"
 import CompanyInfo from "../components/vis/company-info"
+import CreditPage from "./credit"
 
 require('typeface-kanit')
 
@@ -39,11 +40,10 @@ const Index = () => {
                 }}
             >{variables.header}</h1>
             <div css={{fontSize: "0.8em"}}>
-                <b>เขียนโดย</b>
-                <div css={{marginTop: "10px"}}>
-                    {variables.teamMembers.join(', ')}
+                <b>เขียนโดย: </b>{variables.teamMembers.join(', ')}
+                <div css={{marginTop: "5px"}}>
+                    <b>วันที่: </b>{variables.date}
                 </div>
-                <b>วันที่</b> {variables.date}
             </div>
         </TextBox>
         <br/>
@@ -82,8 +82,14 @@ const Index = () => {
         <TextBox name="บทสรุป">
             {variables.content.sectionEmpty}
         </TextBox>
-        <TextBox name="เครดิต">
-            {variables.content.sectionCredit}
+        <TextBox>
+            <div align="center">
+                ⏤ คณะผู้จัดทำ ⏤
+            </div>
+        </TextBox>
+        <TextBox>
+            <CreditPage/>
+            {/* {variables.content.sectionCredit} */}
         </TextBox>
     </div>
 }
