@@ -1,11 +1,11 @@
-// require('typeface-kanit')
-
 import React, {useState, useEffect} from "react"
 
 import * as variables from "../shared/variables"
 
 import { DESKTOP_MIN_WIDTH, media } from "../shared/style"
 import Placeholder from "../components/placeholder"
+
+require('typeface-kanit')
 
 
 const isDev = true
@@ -48,12 +48,12 @@ const NewMain = () => {
         <br/>
         <TextBox name="intro">{variables.content.section1}</TextBox>
         <TextBox>
-            <img src="/figures/total-project-value-summary.png"/>
+            <img width="100%" src="/figures/total-project-value-summary.png"/>
         </TextBox>
         <TextBox name="รายละเอียดงบประมาณ อปท.">{variables.content.section2}</TextBox>
         <TextBox name="รูปแบบการจัดซื้อจัดจ้าง">{variables.content.section3}</TextBox>
         <TextBox>
-            <img src="/figures/type-procurement.png"/>
+            <img width="100%" src="/figures/type-procurement.png"/>
         </TextBox>
         <TextBox name="บทสัมภาษณ์"> (⏯ กดเพิ่มเปิดเล่นเสียงสัมภาษณ์) {variables.content.section5}</TextBox>
         <TextBox>
@@ -61,19 +61,19 @@ const NewMain = () => {
         </TextBox>
         <TextBox name="อปท. เจาะจงมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img src="/figures/local-authority-view.png"/>
+            <img width="100%" src="/figures/local-authority-view.png"/>
         </TextBox>
         <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img src="/figures/local-org-view.png"/>
+            <img  width="100%" src="/figures/local-org-view.png"/>
         </TextBox>
         <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img src="/figures/org-regional-cluster.png"/>
+            <img  width="100%" src="/figures/org-regional-cluster.png"/>
         </TextBox>
         <TextBox name="ลองซุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img src="/figures/org-details.png"/>
+            <img  width="100%" src="/figures/org-details.png"/>
         </TextBox>
         <TextBox name="บทสรุป">
             {variables.content.sectionEmpty}
