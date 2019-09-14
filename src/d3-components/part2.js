@@ -1,14 +1,13 @@
 import * as d3 from "d3"
 import {globalConfig} from "../constant"
+import utils from "../utils"
 
-const VizPart2 = (data) => {
+const VizPart2 = ({data, width, height}) => {
     const clsName = "part2"
     const selector = `svg.${clsName}`
 
-    const width = 700;
-    const height = 300;
-    const margin = { top: 20, left: 40, bottom: 80, right: 40 }
-    const chart_margin = {top: 40, left:200, bottom:0, right:50}
+    const margin = { top: 20, left: 0, bottom: 80, right: 0 }
+    const chart_margin = {top: 40, left:0, bottom:0, right:50}
 
     data.sort((a,b) => {
         return d3.ascending(a.project_money, b.project_money)
@@ -23,7 +22,7 @@ const VizPart2 = (data) => {
     const yScale = d3.scaleBand()
             .range([height-chart_margin.top-chart_margin.bottom, 0])
             .domain(data.map((d) => { return d.purchase_method_name }))
-            .padding(0.5);
+            .padding(0.8);
 
     const node = document.createElement('div')
 
@@ -35,20 +34,6 @@ const VizPart2 = (data) => {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
     const display = () => {
-        // //create y axis
-        d3.select(selector)
-            .append("g")
-            .attr("class", "p2_y_axis")
-            .call(d3.axisLeft(yScale).tickSize([]))
-            .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
-        
-        // //create x axis
-        d3.select(selector)
-            .append("g")
-            .attr("class", "p2_x_axis")
-            .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
-            .call(d3.axisTop(xScale))
-        
         // //create bar chart
         const bar = d3.select(selector)
             .append('g')
@@ -69,31 +54,21 @@ const VizPart2 = (data) => {
             .attr("fill", globalConfig.highligthColors[1])
             .attr("width", function(d) {return xScale(d.project_money)})
 
-        // //add chart label
-        const project_val = d3.select(selector)
-            .append('g')
-            .attr("class", "p2_bar_chart_value")    
+        d3.select(selector)
+            .append("g")
+            .attr("class", "label")
             .selectAll("text")
             .data(data)
-            .enter().append("text")
-            .text((d) => {
-                return d3.format(',.2f')((d.project_money))
-            })
-            .attr("x", 0)
-            .attr("y", (d) => yScale(d.purchase_method_name)+(yScale.bandwidth()/2+ 4))
+            .enter()
+            .append("text")
+            .attr("y", (d) => yScale(d.purchase_method_name) - 5)
+            .text((d) => `${d.purchase_method_name} ${d3.format(',.2f')((d.project_money))}`)
+            .style("font-size", "14px")
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
-            // .style("font-size", "11px")
-        
-        project_val
-            .transition()
-            .delay(200)
-            .duration(2000)
-            .attr("x", d => xScale(d.project_money) + 10)
-
 
         d3.select(selector)
             .append("text")
-            .attr("x", width - chart_margin.right)
+            .attr("x", 0)
             .attr("y", chart_margin.top - margin.top)
             .text("หน่วย: ล้านบาท")
             .style("font-size", "9px")
