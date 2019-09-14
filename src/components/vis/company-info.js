@@ -5,7 +5,7 @@ import rd3 from 'react-d3-library'
 
 import bipartite from "d3-bipartite"
 import BipartiteGraph from "../../d3-components/bipartite"
-import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../../shared/style"
+import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
 
 import utils from "../../utils"
@@ -14,7 +14,15 @@ import {db} from "../../constant"
 
 const RD3Component = rd3.Component;
 
-const CompanyInfo = ({tin="0107537002753"}) => {
+const mockTins = [
+  "0107537002753",
+  "0333546000029",
+  "0523547001787",
+  "0453555000272",
+]
+
+const CompanyInfo = ({tins=mockTins}) => {
+  const [tin, setTin] = useState(utils.pickRandomly(tins))
   const [orgProfile, setOrgProfile] = useState({})
 
   const [d3Dom, setd3Dom] = useState()
@@ -86,7 +94,7 @@ const CompanyInfo = ({tin="0107537002753"}) => {
 
     };
     fetchData();
-  }, [])
+  }, [tin])
 
   return (
       <div id="company-info"
@@ -107,13 +115,14 @@ const CompanyInfo = ({tin="0107537002753"}) => {
             width: "auto",
             display: "inline-block",
             marginBottom: "10px",
+            cursor: "pointer",
             [media(DESKTOP_MIN_WIDTH)]: {
               marginBottom: "0px",
               position: "absolute",
               top: "-5px",
               right: "0px",
             }
-          }}>
+          }} onClick={() =>{ setTin(utils.pickRandomly(tins)) }}>
             สุ่มเลือกบริษัทอื่น
           </div>
           <div>
@@ -140,34 +149,6 @@ const CompanyInfo = ({tin="0107537002753"}) => {
           <RD3Component data={d3Dom}/>
         </div>
 
-        {/* <div>
-          <div style={{fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem", marginTop: "0"}}>
-            
-          </div>
-          { orgProfile.projects &&  <span>
-              ได้รับโครงการจากอปท.ต่างๆ ทั้งสิ้น {orgProfile.projects.length} โครงการ
-              {` `}ซึ่งรวมมูลค่าทั้งหมด {utils.moneyFormat(orgProfile.projects.map(p => p.projectValue).reduce( (a,b) => a+b, 0)/1e6)}
-              {` `}โดยโครงการที่มีมูลค่าสูงสุด {topKProjects.length} อันดับแรก คือ 
-              <ul>
-                {
-                  topKProjects.map(p => {
-                    return <li key={p.projectName} alt={p.projectName}>
-                      <a style={{color: "black", textDecoration: "none"}}
-                        href={`https://govspending.data.go.th/budget?tgsp=${p.projectId}`} target="_blank" rel="noopener noreferrer"
-                      >
-                        <b>{ Sugar.String.truncate(p.projectName, 60) }</b> <br/>
-                        กับ {p.localAuthority}, {p.province} {` `} <br/>
-                        โดยรูปแบบ {p.purchaseMethod} <br/>
-                        มูลค่าโครงการ {utils.moneyFormat(p.projectValue/1e6)}<br/>
-                      </a>
-                      </li>
-                  })
-                }
-              </ul> 
-          </span>
-          }
-
-        </div>  */}
         <div css={{textAlign: "center"}}>
           { orgProfile.tin && <div style={{textDecoration: "underline", textAlign: "center"}}>
             <a style={{color: "black", textDecoration: "none"}}

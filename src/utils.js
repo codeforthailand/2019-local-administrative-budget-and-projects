@@ -52,4 +52,8 @@ utils.isMobile = () => {
   return size.width < DESKTOP_MIN_WIDTH
 }
 
+utils.pickRandomly = (arr) => {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 export default utils
