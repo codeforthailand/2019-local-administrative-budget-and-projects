@@ -23,7 +23,7 @@ const TextBox = ({name, children}) => {
             padding: "0px",
         }
     }}>
-        {isDev && name && <span css={{color: "red"}}>(ย่อหน้า: {name})</span>}
+        {isDev && name && <a href={`#${name}`} id={name} css={{color: "red"}}>(ย่อหน้า: {name})</a>}
         {children}
     </div>
 }
@@ -70,7 +70,7 @@ const Index = () => {
             <img  width="100%" src="/figures/local-org-view.png"/>
         </TextBox>
         <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
-        <TextBox>
+        <TextBox name="comp-dist">
             <CompanyDistribution/>
         </TextBox>
         <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>

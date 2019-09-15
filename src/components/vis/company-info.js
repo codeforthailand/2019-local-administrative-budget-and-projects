@@ -132,7 +132,12 @@ const CompanyInfo = ({tins=mockTins}) => {
                 display: "inline"
               }
             }}>
-              {orgProfile.name}
+              { orgProfile.tin &&
+                <a style={{color: "black", textDecoration: "none"}}
+                  href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
+                    {orgProfile.name}
+                </a>
+              }
             </span>
           </div>
         </div>
@@ -149,10 +154,6 @@ const CompanyInfo = ({tins=mockTins}) => {
 
         <div css={{textAlign: "center"}}>
           { orgProfile.tin && <div style={{textDecoration: "underline", textAlign: "center"}}>
-            <a style={{color: "black", textDecoration: "none"}}
-              href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
-                ดูข้อมูลเพิ่มเติมของนิติบุคคลนี้จากกรมการค้าภายใน
-            </a> <br/>
             <a style={{color: "black", textDecoration: "none"}}
                href={`https://govspending.data.go.th/budget?winner=${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
                 ดูโครงการทั้งหมดจาก ภาษีไปไหน?

@@ -16,18 +16,24 @@ const CircleBlob = (data) => {
 
     const bubbleSizeScaler = d3.scaleLinear()
         .domain([minSize, maxSize])
-        .range([2.5, 30])
+        .range(utils.isMobile() ? [2.5, 20] : [2.5, 30])
 
     const node = document.createElement('div');
 
-    const width = 896, height = 300;
+    const width = utils.isMobile() ? utils.getWindowWidthHeight().width * 0.8 : 896
+    const height = 400
+
+    const scalingFactor = utils.isMobile() ?
+        [ 0.9, 0.5, 0.1, 0.9, 0.5, 0.1] : [0.8, 0.5, 0.2, 0.8, 0.5, 0.2]
+    
     const xCenter = {
         one: [width*0.5],
-        region: [
-            width*0.85, width*0.7, width*0.55,
-            width*0.4, width*0.25, width*0.1,
-        ],
+        region: scalingFactor.map(f => width * f),
         doCivilProjects: [width*0.7, width*0.2],
+    }
+
+    const yCenter = {
+        region: [0.7, 0.7, 0.7, 0.3, 0.3, 0.3].map(f => height * f),
     }
 
     const svg = d3.select(node)
@@ -66,18 +72,25 @@ const CircleBlob = (data) => {
     }
 
     const setLabels = (key) => {
+        const centers = xCenter[key].map((d, i) => {
+            return {
+                x: d,
+                y: yCenter[key][i] + 70
+            }
+        })
+
         const u = d3.select(selector)
             .selectAll("text.label")
-            .data(xCenter[key], d => d)
+            .data(centers, d => d)
 
             u.enter()
                 .append("text")
                 .attr("class", "label")
                 .style("text-anchor", "middle")
                 .merge(u)
-                .attr("x", (d) => d)
-                .attr("y", height)
-                .style("cursor", "pointer")
+                .attr("x", d => d.x)
+                .attr("y", d => d.y)
+                .style("font-size", utils.isMobile() ? "10px": "14px")
                 .text((_, i) => labelConstant[key][i])
 
             u.exit().remove()
@@ -94,7 +107,7 @@ const CircleBlob = (data) => {
             .attr("class", "org")
             .attr('r', (d) => d.radius)
             .style("pointer-events", "all")
-            .style('cursor', 'pointer')
+            // .style('cursor', 'pointer')
             .attr("fill", (d) => findColor(highlightKey, d))
             // .on("click", d => { 
             //     window.open(`/org?tin=${d.tin}`, "_blank")
@@ -122,7 +135,7 @@ const CircleBlob = (data) => {
             })
             .merge(u)
             .attr('cx', d => d.x)
-            .attr('cy', d => height/2 + d.y)
+            .attr('cy', d => d.y)
 
         u.exit().remove();
 
@@ -138,6 +151,7 @@ const CircleBlob = (data) => {
 
         simulation.force('charge', d3.forceManyBody().strength(1.5))
             .force('x', d3.forceX().x(d => xCenter[key][d.category[key]]))
+            .force('y', d3.forceY().y(d => yCenter[key][d.category[key]]))
             .force('collision', d3.forceCollide().radius(d => d.radius))
             .on('tick', () => draw(key, highlightKey))
 

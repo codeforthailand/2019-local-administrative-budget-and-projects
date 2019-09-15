@@ -64,7 +64,7 @@ const CompanyDistribution = () => {
 
     return <div>
         <RD3Component data={d3Dom.node}/>
-        <div css={{ textAlign: "center", marginTop: "10px" }}>
+        <div css={{ textAlign: "center"}}>
             เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
             <select
             style={{
