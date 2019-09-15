@@ -2,18 +2,18 @@ import * as d3 from "d3"
 import {globalConfig} from "../constant"
 import utils from "../utils"
 
-const BarChart = ({data}) => {
+const BarChart = ({name, data}) => {
     const width = utils.getWidth()
     const height = 35 * data.length
 
-    const clsName = "part2"
+    const clsName = name
     const selector = `svg.${clsName}`
 
     const margin = { top: 10, left: 20, bottom: 10, right: 20}
     const chart_margin = {top: 0, left:5, bottom:10, right: 15}
 
     data.sort((a,b) => {
-        return d3.ascending(a.value, b.project_money)
+        return d3.ascending(a.value, b.value)
     })
 
     const xScale = d3.scaleLinear()
@@ -53,7 +53,7 @@ const BarChart = ({data}) => {
         bar
             .transition()
             .delay(1000)
-            .duration(2000)
+            .duration(1000)
             .attr("fill", globalConfig.highligthColors[1])
             .attr("width", function(d) {return xScale(d.value)})
 

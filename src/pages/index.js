@@ -7,7 +7,8 @@ import Placeholder from "../components/placeholder"
 import CompanyInfo from "../components/vis/company-info"
 import CreditPage from "./credit"
 import CompanyDistribution from "../components/vis/comparny-distribution"
-import MethodProfile from "../components/vis/method-profiles"
+import MethodProfile from "../components/vis/method-ranking"
+import CompanyRanking from "../components/vis/company-ranking"
 
 require('typeface-kanit')
 
@@ -69,7 +70,8 @@ const Index = () => {
         </TextBox>
         <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img  width="100%" src="/figures/local-org-view.png"/>
+            {/* <img  width="100%" src="/figures/local-org-view.png"/> */}
+            <CompanyRanking/>
         </TextBox>
         <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
         <TextBox name="comp-dist">
