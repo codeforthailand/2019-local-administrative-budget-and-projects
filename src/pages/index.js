@@ -48,6 +48,7 @@ const Index = () => {
                 <div css={{marginTop: "5px"}}>
                     <b>วันที่: </b>{variables.date}
                 </div>
+                <b>หมายเหตุ: </b>{variables.content.remark}
             </div>
         </TextBox>
         <br/>
@@ -58,7 +59,6 @@ const Index = () => {
         <TextBox name="รายละเอียดงบประมาณ อปท.">{variables.content.section2}</TextBox>
         <TextBox name="รูปแบบการจัดซื้อจัดจ้าง">{variables.content.section3}</TextBox>
         <TextBox>
-            {/* <img width="100%" src="/figures/type-procurement.png"/> */}
             <MethodProfile/>
         </TextBox>
         <TextBox name="บทสัมภาษณ์"> {variables.content.section5}</TextBox>
@@ -69,18 +69,16 @@ const Index = () => {
         <TextBox>
             <AuthorityRanking/>
         </TextBox>
-        <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
+        <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">บริษัทที่มีมูลค่าโครงการรวมทั้งหมดมากกว่า 100 ล้าน {variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            {/* <img  width="100%" src="/figures/local-org-view.png"/> */}
             <CompanyRanking/>
         </TextBox>
         <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
             <CompanyDistribution/>
         </TextBox>
-        <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>
+        <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า 100 บาท"> {variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            {/* <img  width="100%" src="/figures/org-details.png"/> */}
             <CompanyInfo/>
         </TextBox>
         <TextBox name="บทสรุป">

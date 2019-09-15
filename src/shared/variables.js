@@ -22,7 +22,14 @@ const content = {
 ประเทศไทยกำลังจะจัดให้มีการเลือกตั้งท้องถิ่นภายในปี 2563 หลังจากว่างเว้นไปนานกว่า 5 ปี โดยองค์กรปกครองส่วนท้องถิ่น (อปท.) จำนวน 7,852 แห่ง จะมีการเลือกตั้งผู้ดำรงตำแหน่งไม่ต่ำกว่า 1 แสนคนนั้น หลายฝ่ายโดยเฉพาะคนไทยผู้มีสิทธิ์ไปลงคะแนนเสียงเลือกผู้แทนในพื้นที่ รู้หรือไม่ว่าที่ผ่านมางบประมาณท้องถิ่นปีละไม่ต่ำกว่า ${utils.moneyFormat(totalLocalAuthorOrgBudget/1e6)}
 `,
     section2: `
-    จนพบว่าองค์การบริหารท้องถิ่นมีการใช้จ่ายเงินงบประมาณใน ปี 2561 จำนวน ${utils.moneyFormat(totalLocalAuthorOrgBudget/1e6)} และจากการวิเคราะห์ข้อมูลตัวเลขเชิงลึกพบว่าโครงการใช้จ่ายเงิน มีความเกี่ยวข้องกับการจัดซื้อจัดจ้างด้านโยธาถึง ${Math.floor(DataGlobalStats.totalCivilProjects)} โครงการ หรือคิดเป็น ${Math.floor(DataGlobalStats.totalCivilProjects/DataGlobalStats.totalProjects*100)}% ของโครงการทั้งหมด เช่น การสร้างถนน การซ่อมถนน การขุดถนน การถมลูกรัง การาดคอนกรีต และขุดท่อ คิดเป็นมูลค่ารวมทั้งสิ้น ${utils.moneyFormat(DataGlobalStats.sumCivilProjectValue / 1e6)} จากงบประมาณโครงการของอปท. ทั้งหมด ${utils.moneyFormat(DataGlobalStats.sumProjectValue / 1e6)}
+    จนพบว่าองค์การบริหารท้องถิ่นมีการใช้จ่ายเงินงบประมาณใน ปี 2561 จำนวน ${utils.moneyFormat(totalLocalAuthorOrgBudget/1e6)}
+    และจากการวิเคราะห์ข้อมูลตัวเลขเชิงลึกพบว่าโครงการใช้จ่ายเงิน มีความเกี่ยวข้องกับการจัดซื้อจัดจ้างด้านโยธา เช่น การสร้างถนน,
+    การซ่อมถนน, การขุดถนน, การถมลูกรัง, และการราดคอนกรีต เป็นต้น
+    ถึง ${utils.moneyFormat(DataGlobalStats.sumCivilProjectValue/ 1e6)} จาก ${utils.moneyFormat(DataGlobalStats.sumProjectValue/1e6)}
+    ซึ่งคิดเป็น ${Math.floor(DataGlobalStats.sumCivilProjectValue/DataGlobalStats.sumProjectValue*100)}%
+    ของมูลค่าโครงการอปท.ทั้งหมด  ที่น่าสนใจคือ ถ้าดูตามจำนวนโครงการ โครงการเกี่ยวกับโยธามีเพียง ${utils.numFormatInt(DataGlobalStats.totalCivilProjects)} โครงการ
+    จากโครงการของอปท.ทั้งหมด ${utils.numFormatInt(DataGlobalStats.totalProjects)} โครงการ
+    ซึ่งคิดเป็นเพียง ${Math.floor(DataGlobalStats.totalCivilProjects / DataGlobalStats.totalProjects* 100)}% เท่านั้น
 `,
     section3: `
     นอกจากนี้ การประมวลข้อมูลเชิงลึกข้างต้นเมื่อเน้นสืบหาโครงการขนาดใหญ่มูลค่างบประมาณเกิน 100 ล้านบาทขึ้นไป ทำให้พบ “รูปแบบการจัดซื้อจัดจ้างว่ามีทั้งหมด 14 รูปแบบ” โดยมี “6 รูปแบบ” ที่นิยมมากที่สุดเรียงตามลำดับดังรูป
@@ -36,6 +43,9 @@ const content = {
     sectionEmpty: `
 ต้องเขียนเพิ่ม
 `,
+    remark: `
+ข้อมูลที่ใช้ในการวิเคราะห์ถูกดึงจากเว็บไซต์ "ภาษีไปไหน" อาจมีปัญหาทางด้านเทคนิคเกิดขึ้นและทำให้ข้อมูลไม่ครบถ้วน หากพบข้อผิดพลาดหรือข้อเสนอแนะ เรายินดีรับฟังเพื่อปรับปรุงและแก้ไข
+`
 }
 
 export {
