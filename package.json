@@ -47,8 +47,10 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf public && gatsby build",
+    "build": "rm -rf public && gatsby build --prefix-paths",
+    "deploy": "gh-pages -d public -b gh-pages",
     "develop": "gatsby develop",
+    "publish": "npm run build && npm run deploy",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
