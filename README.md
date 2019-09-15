@@ -3,7 +3,7 @@
 บทความเกี่ยวกับงบประมาณของจาองค์การปกครองส่วนท้องถิ่นทั่วประเทศ พร้อมการแสดงผลต่างๆ ประกอบ
 
 ## ชุดข้อมูล
-**สามารถดาวโหลด**์ได้จาก [Google Drive][download]
+สามารถดาวโหลดได้จาก [Google Drive][download]
 
 สำหรับการเตรียมข้อมูลสามารถดูได้ [ที่นี่][data-prep]
 
@@ -18,5 +18,5 @@
 ## Acknowledgements
 Please see them at the bottom of the website.
 
-[download]: xxx
-[data-prep]: yyyk
+[download]: https://drive.google.com/file/d/1EjbqfBoMHy60pCvYqq4g4tv2s5Wggp-v/view?usp=sharing
+[data-prep]: https://github.com/heytitle/data-preparation-for-administrative-budget-and-projects
