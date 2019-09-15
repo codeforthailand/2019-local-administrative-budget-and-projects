@@ -7,7 +7,7 @@ import Placeholder from "../components/placeholder"
 import CompanyInfo from "../components/vis/company-info"
 import CreditPage from "./credit"
 import CompanyDistribution from "../components/vis/comparny-distribution"
-import MethodProfile from "../components/vis/method-profile"
+import MethodProfile from "../components/vis/method-profiles"
 
 require('typeface-kanit')
 
