@@ -2,7 +2,7 @@ import * as d3 from "d3"
 import {globalConfig} from "../constant"
 import utils from "../utils"
 
-const BarChart = ({name, data}) => {
+const BarChart = ({name, data, filterRx}) => {
     const width = utils.getWidth()
     const height = 35 * data.length
 
@@ -24,6 +24,14 @@ const BarChart = ({name, data}) => {
             .padding(0.6)
 
     const node = document.createElement('div')
+    
+    const calculateOpacity = (d) => {
+        if(filterRx && d.label.match(filterRx)){
+            return 0.2
+        } else{
+            return 1
+        }
+    }
 
     d3.select(node)
         .append('svg')
@@ -52,6 +60,7 @@ const BarChart = ({name, data}) => {
             .duration(1000)
             .attr("fill", globalConfig.highligthColors[1])
             .attr("width", function(d) {return xScale(d.value)})
+            .style("opacity", calculateOpacity)
 
         d3.select(selector)
             .append("g")
@@ -61,9 +70,10 @@ const BarChart = ({name, data}) => {
             .enter()
             .append("text")
             .attr("y", (d) => yScale(d.label) - 5)
-            .text((d) => `${d.label} ${d3.format(',.2f')((d.value))}`)
+            .text((d) => `${d.label} ${utils.numFormatInt(d.value)}`)
             .style("font-size", utils.isMobile() ? "8px" : "14px")
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
+            .style("opacity", calculateOpacity)
     }
 
     const reset = () => {

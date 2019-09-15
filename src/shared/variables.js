@@ -1,6 +1,8 @@
 import DataGlobalStats from "../data/global_stats"
 import utils from "../utils"
 
+const dairyCompanyFilter = new RegExp("โคนม|มิลค์|แดรี่")
+
 const totalLocalAuthorOrgBudget = 720822 * 1e6
 
 const header = "เปิดขุมทรัพย์ 7 แสนล้าน และรอยรั่วงบประมาณท้องถิ่น"
@@ -40,5 +42,6 @@ export {
     header,
     teamMembers,
     date,
-    content
+    content,
+    dairyCompanyFilter,
 }

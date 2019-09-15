@@ -65,8 +65,19 @@ const CircleBlob = (data) => {
         simulation.stop()
     }
 
+
+    const getKey = (a, k) => {
+        if(!a.methodStats[k]){
+          return 0
+        } else{
+          return a.methodStats[k].count
+        }
+      }
+
     const findColor = (highlightKey, d) => {
-        const selectedProjects = d.purchaseMethodCount[highlightKey.name] || 0
+        console.log(d.methodStats)
+        const selectedProjects = getKey(d, highlightKey.name)
+        //  d.methodStats[highlightKey.name].count || 0
 
         return colorScale(selectedProjects / d.totalProjects)
     }
@@ -115,7 +126,7 @@ const CircleBlob = (data) => {
             .on("mouseover", (d) => {
                 d3.select("body").select("div.tooltip")
                     .html(`
-                    ${d.name}<br/>
+                    ${d.corporate_name}<br/>
                     ได้รับงานอปท.ทั้งหมด ${d.totalProjects} โครงการ
                     รวมมูลค่าทั้งสิ้น ${ utils.numFormatInt(Math.round(d.size)) } ล้านบาท
                     `

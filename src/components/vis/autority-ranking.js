@@ -24,7 +24,7 @@ const sortedCompany = authorityProfiles.sort((a, b) => {
     return sortAttribute(b) - sortAttribute(a)
   })
   .reverse()
-  .slice(0, 5)
+  .slice(0, 10)
   .map(a => {
     return {
       ...a,

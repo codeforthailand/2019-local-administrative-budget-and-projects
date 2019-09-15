@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import rd3 from 'react-d3-library'
 
-import companyProjectProfiles from "../../data/company-project-profiles"
+import companyProjectProfiles from "../../data/company_stats"
 import CircleBlob from '../../d3-components/circle-blob'
 
 import utils from "../../utils"
@@ -32,9 +32,7 @@ const CompanyDistribution = () => {
                 ...d,
                 size: budgetM,
                 category: {
-                one: 0,
                 region: regionLookup[d['primaryRegion']],
-                doCivilProjects: d['doCivilProjects'] === "yes" ? 0 : 1 // "0" is the right most
                 }
             }
         })

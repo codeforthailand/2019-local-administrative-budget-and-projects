@@ -7,22 +7,21 @@ import bipartite from "d3-bipartite"
 import BipartiteGraph from "../../d3-components/bipartite"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
-import companyProjectProfiles from "../../data/company-project-profiles"
+import companyProjectProfiles from "../../data/company_stats"
+import { dairyCompanyFilter } from "../../shared/variables"
 
 import utils from "../../utils"
 
-import {db} from "../../constant"
-
 const RD3Component = rd3.Component;
 
-const tins = companyProjectProfiles.map(c => c.tin)
+
+const companies = companyProjectProfiles
+  .filter(c => !c.corporate_name.match(dairyCompanyFilter))
 
 const CompanyInfo = () => {
-  const [tin, setTin] = useState(utils.pickRandomly(tins))
-  const [orgProfile, setOrgProfile] = useState({})
+  const [orgProfile, setOrgProfile] = useState(utils.pickRandomly(companies))
 
   const [d3Dom, setd3Dom] = useState()
-  const [data, setData]= useState([])
 
   const padding = 10
 
@@ -40,46 +39,56 @@ const CompanyInfo = () => {
     .value(d => d.value)
 
   useEffect(() => {
+    const data = orgProfile.projectInsights
+      .map( d => {
+        return {
+          ...d,
+          value: d.value / 1e6
+        }
+      })
+    
     const layoutData = layout(data)
     const bd = BipartiteGraph({
       layoutData, width, height
     })
 
     setd3Dom(bd)
-  }, [data]);
+  }, [orgProfile]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(db.companyProfile(tin))
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await axios(db.companyProfile(tin))
       
-      const org = result.data
-      const dd = {}
+  //     const org = result.data
+  //     const dd = {}
 
-      org.projects
-        .forEach(p => {
-          const k = `${p.purchaseMethod}::${p.province}`
-          if (k in dd) {
-            dd[k] += p.projectValue / 1e6
-          } else {
-            dd[k] = p.projectValue / 1e6
-          }
-        });
+  //     org.projects
+  //       .forEach(p => {
+  //         const k = `${p.purchaseMethod}::${p.province}`
+  //         if (k in dd) {
+  //           dd[k] += p.projectValue / 1e6
+  //         } else {
+  //           dd[k] = p.projectValue / 1e6
+  //         }
+  //       });
 
-      const connections = Object.keys(dd).map( k => {
-        const slugs = k.split("::")
-        return {
-            source: slugs[0],
-            target: slugs[1],
-            value: dd[k]
-        }
-      })
+  //     const connections = Object.keys(dd).map( k => {
+  //       const slugs = k.split("::")
+  //       return {
+  //           source: slugs[0],
+  //           target: slugs[1],
+  //           value: dd[k]
+  //       }
+  //     })
 
-      setData(connections)
-      setOrgProfile(org)
+  //     setData(connections)
+  //     setOrgProfile(org)
 
-    };
-    fetchData();
-  }, [tin])
+  //   };
+  //   fetchData();
+  // }, [tin])
 
   return (
       <div id="company-info"
@@ -100,7 +109,7 @@ const CompanyInfo = () => {
             [media(DESKTOP_MIN_WIDTH)]: {
               textAlign: "right",
             }
-          }} onClick={() =>{ setTin(utils.pickRandomly(tins)) }}>
+          }} onClick={() =>{ setOrgProfile(utils.pickRandomly(companies)) }}>
             <div css={{
               padding: "5px",
               border: "1px solid",
@@ -122,7 +131,7 @@ const CompanyInfo = () => {
               { orgProfile.tin &&
                 <a style={{color: "black", textDecoration: "none"}}
                   href={`https://datawarehouse.dbd.go.th/company/profile/${orgProfile.tin[3]}/${orgProfile.tin}`} target="_blank" rel="noopener noreferrer">
-                    {orgProfile.name}
+                    {orgProfile.corporate_name}
                 </a>
               }
             </span>
