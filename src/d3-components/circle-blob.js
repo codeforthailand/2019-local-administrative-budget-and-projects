@@ -2,7 +2,7 @@ import * as d3 from "d3"
 import {labelConstant, globalConfig} from "../constant"
 import utils from "../utils"
 
-const CircleBlob = ({data, navigate}) => {
+const CircleBlob = (data) => {
     const clsName = "circleBlob"
     const selector = `svg.${clsName}`
 
@@ -20,7 +20,7 @@ const CircleBlob = ({data, navigate}) => {
 
     const node = document.createElement('div');
 
-    const width = 896, height = 600;
+    const width = 896, height = 300;
     const xCenter = {
         one: [width*0.5],
         region: [
@@ -74,10 +74,9 @@ const CircleBlob = ({data, navigate}) => {
                 .append("text")
                 .attr("class", "label")
                 .style("text-anchor", "middle")
-                .style("font-weight", "bold")
                 .merge(u)
                 .attr("x", (d) => d)
-                .attr("y", height - 100)
+                .attr("y", height)
                 .style("cursor", "pointer")
                 .text((_, i) => labelConstant[key][i])
 
@@ -97,9 +96,9 @@ const CircleBlob = ({data, navigate}) => {
             .style("pointer-events", "all")
             .style('cursor', 'pointer')
             .attr("fill", (d) => findColor(highlightKey, d))
-            .on("click", d => { 
-                window.open(`/org?tin=${d.tin}`, "_blank")
-            })
+            // .on("click", d => { 
+            //     window.open(`/org?tin=${d.tin}`, "_blank")
+            // })
             .on("mouseover", (d) => {
                 d3.select("body").select("div.tooltip")
                     .html(`
@@ -133,7 +132,7 @@ const CircleBlob = ({data, navigate}) => {
     let lastKey
 
     const doSimulate = ({key, restart=false, highlightKey}) => {
-        if(lastKey != key || restart){
+        if(lastKey !== key || restart){
             simulation.alpha(0.8).restart()
         }
 

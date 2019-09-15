@@ -30,7 +30,6 @@ import {labelConstant, db, globalConfig} from "../constant"
 
 import sizeLegendImage from "../images/size-legend.svg"
 
-const RD3Component = rd3.Component;
 
 const regionLookup = utils.array2lookup(labelConstant.region)
 

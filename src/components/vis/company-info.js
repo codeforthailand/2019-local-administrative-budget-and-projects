@@ -58,8 +58,6 @@ const CompanyInfo = ({tins=mockTins}) => {
       const result = await axios(db.companyProfile(tin))
       
       const org = result.data
-      console.log(org)
-
       const dd = {}
 
       org.projects

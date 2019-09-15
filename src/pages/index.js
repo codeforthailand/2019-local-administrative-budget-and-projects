@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React from "react"
 
 import * as variables from "../shared/variables"
 
@@ -6,6 +6,7 @@ import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../shared/styl
 import Placeholder from "../components/placeholder"
 import CompanyInfo from "../components/vis/company-info"
 import CreditPage from "./credit"
+import CompanyDistribution from "../components/vis/comparny-distribution"
 
 require('typeface-kanit')
 
@@ -70,11 +71,9 @@ const Index = () => {
         </TextBox>
         <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img  width="100%" src="/figures/org-regional-cluster.png"/>
+            <CompanyDistribution/>
         </TextBox>
-        <TextBox name="ลองซุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>
-        {/* <TextBox>
-        </TextBox> */}
+        <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
             {/* <img  width="100%" src="/figures/org-details.png"/> */}
             <CompanyInfo/>
