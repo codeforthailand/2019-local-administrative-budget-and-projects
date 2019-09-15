@@ -61,7 +61,7 @@ const Index = () => {
             {/* <img width="100%" src="/figures/type-procurement.png"/> */}
             <MethodProfile/>
         </TextBox>
-        <TextBox name="บทสัมภาษณ์"> (⏯ กดเพิ่มเปิดเล่นเสียงสัมภาษณ์) {variables.content.section5}</TextBox>
+        <TextBox name="บทสัมภาษณ์"> {variables.content.section5}</TextBox>
         <TextBox>
             <Placeholder name="viz 3" width="100%" height="200px"/>
         </TextBox>

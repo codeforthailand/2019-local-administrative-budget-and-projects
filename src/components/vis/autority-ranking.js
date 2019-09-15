@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 import rd3 from 'react-d3-library'
 
 import BarChart from "../../d3-components/barchart"
-import authorityProfiles from "../../data/authority-profiles"
+import authorityProfiles from "../../data/local_authority_stats"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
 const RD3Component = rd3.Component
@@ -11,12 +11,20 @@ const RD3Component = rd3.Component
 
 const methodSortKey = 'เฉพาะเจาะจง'
 
-const sortAttribute = a => a.methodStats[methodSortKey].count || 0
+
+const sortAttribute = a => {
+  if(!a.methodStats[methodSortKey]){
+    return 0
+  } else{
+    return a.methodStats[methodSortKey].count
+  }
+}
 
 const sortedCompany = authorityProfiles.sort((a, b) => {
     return sortAttribute(b) - sortAttribute(a)
   })
   .reverse()
+  .slice(0, 5)
   .map(a => {
     return {
       ...a,
@@ -35,7 +43,7 @@ const AuthorityRanking = () => {
 
       const data = sortedCompany.map( a => {
         return {
-          label: `${a.name} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
+          label: `${a.dept_name}, ${a.province} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
           value: a[valueKey]
         }
       })
@@ -73,7 +81,6 @@ const AuthorityRanking = () => {
             }}
             value={valueKey}
             onChange={(e) => {
-              console.log(e.target.value)
               setValueKey(e.target.value)
             }}
           >
