@@ -2,27 +2,30 @@ import * as d3 from "d3"
 import {globalConfig} from "../constant"
 import utils from "../utils"
 
-const VizPart2 = ({data, width, height}) => {
+const BarChart = ({data}) => {
+    const width = utils.getWidth()
+    const height = 35 * data.length
+
     const clsName = "part2"
     const selector = `svg.${clsName}`
 
-    const margin = { top: 20, left: 0, bottom: 80, right: 0 }
-    const chart_margin = {top: 40, left:0, bottom:0, right:50}
+    const margin = { top: 10, left: 20, bottom: 10, right: 20}
+    const chart_margin = {top: 0, left:5, bottom:10, right: 15}
 
     data.sort((a,b) => {
-        return d3.ascending(a.project_money, b.project_money)
+        return d3.ascending(a.value, b.project_money)
     })
 
     const xScale = d3.scaleLinear()
             .range([0, width-chart_margin.left-chart_margin.right])
             .domain([0, d3.max(data, (d) => {
-                return d.project_money
+                return d.value
             })]);
 
     const yScale = d3.scaleBand()
             .range([height-chart_margin.top-chart_margin.bottom, 0])
-            .domain(data.map((d) => { return d.purchase_method_name }))
-            .padding(0.8);
+            .domain(data.map((d) => d.label))
+            .padding(0.6)
 
     const node = document.createElement('div')
 
@@ -43,16 +46,16 @@ const VizPart2 = ({data, width, height}) => {
             .enter()
             .append("rect")
             .attr("width", 0)
-            .attr("y", (d) => yScale(d.purchase_method_name))
+            .attr("y", (d) => yScale(d.label))
             .attr("height", yScale.bandwidth())
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
 
         bar
             .transition()
-            .delay(200)
+            .delay(1000)
             .duration(2000)
             .attr("fill", globalConfig.highligthColors[1])
-            .attr("width", function(d) {return xScale(d.project_money)})
+            .attr("width", function(d) {return xScale(d.value)})
 
         d3.select(selector)
             .append("g")
@@ -61,22 +64,10 @@ const VizPart2 = ({data, width, height}) => {
             .data(data)
             .enter()
             .append("text")
-            .attr("y", (d) => yScale(d.purchase_method_name) - 5)
-            .text((d) => `${d.purchase_method_name} ${d3.format(',.2f')((d.project_money))}`)
+            .attr("y", (d) => yScale(d.label) - 5)
+            .text((d) => `${d.label} ${d3.format(',.2f')((d.value))}`)
             .style("font-size", "14px")
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
-
-        d3.select(selector)
-            .append("text")
-            .attr("x", 0)
-            .attr("y", chart_margin.top - margin.top)
-            .text("หน่วย: ล้านบาท")
-            .style("font-size", "9px")
-
-
-        console.log("done")
-        
-
     }
 
     const reset = () => {
@@ -90,4 +81,4 @@ const VizPart2 = ({data, width, height}) => {
     return {node, display, reset}
 }
 
-export default VizPart2
+export default BarChart

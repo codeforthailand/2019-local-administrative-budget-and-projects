@@ -7,6 +7,7 @@ import Placeholder from "../components/placeholder"
 import CompanyInfo from "../components/vis/company-info"
 import CreditPage from "./credit"
 import CompanyDistribution from "../components/vis/comparny-distribution"
+import MethodProfile from "../components/vis/method-profile"
 
 require('typeface-kanit')
 
@@ -55,7 +56,8 @@ const Index = () => {
         <TextBox name="รายละเอียดงบประมาณ อปท.">{variables.content.section2}</TextBox>
         <TextBox name="รูปแบบการจัดซื้อจัดจ้าง">{variables.content.section3}</TextBox>
         <TextBox>
-            <img width="100%" src="/figures/type-procurement.png"/>
+            {/* <img width="100%" src="/figures/type-procurement.png"/> */}
+            <MethodProfile/>
         </TextBox>
         <TextBox name="บทสัมภาษณ์"> (⏯ กดเพิ่มเปิดเล่นเสียงสัมภาษณ์) {variables.content.section5}</TextBox>
         <TextBox>

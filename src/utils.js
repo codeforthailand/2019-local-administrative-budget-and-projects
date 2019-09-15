@@ -1,5 +1,5 @@
 import * as d3 from "d3-format"
-import { DESKTOP_MIN_WIDTH } from "./shared/style"
+import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING } from "./shared/style"
 
 const utils = {}
 
@@ -44,6 +44,15 @@ utils.getWindowWidthHeight = () => {
       width: 0,
       height: 0
     }
+  }
+}
+
+utils.getWidth = () => {
+  const windowSize = utils.getWindowWidthHeight()
+  if(utils.isMobile()){
+    return windowSize.width  - 2*MOBILE_CONTENT_PADDING
+  } else {
+    return windowSize.width
   }
 }
 
