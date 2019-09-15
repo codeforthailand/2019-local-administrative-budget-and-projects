@@ -4,6 +4,7 @@ import rd3 from 'react-d3-library'
 
 import BarChart from "../../d3-components/barchart"
 import companyProjectProfiles from "../../data/company-project-profiles"
+import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
 const RD3Component = rd3.Component
 
@@ -56,8 +57,11 @@ const CompanyRanking = () => {
     return <div>
       <div style={{marginTop: "0rem"}}>
         <div css={{
-          textAlign: "right",
+          textAlign: "center",
           fontSize: "11px",
+          [media(DESKTOP_MIN_WIDTH)] : {
+            textAlign: "right",
+          }
         }}>หน่วย: <select
             style={{
                 border: "0px",

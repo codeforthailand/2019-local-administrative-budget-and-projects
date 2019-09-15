@@ -66,7 +66,7 @@ const BarChart = ({name, data}) => {
             .append("text")
             .attr("y", (d) => yScale(d.label) - 5)
             .text((d) => `${d.label} ${d3.format(',.2f')((d.value))}`)
-            .style("font-size", "14px")
+            .style("font-size", utils.isMobile() ? "8px" : "14px")
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
     }
 

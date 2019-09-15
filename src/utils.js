@@ -36,8 +36,8 @@ utils.getWindowObj = () => {
 utils.getWindowWidthHeight = () => {
   if(typeof window !== 'undefined' && window) {
     return {
-      width: Math.min(window.innerWidth, DESKTOP_MIN_WIDTH),
-      height: window.innerHeight
+      width: Math.min(window.outerWidth, DESKTOP_MIN_WIDTH),
+      height: window.outerHeight
     }
   } else {
     return {
@@ -50,7 +50,7 @@ utils.getWindowWidthHeight = () => {
 utils.getWidth = () => {
   const windowSize = utils.getWindowWidthHeight()
   if(utils.isMobile()){
-    return windowSize.width  - 2*MOBILE_CONTENT_PADDING
+    return windowSize.width * 0.8 - 2*MOBILE_CONTENT_PADDING 
   } else {
     return windowSize.width
   }

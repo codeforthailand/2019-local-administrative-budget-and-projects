@@ -74,7 +74,7 @@ const Index = () => {
             <CompanyRanking/>
         </TextBox>
         <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
-        <TextBox name="comp-dist">
+        <TextBox>
             <CompanyDistribution/>
         </TextBox>
         <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า x บาท">{variables.content.sectionEmpty}</TextBox>
