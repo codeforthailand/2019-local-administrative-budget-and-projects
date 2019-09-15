@@ -30,6 +30,10 @@ const MethodRanking = () => {
             value: parseFloat(n.node.project_money) / 1e6
         }
     })
+    .sort((a, b) => {
+      return b.value - a.value 
+    })
+    .reverse()
 
     const [viz, setViz] = useState({})
 

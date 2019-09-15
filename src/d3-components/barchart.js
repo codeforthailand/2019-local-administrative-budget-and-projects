@@ -12,10 +12,6 @@ const BarChart = ({name, data}) => {
     const margin = { top: 10, left: 20, bottom: 10, right: 20}
     const chart_margin = {top: 0, left:5, bottom:10, right: 15}
 
-    data.sort((a,b) => {
-        return d3.ascending(a.value, b.value)
-    })
-
     const xScale = d3.scaleLinear()
             .range([0, width-chart_margin.left-chart_margin.right])
             .domain([0, d3.max(data, (d) => {

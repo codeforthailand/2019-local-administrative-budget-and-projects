@@ -9,6 +9,7 @@ import CreditPage from "./credit"
 import CompanyDistribution from "../components/vis/comparny-distribution"
 import MethodProfile from "../components/vis/method-ranking"
 import CompanyRanking from "../components/vis/company-ranking"
+import AuthorityRanking from "../components/vis/autority-ranking"
 
 require('typeface-kanit')
 
@@ -66,7 +67,7 @@ const Index = () => {
         </TextBox>
         <TextBox name="อปท. เจาะจงมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
         <TextBox>
-            <img width="100%" src="/figures/local-authority-view.png"/>
+            <AuthorityRanking/>
         </TextBox>
         <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
         <TextBox>

@@ -7,6 +7,7 @@ import bipartite from "d3-bipartite"
 import BipartiteGraph from "../../d3-components/bipartite"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
+import companyProjectProfiles from "../../data/company-project-profiles"
 
 import utils from "../../utils"
 
@@ -14,20 +15,14 @@ import {db} from "../../constant"
 
 const RD3Component = rd3.Component;
 
-const mockTins = [
-  "0107537002753",
-  "0333546000029",
-  "0523547001787",
-  "0453555000272",
-]
+const tins = companyProjectProfiles.map(c => c.tin)
 
-const CompanyInfo = ({tins=mockTins}) => {
+const CompanyInfo = () => {
   const [tin, setTin] = useState(utils.pickRandomly(tins))
   const [orgProfile, setOrgProfile] = useState({})
 
   const [d3Dom, setd3Dom] = useState()
   const [data, setData]= useState([])
-  const [topKProjects, setTopKProjects]= useState([])
 
   const padding = 10
 
@@ -82,14 +77,6 @@ const CompanyInfo = ({tins=mockTins}) => {
       setData(connections)
       setOrgProfile(org)
 
-      const k = Math.min(3, org.projects.length)
-      const topProjects = org.projects
-        .slice()
-        .sort( (a, b) => b.sum_price_agree - a.sum_price_agree)
-        .slice(0, k)
-
-      setTopKProjects(topProjects)
-
     };
     fetchData();
   }, [tin])
@@ -107,21 +94,21 @@ const CompanyInfo = ({tins=mockTins}) => {
           }
         }}>
           <div css={{
-            margin: "0px auto",
-            padding: "5px",
-            border: "1px solid",
-            width: "auto",
-            display: "inline-block",
+            width: "100%",
             marginBottom: "10px",
-            cursor: "pointer",
+            textAlign: "center",
             [media(DESKTOP_MIN_WIDTH)]: {
-              marginBottom: "0px",
-              position: "absolute",
-              top: "-5px",
-              right: "0px",
+              textAlign: "right",
             }
           }} onClick={() =>{ setTin(utils.pickRandomly(tins)) }}>
-            สุ่มเลือกบริษัทอื่น
+            <div css={{
+              padding: "5px",
+              border: "1px solid",
+              cursor: "pointer",
+              display: "inline-block",
+            }}>
+              สุ่มเลือกบริษัทอื่น
+            </div>
           </div>
           <div>
             รายละเอียดการรับโครงการของ {` `}

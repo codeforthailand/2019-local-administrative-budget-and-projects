@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react"
 import rd3 from 'react-d3-library'
 
 import BarChart from "../../d3-components/barchart"
-import companyProjectProfiles from "../../data/company-project-profiles"
+import authorityProfiles from "../../data/authority-profiles"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
 const RD3Component = rd3.Component
@@ -11,13 +11,12 @@ const RD3Component = rd3.Component
 
 const methodSortKey = 'เฉพาะเจาะจง'
 
-const sortAttribute = a => a.purchaseMethodCount[methodSortKey] || 0
+const sortAttribute = a => a.methodStats[methodSortKey].count || 0
 
-const sortedCompany = companyProjectProfiles.sort((a, b) => {
+const sortedCompany = authorityProfiles.sort((a, b) => {
     return sortAttribute(b) - sortAttribute(a)
   })
   .reverse()
-  .slice(0, 5)
   .map(a => {
     return {
       ...a,
@@ -25,29 +24,32 @@ const sortedCompany = companyProjectProfiles.sort((a, b) => {
     }
   })
 
-const CompanyRanking = () => {
+const AuthorityRanking = () => {
     const [valueKey, setValueKey] = useState('totalProjects')
-
 
     const [viz, setViz] = useState({})
 
     useEffect(()=> {
+      const ak = valueKey === "totalProjectValueInMillion" ? `value` : `count`
+      const normalizer = valueKey === "totalProjectValueInMillion" ? 1e6 : 1
+
       const data = sortedCompany.map( a => {
-          return {
-            label: `${a.name} (เฉพาะเจาะจง: ${sortAttribute(a)} โครงการ)`,
-            value: a[valueKey]
-          }
-        })
-        const obj = BarChart({
-          name: 'company-ranking',
-          data,
-        })
-
-        if(viz && viz.reset){
-          viz.reset()
+        return {
+          label: `${a.name} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
+          value: a[valueKey]
         }
+      })
 
-        setViz(obj)
+      const obj = BarChart({
+        name: 'authority-ranking',
+        data,
+      })
+
+      if(viz && viz.reset){
+        viz.reset()
+      }
+
+      setViz(obj)
     }, [valueKey])
 
     useEffect( () => {
@@ -84,4 +86,4 @@ const CompanyRanking = () => {
     </div>
 }
 
-export default CompanyRanking
+export default AuthorityRanking
