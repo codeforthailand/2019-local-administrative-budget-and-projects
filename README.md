@@ -1,8 +1,12 @@
 # งบประมาณองค์การปกครองส่วนท้องถิ่นและบริษัทที่เกี่ยวข้อง
 
-## Dataset
-How we prepare data...
-Link to dataset
+บทความเกี่ยวกับงบประมาณของจาองค์การปกครองส่วนท้องถิ่นทั่วประเทศ พร้อมการแสดงผลต่างๆ ประกอบ
+
+## ชุดข้อมูล
+**สามารถดาวโหลด**์ได้จาก [Google Drive][download]
+
+สำหรับการเตรียมข้อมูลสามารถดูได้ [ที่นี่][data-prep]
+
 
 ## Requirements
 - NodeJS v11.4.0
@@ -13,3 +17,6 @@ Link to dataset
 
 ## Acknowledgements
 Please see them at the bottom of the website.
+
+[download]: xxx
+[data-prep]: yyyk
