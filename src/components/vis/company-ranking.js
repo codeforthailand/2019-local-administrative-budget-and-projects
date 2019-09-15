@@ -16,8 +16,8 @@ const sortAttribute = a => a.purchaseMethodCount[methodSortKey] || 0
 const sortedCompany = companyProjectProfiles.sort((a, b) => {
     return sortAttribute(b) - sortAttribute(a)
   })
-  .reverse()
   .slice(0, 5)
+  .reverse()
   .map(a => {
     return {
       ...a,
@@ -75,7 +75,7 @@ const CompanyRanking = () => {
               setValueKey(e.target.value)
             }}
           >
-            <option value="totalProjects">จำนวนโครงการ</option>
+            <option value="totalProjects">จำนวนโครงการรวม</option>
             <option value="totalProjectValueInMillion">มูลค่าโครงการรวม​ (ล้านบาท)</option>
           </select>
         </div>

@@ -77,7 +77,7 @@ const AuthorityRanking = () => {
               setValueKey(e.target.value)
             }}
           >
-            <option value="totalProjects">จำนวนโครงการ</option>
+            <option value="totalProjects">จำนวนโครงการรวม</option>
             <option value="totalProjectValueInMillion">มูลค่าโครงการรวม​ (ล้านบาท)</option>
           </select>
         </div>
