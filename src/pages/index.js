@@ -13,7 +13,6 @@ import AuthorityRanking from "../components/vis/autority-ranking"
 
 require('typeface-kanit')
 
-
 const isDev = true
 
 const TextBox = ({name, children}) => {

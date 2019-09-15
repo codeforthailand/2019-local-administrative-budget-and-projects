@@ -13,7 +13,7 @@
 
 ## Environments
 1. Production: https://codeforthailand.github.io/2019-local-administrative-budget-and-projects
-1. Staging(for testing only): https://lucid-hawking-ace16b.netlify.com
+1. Staging(for testing only):  ...
 
 ## Acknowledgements
 Please see them at the bottom of the website.
