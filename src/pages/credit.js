@@ -37,6 +37,10 @@ const CreditPage = () => {
 
             <br/><br/>
 
+            <Person name="รายละเอียดชุดข้อมูล" url="https://github.com/codeforthailand/2019-local-administrative-budget-and-projects#ชุดข้อมูล"/>
+
+            <br/><br/>
+
             โครงการนี้เป็นส่วนหนึ่งของ Data Journalism Camp Thailand 2019<br/>
             จัดโดย <Person name="สมาคมนักข่าวนักหนังสือพิมพ์แห่งประเทศไทย" url="http://www.tja.or.th"/> ✕ {` `}
             <Person name="ชมรมเครือข่ายนักสื่อสารข้อมูลเชิงลึกแห่งประเทศไทย" url=""/>

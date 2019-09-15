@@ -61,7 +61,6 @@ const CompanyDistribution = () => {
     }, [d3Dom, highlightCategory])
 
     return <div>
-        <RD3Component data={d3Dom.node}/>
         <div css={{ textAlign: "center"}}>
             เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
             <select
@@ -83,6 +82,7 @@ const CompanyDistribution = () => {
             }
             </select>
         </div>
+        <RD3Component data={d3Dom.node}/>
     </div>
 }
 
