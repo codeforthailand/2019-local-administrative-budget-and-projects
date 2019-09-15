@@ -54,7 +54,7 @@ const Index = () => {
         <br/>
         <TextBox name="intro">{variables.content.section1}</TextBox>
         <TextBox>
-            <img width="100%" src="/figures/total-project-value-summary.png"/>
+            <img width="100%" src="figures/total-project-value-summary.png"/>
         </TextBox>
         <TextBox name="รายละเอียดงบประมาณ อปท.">{variables.content.section2}</TextBox>
         <TextBox name="รูปแบบการจัดซื้อจัดจ้าง">{variables.content.section3}</TextBox>
