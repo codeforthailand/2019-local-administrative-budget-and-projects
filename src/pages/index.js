@@ -10,6 +10,9 @@ import CompanyDistribution from "../components/vis/comparny-distribution"
 import MethodProfile from "../components/vis/method-ranking"
 import CompanyRanking from "../components/vis/company-ranking"
 import AuthorityRanking from "../components/vis/autority-ranking"
+import ExternalLink from "../components/external-link"
+
+import utils from "../utils"
 
 require('typeface-kanit')
 
@@ -47,7 +50,11 @@ const Index = () => {
                 <div css={{marginTop: "5px"}}>
                     <b>วันที่: </b>{variables.date}
                 </div>
-                <b>หมายเหตุ: </b>{variables.content.remark}
+                <b>หมายเหตุ: </b>1) {variables.content.remark}{
+                    utils.isMobile() && <span>
+                        ; 2) การแสดงผลบางส่วนอาจไม่สมบูรณ์บนจอขนาดเล็ก
+                    </span>
+                }
             </div>
         </TextBox>
         <br/>
@@ -84,11 +91,18 @@ const Index = () => {
             {variables.content.sectionEmpty}
         </TextBox>
         <TextBox>
-            <div align="center">
-                ⏤ คณะผู้จัดทำ ⏤
+            <b>รายละเอียดเพิ่มเติม</b>
+            <ol>
+                <li>
+                    <ExternalLink name="ชุดข้อมูลโครงการจัดซื้อจ้างของอปท. ที่ใช้ในการวิเคราะห์" url="https://github.com/codeforthailand/2019-local-administrative-budget-and-projects#ชุดข้อมูล"/>
+                </li>
+                <li>
+                    <ExternalLink name="สิ่งที่ได้เรียนรู้ในการทำงานโปรเจ็คนี้" url="#"/>
+                </li>
+            </ol>
+            <div>
             </div>
-        </TextBox>
-        <TextBox>
+            <b>คณะผู้จัดทำ</b>
             <CreditPage/>
             {/* {variables.content.sectionCredit} */}
         </TextBox>
