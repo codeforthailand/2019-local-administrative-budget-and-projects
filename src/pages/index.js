@@ -72,7 +72,7 @@ const Index = () => {
             <CompanyInfo/>
         </TextBox>
         <TextBox name="บทสรุป">
-            {variables.content.sectionEmpty}
+            {variables.content.sectionConclusion}
         </TextBox>
         <TextBox>
             <b>เนื้อหาเพิ่มเติม</b>
@@ -81,13 +81,14 @@ const Index = () => {
                     <ExternalLink name="ชุดข้อมูลโครงการจัดซื้อจ้างของอปท. ที่ใช้ในการวิเคราะห์" url="https://github.com/codeforthailand/2019-local-administrative-budget-and-projects#ชุดข้อมูล"/>
                 </li>
                 <li>
-                    <Link  css={{color: "black" }} to="/reflection-on-our-open-data">โจทย์หิน “ข้อมูลเปิดภาครัฐ” ใช้ไม่ได้จริง !?</Link>
+                    <Link  css={{color: "black" }} to="/reflection-on-our-open-data">
+                        อุปสรรคในการทำงานและการเข้าถึง “ข้อมูลเปิดภาครัฐ” (Open Government Data)
+                    </Link>
                 </li>
             </ol>
             <div>
             </div>
             <CreditPage/>
-            {/* {variables.content.sectionCredit} */}
         </TextBox>
     </div>
 }
