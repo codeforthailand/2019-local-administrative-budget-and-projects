@@ -26,7 +26,7 @@ const CompanyInfo = () => {
   const padding = 10
 
   const windowWidthHeight = utils.getWindowWidthHeight()
-  const scalingFactor = (utils.isMobile() ? 0.25 : 0.5)
+  const scalingFactor = (utils.isMobile() ? 0.3 : 0.5)
   const width = windowWidthHeight.width * scalingFactor
   const height = 300
 
