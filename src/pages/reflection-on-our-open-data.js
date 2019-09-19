@@ -6,6 +6,8 @@ import ExternalLink from "../components/external-link"
 import * as variables from "../shared/variables"
 import CreditPage from "./credit"
 
+require('typeface-kanit')
+
 const LessonsLearn = () => {
     return <div css={{ padding: "10px" }}>
         <TextBox>
