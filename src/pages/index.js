@@ -43,10 +43,10 @@ const Index = () => {
         </TextBox>
         <br/>
         <TextBox name="intro">{variables.content.section1}</TextBox>
+        <TextBox name="รายละเอียดงบประมาณ อปท.">{variables.content.section2}</TextBox>
         <TextBox>
             <img width="100%" src="figures/total-project-value-summary.png"/>
         </TextBox>
-        <TextBox name="รายละเอียดงบประมาณ อปท.">{variables.content.section2}</TextBox>
         <TextBox name="รูปแบบการจัดซื้อจัดจ้าง">{variables.content.section3}</TextBox>
         <TextBox>
             <MethodProfile/>
@@ -67,7 +67,7 @@ const Index = () => {
         <TextBox>
             <CompanyDistribution/>
         </TextBox>
-        <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า 100 บาท"> {variables.content.sectionEmpty}</TextBox>
+        <TextBox name="ลองสุ่มดูบริษัทอื่นๆ ที่มี รายได้มากกว่า 100 บาท"> {variables.content.sectonCompanyProfile}</TextBox>
         <TextBox>
             <CompanyInfo/>
         </TextBox>
