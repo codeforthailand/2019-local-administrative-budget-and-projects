@@ -2,7 +2,6 @@ import React from "react"
 
 import * as variables from "../shared/variables"
 
-import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../shared/style"
 import Placeholder from "../components/placeholder"
 import CompanyInfo from "../components/vis/company-info"
 import CreditPage from "./credit"
@@ -11,27 +10,12 @@ import MethodProfile from "../components/vis/method-ranking"
 import CompanyRanking from "../components/vis/company-ranking"
 import AuthorityRanking from "../components/vis/autority-ranking"
 import ExternalLink from "../components/external-link"
+import TextBox from "../components/textbox"
 
 import utils from "../utils"
+import { Link } from "gatsby"
 
 require('typeface-kanit')
-
-const isDev = true
-
-const TextBox = ({name, children}) => {
-    return <div css={{
-        width: "100%",
-        margin: "0px auto 10px auto",
-        padding: `0 ${MOBILE_CONTENT_PADDING}px`,
-        [media(DESKTOP_MIN_WIDTH)]: {
-            width: `${DESKTOP_MIN_WIDTH}px`,
-            padding: "0px",
-        }
-    }}>
-        {isDev && name && <a href={`#${name}`} id={name} css={{color: "red"}}>(ย่อหน้า: {name})</a>}
-        {children}
-    </div>
-}
 
 const Index = () => {
     return <div
@@ -91,18 +75,17 @@ const Index = () => {
             {variables.content.sectionEmpty}
         </TextBox>
         <TextBox>
-            <b>รายละเอียดเพิ่มเติม</b>
+            <b>เนื้อหาเพิ่มเติม</b>
             <ol>
                 <li>
                     <ExternalLink name="ชุดข้อมูลโครงการจัดซื้อจ้างของอปท. ที่ใช้ในการวิเคราะห์" url="https://github.com/codeforthailand/2019-local-administrative-budget-and-projects#ชุดข้อมูล"/>
                 </li>
                 <li>
-                    <ExternalLink name="สิ่งที่ได้เรียนรู้ในการทำงานโปรเจ็คนี้" url="#"/>
+                    <Link  css={{color: "black" }} to="/reflection-on-our-open-data">โจทย์หิน “ข้อมูลเปิดภาครัฐ” ใช้ไม่ได้จริง !?</Link>
                 </li>
             </ol>
             <div>
             </div>
-            <b>คณะผู้จัดทำ</b>
             <CreditPage/>
             {/* {variables.content.sectionCredit} */}
         </TextBox>

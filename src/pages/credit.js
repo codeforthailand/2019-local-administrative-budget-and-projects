@@ -10,6 +10,7 @@ const joinArray = (arr) => {
 
 const CreditPage = () => {
     return <div style={{ paddingTop: "20px"}}>
+        <b>คณะผู้จัดทำ</b>
         <div>
             เรียบเรียงเนื้อหา: {
                 joinArray([
