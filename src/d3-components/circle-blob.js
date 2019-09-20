@@ -75,9 +75,7 @@ const CircleBlob = (data) => {
       }
 
     const findColor = (highlightKey, d) => {
-        console.log(d.methodStats)
         const selectedProjects = getKey(d, highlightKey.name)
-        //  d.methodStats[highlightKey.name].count || 0
 
         return colorScale(selectedProjects / d.totalProjects)
     }

@@ -61,7 +61,7 @@ const CompanyDistribution = () => {
     }, [d3Dom, highlightCategory])
 
     return <div>
-        <div css={{ textAlign: "center"}}>
+        <div css={{ textAlign: "center", fontSize: "11px"}}>
             เลือกไฮไลท์สีตามสัดส่วนโครงการแบบ {` `}
             <select
             style={{

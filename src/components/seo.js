@@ -8,7 +8,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, withPrefix } from "gatsby"
+
 
 function SEO({ description, lang, meta, title }) {
   const { site } = useStaticQuery(
@@ -26,14 +27,14 @@ function SEO({ description, lang, meta, title }) {
   )
 
   const metaDescription = description || site.siteMetadata.description
+  const ogImage = withPrefix(`cover.png`)
 
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
-      title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      title={site.siteMetadata.title}
       meta={[
         {
           name: `description`,
@@ -67,6 +68,14 @@ function SEO({ description, lang, meta, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          name: `og:image`,
+          content: ogImage,
+        },
+        {
+          name: `twitter:image`,
+          content: ogImage
+        }
       ].concat(meta)}
     >
     </Helmet>

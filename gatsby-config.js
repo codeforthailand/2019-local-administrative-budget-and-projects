@@ -1,9 +1,9 @@
 module.exports = {
   pathPrefix: `/2019-local-administrative-budget-and-projects`,
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `ขุมทรัพย์ 7 แสนล้าน และรอยรั่วงบประมาณท้องถิ่น!?`,
+    description: `บทวิเคราะห์รูปแบบการใช้จ่ายงบประมาณขององค์การปกครองส่วนทั้งถิ่น`,
+    author: `ชนิกานต์ กาญจนสาลี, กิตตินันท์ นาคทอง, กนิษฐา ไชยแสง, อักษราภัค พุทธวงษ์, ไวยณ์วุฒิ เอื้อจงประสิทธิ์, ภัทรวัต ช่อไม้`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

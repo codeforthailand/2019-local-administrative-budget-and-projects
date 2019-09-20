@@ -1,5 +1,3 @@
-import axios from "axios"
-
 import React, {useState, useEffect} from "react"
 import rd3 from 'react-d3-library'
 

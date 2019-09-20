@@ -77,7 +77,16 @@ const CompanyRanking = () => {
           [media(DESKTOP_MIN_WIDTH)] : {
             textAlign: "right",
           }
-        }}>หน่วย: <select
+        }}>
+          <div css={{
+            fontWeight: "bold",
+            [media(DESKTOP_MIN_WIDTH)] : {
+              float: "left"
+            }
+          }}>
+            เรียงตามจำนวนโครงการจัดซื้อจัดจ้างแบบเฉพาะเจาะจง
+          </div>
+          หน่วย: <select
             style={{
                 border: "0px",
                 background: "#eee",
@@ -88,7 +97,7 @@ const CompanyRanking = () => {
               setValueKey(e.target.value)
             }}
           >
-            <option value="totalProjects">จำนวนโครงการรวม</option>
+            <option value="totalProjects">จำนวนโครงการทั้งหมด</option>
             <option value="totalProjectValueInMillion">มูลค่าโครงการรวม​ (ล้านบาท)</option>
           </select>
         </div>

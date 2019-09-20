@@ -70,7 +70,7 @@ const MethodRanking = () => {
               setValueKey(e.target.value)
             }}
           >
-            <option value="totalProjects">จำนวนโครงการรวม</option>
+            <option value="totalProjects">จำนวนโครงการทั้งหมด</option>
             <option value="totalProjectValueInMillion">มูลค่าโครงการรวม​ (ล้านบาท)</option>
           </select>
         </div>
