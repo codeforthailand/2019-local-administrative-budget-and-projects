@@ -1,7 +1,7 @@
 import DataGlobalStats from "../data/global_stats"
 import utils from "../utils"
 
-const dairyCompanyFilter = new RegExp("โคนม|มิลค์|แดรี่")
+const dairyCompanyFilter = new RegExp("โคนม|มิลค์|แดรี่|สหกรณ์การเกษตร")
 
 const totalLocalAuthorOrgBudget = 720822 * 1e6
 

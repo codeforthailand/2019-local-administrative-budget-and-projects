@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 
 import rd3 from 'react-d3-library'
 
-import BarChart from "../../d3-components/barchart"
+import BarChart2Layer from "../../d3-components/barchart-2layer"
 import companyProjectProfiles from "../../data/company_stats"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
@@ -24,8 +24,6 @@ const sortAttribute = a => {
 const sortedCompany = companyProjectProfiles.sort((a, b) => {
     return sortAttribute(b) - sortAttribute(a)
   })
-  .slice(0, 20)
-  .reverse()
   .map(a => {
     return {
       ...a,
@@ -35,6 +33,7 @@ const sortedCompany = companyProjectProfiles.sort((a, b) => {
 
 const CompanyRanking = () => {
     const [valueKey, setValueKey] = useState('totalProjects')
+    const [filterDairyCompanies, setFilterDairyComparies] = useState(false)
 
 
     const [viz, setViz] = useState({})
@@ -43,14 +42,19 @@ const CompanyRanking = () => {
       const ak = valueKey === "totalProjectValueInMillion" ? `value` : `count`
       const normalizer = valueKey === "totalProjectValueInMillion" ? 1e6 : 1
 
-      const data = sortedCompany.map( a => {
+      const data = sortedCompany
+      .filter(a => !(a.corporate_name.match(dairyCompanyFilter) && filterDairyCompanies))
+      .slice(0, 20)
+      .map( a => {
         return {
           label: `${a.corporate_name} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
-          value: a[valueKey]
+          value: a[valueKey],
+          value2: a.methodStats['เฉพาะเจาะจง'][ak]/normalizer
         }
       })
+      .reverse()
 
-      const obj = BarChart({
+      const obj = BarChart2Layer({
         name: 'company-ranking',
         data,
         filterRx: dairyCompanyFilter
@@ -61,7 +65,7 @@ const CompanyRanking = () => {
       }
 
       setViz(obj)
-    }, [valueKey])
+    }, [valueKey, filterDairyCompanies])
 
     useEffect( () => {
       if(viz && viz.display){
@@ -100,6 +104,19 @@ const CompanyRanking = () => {
             <option value="totalProjects">จำนวนโครงการทั้งหมด</option>
             <option value="totalProjectValueInMillion">มูลค่าโครงการรวม​ (ล้านบาท)</option>
           </select>
+          <div css={{
+            textAlign: "center",
+            [media(DESKTOP_MIN_WIDTH)] : {
+              textAlign: "left",
+            }
+          }}>
+            <input
+              type="checkbox" defaultChecked={!filterDairyCompanies}
+              onChange={() => {
+                setFilterDairyComparies(!filterDairyCompanies)
+              }}
+            />{` `}รวมข้อมูลของนิติบุคคลที่เกี่ยวกับด้านผลิตภัณฑ์นม
+          </div>
         </div>
         <RD3Component data={viz.node}/>
       </div>

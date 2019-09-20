@@ -53,41 +53,6 @@ const CompanyInfo = () => {
     setd3Dom(bd)
   }, [orgProfile]);
 
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const result = await axios(db.companyProfile(tin))
-      
-  //     const org = result.data
-  //     const dd = {}
-
-  //     org.projects
-  //       .forEach(p => {
-  //         const k = `${p.purchaseMethod}::${p.province}`
-  //         if (k in dd) {
-  //           dd[k] += p.projectValue / 1e6
-  //         } else {
-  //           dd[k] = p.projectValue / 1e6
-  //         }
-  //       });
-
-  //     const connections = Object.keys(dd).map( k => {
-  //       const slugs = k.split("::")
-  //       return {
-  //           source: slugs[0],
-  //           target: slugs[1],
-  //           value: dd[k]
-  //       }
-  //     })
-
-  //     setData(connections)
-  //     setOrgProfile(org)
-
-  //   };
-  //   fetchData();
-  // }, [tin])
-
   return (
       <div id="company-info"
         css={{

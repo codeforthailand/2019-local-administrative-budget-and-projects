@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 
 import rd3 from 'react-d3-library'
 
-import BarChart from "../../d3-components/barchart"
+import BarChart2Layer from "../../d3-components/barchart-2layer"
 import authorityProfiles from "../../data/local_authority_stats"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
 
@@ -44,11 +44,12 @@ const AuthorityRanking = () => {
       const data = sortedCompany.map( a => {
         return {
           label: `${a.dept_name}, ${a.province} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
-          value: a[valueKey]
+          value: a[valueKey],
+          value2: a.methodStats['เฉพาะเจาะจง'][ak]/normalizer,
         }
       })
 
-      const obj = BarChart({
+      const obj = BarChart2Layer({
         name: 'authority-ranking',
         data,
       })
