@@ -22,7 +22,7 @@ const sortedMethods = methodProfiles.sort((a, b) => {
   })
 
 const MethodRanking = () => {
-    const [valueKey, setValueKey] = useState('totalProjects')
+    const [valueKey, setValueKey] = useState('totalProjectValueInMillion')
 
     const [viz, setViz] = useState({})
 

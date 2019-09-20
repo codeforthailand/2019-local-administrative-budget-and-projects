@@ -70,7 +70,7 @@ const BarChart = ({name, data, filterRx}) => {
             .enter()
             .append("text")
             .attr("y", (d) => yScale(d.label) - 5)
-            .text((d) => `${d.label} ${utils.numFormatInt(d.value)}`)
+            .text((d) => `${d.label} ${utils.numFormatFloat(d.value)}`)
             .style("font-size", utils.isMobile() ? "8px" : "14px")
             .attr("transform", "translate("+chart_margin.left+"," + chart_margin.top + ")")
             .style("opacity", calculateOpacity)
