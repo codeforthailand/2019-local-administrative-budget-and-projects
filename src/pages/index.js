@@ -77,6 +77,7 @@ const Index = () => {
                 {variables.content.sectionConclusion}
             </TextBox>
             <TextBox>
+                <br/>
                 <b>เนื้อหาเพิ่มเติม</b>
                 <ol>
                     <li>
