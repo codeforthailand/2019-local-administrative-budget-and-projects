@@ -25,12 +25,12 @@ const content = {
 การบริหารงานและรูปแบบใช้งบประมาณขององค์กรส่วนท้องถิ่นเหล่านี้
 `,
     section2: `
-    จากจำนวนอปท. ทั่วประเทศทั้งหมด 7,852 แห่ง เราได้พบว่ามีทั้งหมด มีอปท.ทั้งหมด 6,737 แห่ง ที่มีข้อมูลการจัดซื้อจัดจ้างของปี 2561 บนเว็บภาษีไปไหน และเมื่อวิเคราะห์ข้อมูลดังกล่าวพบว่า 
+    จากจำนวนอปท. ทั่วประเทศทั้งหมด 7,852 แห่ง เราได้พบว่ามีีอปท.ทั้งหมด 6,737 แห่ง ที่มีข้อมูลการจัดซื้อจัดจ้างของปี 2561 บนเว็บภาษีไปไหน และเมื่อวิเคราะห์ข้อมูลดังกล่าวพบว่า 
     มีความเกี่ยวข้องกับโครงการจัดซื้อจัดจ้างด้านโยธา เช่น การสร้างถนน, การซ่อมถนน, การขุดถนน, การถมลูกรัง, และการราดคอนกรีต  จำนวน
     ${utils.moneyFormat(DataGlobalStats.sumCivilProjectValue/ 1e6)} จาก ${utils.moneyFormat(DataGlobalStats.sumProjectValue/1e6)}
     ซึ่งคิดเป็น ${Math.floor(DataGlobalStats.sumCivilProjectValue/DataGlobalStats.sumProjectValue*100)}%
     ของมูลค่าโครงการ อปท. ทั้งหมด และที่น่าสนใจคือ 
-    และที่น่าสนใจคือ ถ้าดูตามจำนวนโครงการ โครงการเกี่ยวกับโยธามีเพียง ${utils.numFormatInt(DataGlobalStats.totalCivilProjects)} โครงการ
+    ถ้าดูตามจำนวนโครงการ โครงการเกี่ยวกับโยธามีเพียง ${utils.numFormatInt(DataGlobalStats.totalCivilProjects)} โครงการ
     จากโครงการของอปท.ทั้งหมด ${utils.numFormatInt(DataGlobalStats.totalProjects)} โครงการ
     มีเพียงแค่ ${Math.floor(DataGlobalStats.totalCivilProjects / DataGlobalStats.totalProjects* 100)}% เท่านั้น
 `,
