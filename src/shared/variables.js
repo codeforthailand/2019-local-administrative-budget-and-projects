@@ -32,7 +32,7 @@ const content = {
     ของมูลค่าโครงการ อปท. ทั้งหมด และที่น่าสนใจคือ 
     ถ้าดูตามจำนวนโครงการ โครงการเกี่ยวกับโยธามีเพียง ${utils.numFormatInt(DataGlobalStats.totalCivilProjects)} โครงการ
     จากโครงการของอปท.ทั้งหมด ${utils.numFormatInt(DataGlobalStats.totalProjects)} โครงการ
-    มีเพียงแค่ ${Math.floor(DataGlobalStats.totalCivilProjects / DataGlobalStats.totalProjects* 100)}% เท่านั้น
+    มีเพียงแค่ ${Math.round(DataGlobalStats.totalCivilProjects / DataGlobalStats.totalProjects* 100)}% เท่านั้น
 `,
     section3: `
     เมื่อประมวลข้อมูลเชิงลึก สืบหาโครงการขนาดใหญ่มูลค่างบประมาณเกิน 100 ล้านบาทขึ้นไป ทำให้พบรูปแบบการจัดซื้อจัดจ้าง 6 รูปแบบที่นิยมมากที่สุด ดังรูป 
