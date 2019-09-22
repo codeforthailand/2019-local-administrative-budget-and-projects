@@ -5,9 +5,9 @@ import rd3 from 'react-d3-library'
 import BarChart2Layer from "../../d3-components/barchart-2layer"
 import authorityProfiles from "../../data/local_authority_stats"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
+import utils from "../../utils"
 
 const RD3Component = rd3.Component
-
 
 const methodSortKey = 'เฉพาะเจาะจง'
 
@@ -43,7 +43,7 @@ const AuthorityRanking = () => {
 
       const data = sortedCompany.map( a => {
         return {
-          label: `${a.dept_name}, ${a.province} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
+          label: `${a.dept_name}, ${a.province} (เฉพาะเจาะจง: ${utils.numFormatFloat(a.methodStats['เฉพาะเจาะจง'][ak]/normalizer).replace(".00", "")})`,
           value: a[valueKey],
           value2: a.methodStats['เฉพาะเจาะจง'][ak]/normalizer,
         }

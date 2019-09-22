@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 
 import rd3 from 'react-d3-library'
-
+import utils from "../../utils"
 import BarChart2Layer from "../../d3-components/barchart-2layer"
 import companyProjectProfiles from "../../data/company_stats"
 import { DESKTOP_MIN_WIDTH, media } from "../../shared/style"
@@ -47,7 +47,7 @@ const CompanyRanking = () => {
       .slice(0, 20)
       .map( a => {
         return {
-          label: `${a.corporate_name} (เฉพาะเจาะจง: ${a.methodStats['เฉพาะเจาะจง'][ak]/normalizer})`,
+          label: `${a.corporate_name} (เฉพาะเจาะจง: ${utils.numFormatFloat(a.methodStats['เฉพาะเจาะจง'][ak]/normalizer).replace(".00", "")})`,
           value: a[valueKey],
           value2: a.methodStats['เฉพาะเจาะจง'][ak]/normalizer
         }
