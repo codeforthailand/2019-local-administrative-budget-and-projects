@@ -30,6 +30,10 @@ const CreditPage = () => {
                 ])
             }
 
+            <br/>
+            <br/>
+            ที่ปรึกษาข้อมูล: พิศิษฐ์ ลีลาวชิโรภาส (อดีตผู้ว่าฯ สตง.)
+
             <br/><br/>
 
             โครงการนี้เป็นส่วนหนึ่งของ Data Journalism Camp Thailand 2019<br/>
@@ -43,7 +47,6 @@ const CreditPage = () => {
                         <ExternalLink name="เว็บภาษีไปไหน?" url="http://govspending.data.go.th"/>,
                         <ExternalLink name="กรมส่งเสริมการปกครองท้องถิ่น" url="http://www.dla.go.th/work/abt/index.jsp"/>,
                         <ExternalLink name="สำนักงานการตรวจเงินแผ่นดิน" url="https://www.audit.go.th"/>,
-                        <ExternalLink name="นายพิศิษฐ์ ลีลาวชิโรภาส (สัมภาษณ์)" url="#"/>,
                     ])
                 }
             <br/>

@@ -54,18 +54,15 @@ const Index = () => {
                 <MethodProfile/>
             </TextBox>
             <TextBox name="บทสัมภาษณ์"> {variables.content.section5}</TextBox>
-            <TextBox>
-                <Placeholder name="viz 3" width="100%" height="200px"/>
-            </TextBox>
-            <TextBox name="อปท. เจาะจงมากสุด 5 แห่ง">{variables.content.sectionEmpty}</TextBox>
+            <TextBox name="อปท. เจาะจงมากสุด 5 แห่ง">{variables.content.section6}</TextBox>
             <TextBox>
                 <AuthorityRanking/>
             </TextBox>
-            <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">บริษัทที่มีมูลค่าโครงการรวมทั้งหมดมากกว่า 100 ล้าน {variables.content.sectionEmpty}</TextBox>
+            <TextBox name="บริษัท ที่เจาะมากสุด 5 แห่ง">{variables.content.section7}</TextBox>
             <TextBox>
                 <CompanyRanking/>
             </TextBox>
-            <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.sectionEmpty}</TextBox>
+            <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.section8}</TextBox>
             <TextBox>
                 <CompanyDistribution/>
             </TextBox>
@@ -86,6 +83,11 @@ const Index = () => {
                     <li>
                         <Link  css={{color: "black" }} to="/reflection-on-our-open-data">
                             อุปสรรคในการทำงานและการเข้าถึง “ข้อมูลเปิดภาครัฐ” (Open Government Data)
+                        </Link>
+                    </li>
+                    <li>
+                        <Link  css={{color: "black" }} to="/interview">
+                            บทสัมภาษณ์ พิศิษฐ์ ลีลาวชิโรภาส เกี่ยวกับรูปแบบและการตรวจสอบการจัดซื้อจัดจ้างภาครัฐ
                         </Link>
                     </li>
                 </ol>

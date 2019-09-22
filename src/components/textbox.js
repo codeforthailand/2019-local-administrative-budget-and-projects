@@ -2,7 +2,7 @@ import React from "react"
 
 import { DESKTOP_MIN_WIDTH, MOBILE_CONTENT_PADDING, media } from "../shared/style"
 
-const isDev = true
+const isDev = false
 
 const TextBox = ({name, children}) => {
     return <div css={{
