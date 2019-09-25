@@ -63,6 +63,7 @@ const Index = () => {
                 <CompanyRanking/>
             </TextBox>
             <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.section8}</TextBox>
+            <TextBox name="การกระจายตัวของบริษัทในแต่ละภูมิภาค">{variables.content.section82}</TextBox>
             <TextBox>
                 <CompanyDistribution/>
             </TextBox>
